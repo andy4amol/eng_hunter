@@ -1,7 +1,10 @@
 package com.enghunter.tv
 
 import com.enghunter.tv.audio.AntiVocalCancelPlayer
+import com.enghunter.tv.audio.OfflineKaraokePackLoader
 import com.enghunter.tv.audio.VirtualKaraokeMicTwin
+import com.enghunter.tv.model.CurriculumUnit
+import com.enghunter.tv.model.PrimarySchool60Catalog
 import com.enghunter.tv.model.SampleSentenceRepository
 import com.enghunter.tv.model.WordFeedbackLevel
 import com.enghunter.tv.scoring.PronunciationScorer
@@ -144,5 +147,58 @@ class AudioAndScoringTest {
 
         val report = scorer.evaluate(card, targetWords, vadResult.pcm16kMono)
         assertEquals(3, report.stars)
+    }
+
+    @Test
+    fun `M2 catalog contains exactly 60 primary school sentences across 6 units with complete karaoke timings`() {
+        val all = PrimarySchool60Catalog.all60Sentences
+        assertEquals("Catalog must contain exactly 60 core sentences", 60, all.size)
+
+        // 驗證 6 個主題單元，每個單元 10 句
+        val units = listOf(
+            CurriculumUnit.UNIT_1,
+            CurriculumUnit.UNIT_2,
+            CurriculumUnit.UNIT_3,
+            CurriculumUnit.UNIT_4,
+            CurriculumUnit.UNIT_5,
+            CurriculumUnit.UNIT_6
+        )
+        for (unit in units) {
+            val filtered = SampleSentenceRepository.filterByUnit(unit, all)
+            assertEquals("Unit ${unit.unitId} should have 10 sentences", 10, filtered.size)
+        }
+
+        // 驗證每一句的卡拉 OK 逐詞時間軸與單詞數量 100% 對齊，且慢速總時長大於常速總時長
+        for (card in all) {
+            val words = card.en.trim().split(Regex("\\s+"))
+            assertEquals("Normal timings count must match words for ${card.id}", words.size, card.wordTimingsNormal.size)
+            assertEquals("Slow timings count must match words for ${card.id}", words.size, card.wordTimingsSlow.size)
+
+            val normalEnd = card.wordTimingsNormal.last().endMs
+            val slowEnd = card.wordTimingsSlow.last().endMs
+            assertTrue("Slow karaoke duration ($slowEnd) must exceed normal ($normalEnd) for ${card.id}", slowEnd > normalEnd)
+            assertTrue("Chunks should not be empty for ${card.id}", card.chunks.isNotEmpty())
+            assertTrue("Substitutions should have at least 2 options for ${card.id}", card.substitutions.size >= 2)
+        }
+    }
+
+    @Test
+    fun `M2 manifest JSON file in assets parses all 60 sentences losslessly`() {
+        val manifestFile = java.io.File("src/main/assets/sentences/sentences_manifest.json")
+            .takeIf { it.exists() }
+            ?: java.io.File("app/src/main/assets/sentences/sentences_manifest.json")
+
+        assertTrue("Prebaked sentences_manifest.json must exist in assets", manifestFile.exists())
+        val jsonText = manifestFile.readText(Charsets.UTF_8)
+        val parsed = OfflineKaraokePackLoader.parseManifestJson(jsonText)
+
+        assertEquals(60, parsed.size)
+        assertEquals("u01_s01", parsed.first().id)
+        assertEquals("u06_s10", parsed.last().id)
+
+        // Round-trip serialization verification
+        val reserialized = OfflineKaraokePackLoader.toManifestJson(parsed)
+        val reparsed = OfflineKaraokePackLoader.parseManifestJson(reserialized)
+        assertEquals(60, reparsed.size)
     }
 }

@@ -1,0 +1,5749 @@
+{
+  "schemaVersion": "enghunter.karaoke.pack.v2",
+  "voice": "en-US-AnaNeural",
+  "totalCount": 60,
+  "units": [
+    {
+      "unitId": "u01",
+      "unitTitle": "Unit 1 · 礼貌问候与日常交际 (10句)",
+      "count": 10
+    },
+    {
+      "unitId": "u02",
+      "unitTitle": "Unit 2 · 美食点餐与礼貌请求 (10句)",
+      "count": 10
+    },
+    {
+      "unitId": "u03",
+      "unitTitle": "Unit 3 · 校园生活与文具物品 (10句)",
+      "count": 10
+    },
+    {
+      "unitId": "u04",
+      "unitTitle": "Unit 4 · 家庭成员与兴趣运动 (10句)",
+      "count": 10
+    },
+    {
+      "unitId": "u05",
+      "unitTitle": "Unit 5 · 日常作息与天气穿搭 (10句)",
+      "count": 10
+    },
+    {
+      "unitId": "u06",
+      "unitTitle": "Unit 6 · 动物世界与问路出行 (10句)",
+      "count": 10
+    }
+  ],
+  "sentences": [
+    {
+      "id": "u01_s01",
+      "unitId": "u01",
+      "unitTitle": "Unit 1 · 礼貌问候与日常交际 (10句)",
+      "pattern": "Hello! My name is ___.",
+      "en": "Hello! My name is Lily.",
+      "zh": "你好！我的名字叫莉莉。",
+      "emoji": "👋",
+      "chunks": [
+        "Hello!",
+        "My name",
+        "is Lily."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Hello!",
+          "startMs": 0,
+          "durationMs": 525
+        },
+        {
+          "word": "My",
+          "startMs": 553,
+          "durationMs": 298
+        },
+        {
+          "word": "name",
+          "startMs": 879,
+          "durationMs": 326
+        },
+        {
+          "word": "is",
+          "startMs": 1233,
+          "durationMs": 298
+        },
+        {
+          "word": "Lily.",
+          "startMs": 1559,
+          "durationMs": 511
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Hello!",
+          "startMs": 0,
+          "durationMs": 724
+        },
+        {
+          "word": "My",
+          "startMs": 769,
+          "durationMs": 411
+        },
+        {
+          "word": "name",
+          "startMs": 1225,
+          "durationMs": 449
+        },
+        {
+          "word": "is",
+          "startMs": 1719,
+          "durationMs": 411
+        },
+        {
+          "word": "Lily.",
+          "startMs": 2175,
+          "durationMs": 705
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "Tom",
+          "zhHint": "汤姆",
+          "emoji": "👦",
+          "fullEn": "Hello! My name is Tom.",
+          "fullZh": "你好！我的名字叫汤姆。"
+        },
+        {
+          "keyword": "Lucy",
+          "zhHint": "露西",
+          "emoji": "👧",
+          "fullEn": "Hello! My name is Lucy.",
+          "fullZh": "你好！我的名字叫露西。"
+        }
+      ],
+      "rolePlayQuestion": "Hello! What is your name?",
+      "rolePlayQuestionZh": "你好！你叫什么名字？",
+      "prebakedAudioNormalAsset": "sentences/audio/u01_s01_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u01_s01_slow.wav"
+    },
+    {
+      "id": "u01_s02",
+      "unitId": "u01",
+      "unitTitle": "Unit 1 · 礼貌问候与日常交际 (10句)",
+      "pattern": "Nice to meet you, ___.",
+      "en": "Nice to meet you, too.",
+      "zh": "我也很高兴认识你。",
+      "emoji": "🤝",
+      "chunks": [
+        "Nice to",
+        "meet you,",
+        "too."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Nice",
+          "startMs": 0,
+          "durationMs": 326
+        },
+        {
+          "word": "to",
+          "startMs": 354,
+          "durationMs": 298
+        },
+        {
+          "word": "meet",
+          "startMs": 680,
+          "durationMs": 326
+        },
+        {
+          "word": "you,",
+          "startMs": 1034,
+          "durationMs": 402
+        },
+        {
+          "word": "too.",
+          "startMs": 1464,
+          "durationMs": 402
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Nice",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "to",
+          "startMs": 494,
+          "durationMs": 411
+        },
+        {
+          "word": "meet",
+          "startMs": 950,
+          "durationMs": 449
+        },
+        {
+          "word": "you,",
+          "startMs": 1444,
+          "durationMs": 554
+        },
+        {
+          "word": "too.",
+          "startMs": 2043,
+          "durationMs": 554
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "Miss White",
+          "zhHint": "怀特老师",
+          "emoji": "👩‍🏫",
+          "fullEn": "Nice to meet you, Miss White.",
+          "fullZh": "很高兴认识您，怀特老师。"
+        },
+        {
+          "keyword": "my friend",
+          "zhHint": "我的朋友",
+          "emoji": "🧒",
+          "fullEn": "Nice to meet you, my friend.",
+          "fullZh": "很高兴认识你，我的朋友。"
+        }
+      ],
+      "rolePlayQuestion": "Nice to meet you!",
+      "rolePlayQuestionZh": "很高兴认识你！",
+      "prebakedAudioNormalAsset": "sentences/audio/u01_s02_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u01_s02_slow.wav"
+    },
+    {
+      "id": "u01_s03",
+      "unitId": "u01",
+      "unitTitle": "Unit 1 · 礼貌问候与日常交际 (10句)",
+      "pattern": "I am ___ years old.",
+      "en": "I am nine years old.",
+      "zh": "我今年九岁了。",
+      "emoji": "🎂",
+      "chunks": [
+        "I am",
+        "nine years",
+        "old."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "am",
+          "startMs": 312,
+          "durationMs": 298
+        },
+        {
+          "word": "nine",
+          "startMs": 638,
+          "durationMs": 326
+        },
+        {
+          "word": "years",
+          "startMs": 992,
+          "durationMs": 340
+        },
+        {
+          "word": "old.",
+          "startMs": 1360,
+          "durationMs": 402
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "am",
+          "startMs": 436,
+          "durationMs": 411
+        },
+        {
+          "word": "nine",
+          "startMs": 892,
+          "durationMs": 449
+        },
+        {
+          "word": "years",
+          "startMs": 1386,
+          "durationMs": 469
+        },
+        {
+          "word": "old.",
+          "startMs": 1900,
+          "durationMs": 554
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "eight",
+          "zhHint": "八岁",
+          "emoji": "8️⃣",
+          "fullEn": "I am eight years old.",
+          "fullZh": "我今年八岁了。"
+        },
+        {
+          "keyword": "ten",
+          "zhHint": "十岁",
+          "emoji": "🔟",
+          "fullEn": "I am ten years old.",
+          "fullZh": "我今年十岁了。"
+        }
+      ],
+      "rolePlayQuestion": "How old are you?",
+      "rolePlayQuestionZh": "你几岁了？",
+      "prebakedAudioNormalAsset": "sentences/audio/u01_s03_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u01_s03_slow.wav"
+    },
+    {
+      "id": "u01_s04",
+      "unitId": "u01",
+      "unitTitle": "Unit 1 · 礼貌问候与日常交际 (10句)",
+      "pattern": "I am fine, thank you.",
+      "en": "I am fine, thank you.",
+      "zh": "我很好，谢谢你。",
+      "emoji": "😊",
+      "chunks": [
+        "I am fine,",
+        "thank",
+        "you."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "am",
+          "startMs": 312,
+          "durationMs": 298
+        },
+        {
+          "word": "fine,",
+          "startMs": 638,
+          "durationMs": 416
+        },
+        {
+          "word": "thank",
+          "startMs": 1082,
+          "durationMs": 340
+        },
+        {
+          "word": "you.",
+          "startMs": 1450,
+          "durationMs": 402
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "am",
+          "startMs": 436,
+          "durationMs": 411
+        },
+        {
+          "word": "fine,",
+          "startMs": 892,
+          "durationMs": 574
+        },
+        {
+          "word": "thank",
+          "startMs": 1511,
+          "durationMs": 469
+        },
+        {
+          "word": "you.",
+          "startMs": 2025,
+          "durationMs": 554
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "very happy",
+          "zhHint": "非常开心",
+          "emoji": "😄",
+          "fullEn": "I am very happy, thank you.",
+          "fullZh": "我非常开心，谢谢你。"
+        },
+        {
+          "keyword": "doing great",
+          "zhHint": "棒极了",
+          "emoji": "👍",
+          "fullEn": "I am doing great, thank you.",
+          "fullZh": "我棒极了，谢谢你。"
+        }
+      ],
+      "rolePlayQuestion": "How are you today?",
+      "rolePlayQuestionZh": "你今天过得怎么样？",
+      "prebakedAudioNormalAsset": "sentences/audio/u01_s04_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u01_s04_slow.wav"
+    },
+    {
+      "id": "u01_s05",
+      "unitId": "u01",
+      "unitTitle": "Unit 1 · 礼貌问候与日常交际 (10句)",
+      "pattern": "I am from ___.",
+      "en": "I am from Beijing, China.",
+      "zh": "我来自中国北京。",
+      "emoji": "🐼",
+      "chunks": [
+        "I am",
+        "from Beijing,",
+        "China."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "am",
+          "startMs": 312,
+          "durationMs": 298
+        },
+        {
+          "word": "from",
+          "startMs": 638,
+          "durationMs": 326
+        },
+        {
+          "word": "Beijing,",
+          "startMs": 992,
+          "durationMs": 553
+        },
+        {
+          "word": "China.",
+          "startMs": 1573,
+          "durationMs": 525
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "am",
+          "startMs": 436,
+          "durationMs": 411
+        },
+        {
+          "word": "from",
+          "startMs": 892,
+          "durationMs": 449
+        },
+        {
+          "word": "Beijing,",
+          "startMs": 1386,
+          "durationMs": 763
+        },
+        {
+          "word": "China.",
+          "startMs": 2194,
+          "durationMs": 724
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "Shanghai",
+          "zhHint": "上海",
+          "emoji": "🏙️",
+          "fullEn": "I am from Shanghai, China.",
+          "fullZh": "我来自中国上海。"
+        },
+        {
+          "keyword": "London",
+          "zhHint": "伦敦",
+          "emoji": "🎡",
+          "fullEn": "I am from London, UK.",
+          "fullZh": "我来自英国伦敦。"
+        }
+      ],
+      "rolePlayQuestion": "Where are you from?",
+      "rolePlayQuestionZh": "你来自哪里？",
+      "prebakedAudioNormalAsset": "sentences/audio/u01_s05_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u01_s05_slow.wav"
+    },
+    {
+      "id": "u01_s06",
+      "unitId": "u01",
+      "unitTitle": "Unit 1 · 礼貌问候与日常交际 (10句)",
+      "pattern": "Good morning, ___!",
+      "en": "Good morning, dear teacher!",
+      "zh": "早上好，亲爱的老师！",
+      "emoji": "🌅",
+      "chunks": [
+        "Good morning,",
+        "dear",
+        "teacher!"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Good",
+          "startMs": 0,
+          "durationMs": 326
+        },
+        {
+          "word": "morning,",
+          "startMs": 354,
+          "durationMs": 553
+        },
+        {
+          "word": "dear",
+          "startMs": 935,
+          "durationMs": 326
+        },
+        {
+          "word": "teacher!",
+          "startMs": 1289,
+          "durationMs": 553
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Good",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "morning,",
+          "startMs": 494,
+          "durationMs": 763
+        },
+        {
+          "word": "dear",
+          "startMs": 1302,
+          "durationMs": 449
+        },
+        {
+          "word": "teacher!",
+          "startMs": 1796,
+          "durationMs": 763
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "Mom and Dad",
+          "zhHint": "爸爸妈妈",
+          "emoji": "👨‍👩‍👧",
+          "fullEn": "Good morning, Mom and Dad!",
+          "fullZh": "早上好，爸爸妈妈！"
+        },
+        {
+          "keyword": "everyone",
+          "zhHint": "大家",
+          "emoji": "🌞",
+          "fullEn": "Good morning, everyone!",
+          "fullZh": "大家早上好！"
+        }
+      ],
+      "rolePlayQuestion": "Good morning, class!",
+      "rolePlayQuestionZh": "同学们早上好！",
+      "prebakedAudioNormalAsset": "sentences/audio/u01_s06_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u01_s06_slow.wav"
+    },
+    {
+      "id": "u01_s07",
+      "unitId": "u01",
+      "unitTitle": "Unit 1 · 礼貌问候与日常交际 (10句)",
+      "pattern": "Thank you so much!",
+      "en": "Thank you for your help!",
+      "zh": "非常感谢你的帮助！",
+      "emoji": "💖",
+      "chunks": [
+        "Thank you",
+        "for your",
+        "help!"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Thank",
+          "startMs": 0,
+          "durationMs": 340
+        },
+        {
+          "word": "you",
+          "startMs": 368,
+          "durationMs": 312
+        },
+        {
+          "word": "for",
+          "startMs": 708,
+          "durationMs": 312
+        },
+        {
+          "word": "your",
+          "startMs": 1048,
+          "durationMs": 326
+        },
+        {
+          "word": "help!",
+          "startMs": 1402,
+          "durationMs": 416
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Thank",
+          "startMs": 0,
+          "durationMs": 469
+        },
+        {
+          "word": "you",
+          "startMs": 514,
+          "durationMs": 430
+        },
+        {
+          "word": "for",
+          "startMs": 989,
+          "durationMs": 430
+        },
+        {
+          "word": "your",
+          "startMs": 1464,
+          "durationMs": 449
+        },
+        {
+          "word": "help!",
+          "startMs": 1958,
+          "durationMs": 574
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "your gift",
+          "zhHint": "你的礼物",
+          "emoji": "🎁",
+          "fullEn": "Thank you for your gift!",
+          "fullZh": "谢谢你的礼物！"
+        },
+        {
+          "keyword": "your book",
+          "zhHint": "你的书",
+          "emoji": "📖",
+          "fullEn": "Thank you for your book!",
+          "fullZh": "谢谢你的书！"
+        }
+      ],
+      "rolePlayQuestion": "Here is a little gift for you.",
+      "rolePlayQuestionZh": "这是送给你的小礼物。",
+      "prebakedAudioNormalAsset": "sentences/audio/u01_s07_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u01_s07_slow.wav"
+    },
+    {
+      "id": "u01_s08",
+      "unitId": "u01",
+      "unitTitle": "Unit 1 · 礼貌问候与日常交际 (10句)",
+      "pattern": "You are very welcome.",
+      "en": "You are very welcome.",
+      "zh": "你太客气啦（不用谢）。",
+      "emoji": "🌟",
+      "chunks": [
+        "You are",
+        "very",
+        "welcome."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "You",
+          "startMs": 0,
+          "durationMs": 312
+        },
+        {
+          "word": "are",
+          "startMs": 340,
+          "durationMs": 312
+        },
+        {
+          "word": "very",
+          "startMs": 680,
+          "durationMs": 421
+        },
+        {
+          "word": "welcome.",
+          "startMs": 1129,
+          "durationMs": 553
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "You",
+          "startMs": 0,
+          "durationMs": 430
+        },
+        {
+          "word": "are",
+          "startMs": 475,
+          "durationMs": 430
+        },
+        {
+          "word": "very",
+          "startMs": 950,
+          "durationMs": 580
+        },
+        {
+          "word": "welcome.",
+          "startMs": 1575,
+          "durationMs": 763
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "My pleasure",
+          "zhHint": "我的荣幸",
+          "emoji": "✨",
+          "fullEn": "It is my pleasure.",
+          "fullZh": "这是我的荣幸。"
+        },
+        {
+          "keyword": "No problem",
+          "zhHint": "没问题",
+          "emoji": "👌",
+          "fullEn": "No problem at all.",
+          "fullZh": "完全没问题。"
+        }
+      ],
+      "rolePlayQuestion": "Thank you very much!",
+      "rolePlayQuestionZh": "非常感谢你！",
+      "prebakedAudioNormalAsset": "sentences/audio/u01_s08_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u01_s08_slow.wav"
+    },
+    {
+      "id": "u01_s09",
+      "unitId": "u01",
+      "unitTitle": "Unit 1 · 礼貌问候与日常交际 (10句)",
+      "pattern": "Excuse me, may I ___?",
+      "en": "Excuse me, may I come in?",
+      "zh": "打扰一下，我可以进来吗？",
+      "emoji": "🚪",
+      "chunks": [
+        "Excuse me,",
+        "may I",
+        "come in?"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Excuse",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "me,",
+          "startMs": 477,
+          "durationMs": 388
+        },
+        {
+          "word": "may",
+          "startMs": 893,
+          "durationMs": 312
+        },
+        {
+          "word": "I",
+          "startMs": 1233,
+          "durationMs": 284
+        },
+        {
+          "word": "come",
+          "startMs": 1545,
+          "durationMs": 326
+        },
+        {
+          "word": "in?",
+          "startMs": 1899,
+          "durationMs": 388
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Excuse",
+          "startMs": 0,
+          "durationMs": 619
+        },
+        {
+          "word": "me,",
+          "startMs": 664,
+          "durationMs": 535
+        },
+        {
+          "word": "may",
+          "startMs": 1244,
+          "durationMs": 430
+        },
+        {
+          "word": "I",
+          "startMs": 1719,
+          "durationMs": 391
+        },
+        {
+          "word": "come",
+          "startMs": 2155,
+          "durationMs": 449
+        },
+        {
+          "word": "in?",
+          "startMs": 2649,
+          "durationMs": 535
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "ask a question",
+          "zhHint": "问个问题",
+          "emoji": "🙋",
+          "fullEn": "Excuse me, may I ask a question?",
+          "fullZh": "打扰一下，我可以问个问题吗？"
+        },
+        {
+          "keyword": "sit here",
+          "zhHint": "坐这里",
+          "emoji": "🪑",
+          "fullEn": "Excuse me, may I sit here?",
+          "fullZh": "打扰一下，我可以坐这里吗？"
+        }
+      ],
+      "rolePlayQuestion": "Who is knocking at the door?",
+      "rolePlayQuestionZh": "谁在敲门呀？",
+      "prebakedAudioNormalAsset": "sentences/audio/u01_s09_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u01_s09_slow.wav"
+    },
+    {
+      "id": "u01_s10",
+      "unitId": "u01",
+      "unitTitle": "Unit 1 · 礼貌问候与日常交际 (10句)",
+      "pattern": "See you ___!",
+      "en": "Goodbye! See you tomorrow!",
+      "zh": "再见！我们明天见！",
+      "emoji": "👋",
+      "chunks": [
+        "Goodbye!",
+        "See you",
+        "tomorrow!"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Goodbye!",
+          "startMs": 0,
+          "durationMs": 458
+        },
+        {
+          "word": "See",
+          "startMs": 486,
+          "durationMs": 312
+        },
+        {
+          "word": "you",
+          "startMs": 826,
+          "durationMs": 312
+        },
+        {
+          "word": "tomorrow!",
+          "startMs": 1166,
+          "durationMs": 662
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Goodbye!",
+          "startMs": 0,
+          "durationMs": 632
+        },
+        {
+          "word": "See",
+          "startMs": 677,
+          "durationMs": 430
+        },
+        {
+          "word": "you",
+          "startMs": 1152,
+          "durationMs": 430
+        },
+        {
+          "word": "tomorrow!",
+          "startMs": 1627,
+          "durationMs": 913
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "next week",
+          "zhHint": "下周",
+          "emoji": "📅",
+          "fullEn": "Goodbye! See you next week!",
+          "fullZh": "再见！我们下周见！"
+        },
+        {
+          "keyword": "after school",
+          "zhHint": "放学后",
+          "emoji": "🏫",
+          "fullEn": "Goodbye! See you after school!",
+          "fullZh": "再见！放学后见！"
+        }
+      ],
+      "rolePlayQuestion": "School is over. Goodbye!",
+      "rolePlayQuestionZh": "放学啦，再见！",
+      "prebakedAudioNormalAsset": "sentences/audio/u01_s10_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u01_s10_slow.wav"
+    },
+    {
+      "id": "u02_s01",
+      "unitId": "u02",
+      "unitTitle": "Unit 2 · 美食点餐与礼貌请求 (10句)",
+      "pattern": "Can I have some ___, please?",
+      "en": "Can I have some water, please?",
+      "zh": "请给我一些水好吗？",
+      "emoji": "💧",
+      "chunks": [
+        "Can I have",
+        "some water,",
+        "please?"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Can",
+          "startMs": 0,
+          "durationMs": 312
+        },
+        {
+          "word": "I",
+          "startMs": 340,
+          "durationMs": 284
+        },
+        {
+          "word": "have",
+          "startMs": 652,
+          "durationMs": 326
+        },
+        {
+          "word": "some",
+          "startMs": 1006,
+          "durationMs": 326
+        },
+        {
+          "word": "water,",
+          "startMs": 1360,
+          "durationMs": 525
+        },
+        {
+          "word": "please?",
+          "startMs": 1913,
+          "durationMs": 444
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Can",
+          "startMs": 0,
+          "durationMs": 430
+        },
+        {
+          "word": "I",
+          "startMs": 475,
+          "durationMs": 391
+        },
+        {
+          "word": "have",
+          "startMs": 911,
+          "durationMs": 449
+        },
+        {
+          "word": "some",
+          "startMs": 1405,
+          "durationMs": 449
+        },
+        {
+          "word": "water,",
+          "startMs": 1899,
+          "durationMs": 724
+        },
+        {
+          "word": "please?",
+          "startMs": 2668,
+          "durationMs": 612
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "some bread",
+          "zhHint": "一些面包",
+          "emoji": "🍞",
+          "fullEn": "Can I have some bread, please?",
+          "fullZh": "请给我一些面包好吗？"
+        },
+        {
+          "keyword": "some milk",
+          "zhHint": "一些牛奶",
+          "emoji": "🥛",
+          "fullEn": "Can I have some milk, please?",
+          "fullZh": "请给我一些牛奶好吗？"
+        }
+      ],
+      "rolePlayQuestion": "Welcome! What would you like?",
+      "rolePlayQuestionZh": "欢迎光临！你想要点什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u02_s01_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u02_s01_slow.wav"
+    },
+    {
+      "id": "u02_s02",
+      "unitId": "u02",
+      "unitTitle": "Unit 2 · 美食点餐与礼貌请求 (10句)",
+      "pattern": "I would like ___.",
+      "en": "I would like a beef burger.",
+      "zh": "我想要一个牛肉汉堡。",
+      "emoji": "🍔",
+      "chunks": [
+        "I would like",
+        "a beef",
+        "burger."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "would",
+          "startMs": 312,
+          "durationMs": 340
+        },
+        {
+          "word": "like",
+          "startMs": 680,
+          "durationMs": 326
+        },
+        {
+          "word": "a",
+          "startMs": 1034,
+          "durationMs": 284
+        },
+        {
+          "word": "beef",
+          "startMs": 1346,
+          "durationMs": 326
+        },
+        {
+          "word": "burger.",
+          "startMs": 1700,
+          "durationMs": 539
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "would",
+          "startMs": 436,
+          "durationMs": 469
+        },
+        {
+          "word": "like",
+          "startMs": 950,
+          "durationMs": 449
+        },
+        {
+          "word": "a",
+          "startMs": 1444,
+          "durationMs": 391
+        },
+        {
+          "word": "beef",
+          "startMs": 1880,
+          "durationMs": 449
+        },
+        {
+          "word": "burger.",
+          "startMs": 2374,
+          "durationMs": 743
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "some noodles",
+          "zhHint": "一些面条",
+          "emoji": "🍜",
+          "fullEn": "I would like some noodles.",
+          "fullZh": "我想要一些面条。"
+        },
+        {
+          "keyword": "an apple pie",
+          "zhHint": "一个苹果派",
+          "emoji": "🥧",
+          "fullEn": "I would like an apple pie.",
+          "fullZh": "我想要一个苹果派。"
+        }
+      ],
+      "rolePlayQuestion": "Are you ready to order?",
+      "rolePlayQuestionZh": "你准备好点餐了吗？",
+      "prebakedAudioNormalAsset": "sentences/audio/u02_s02_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u02_s02_slow.wav"
+    },
+    {
+      "id": "u02_s03",
+      "unitId": "u02",
+      "unitTitle": "Unit 2 · 美食点餐与礼貌请求 (10句)",
+      "pattern": "I like ___ very much.",
+      "en": "I like red apples very much.",
+      "zh": "我非常喜欢红苹果。",
+      "emoji": "🍎",
+      "chunks": [
+        "I like",
+        "red apples",
+        "very much."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "like",
+          "startMs": 312,
+          "durationMs": 326
+        },
+        {
+          "word": "red",
+          "startMs": 666,
+          "durationMs": 312
+        },
+        {
+          "word": "apples",
+          "startMs": 1006,
+          "durationMs": 449
+        },
+        {
+          "word": "very",
+          "startMs": 1483,
+          "durationMs": 421
+        },
+        {
+          "word": "much.",
+          "startMs": 1932,
+          "durationMs": 416
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "like",
+          "startMs": 436,
+          "durationMs": 449
+        },
+        {
+          "word": "red",
+          "startMs": 930,
+          "durationMs": 430
+        },
+        {
+          "word": "apples",
+          "startMs": 1405,
+          "durationMs": 619
+        },
+        {
+          "word": "very",
+          "startMs": 2069,
+          "durationMs": 580
+        },
+        {
+          "word": "much.",
+          "startMs": 2694,
+          "durationMs": 574
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "sweet strawberries",
+          "zhHint": "甜草莓",
+          "emoji": "🍓",
+          "fullEn": "I like sweet strawberries very much.",
+          "fullZh": "我非常喜欢甜草莓。"
+        },
+        {
+          "keyword": "yellow bananas",
+          "zhHint": "黄香蕉",
+          "emoji": "🍌",
+          "fullEn": "I like yellow bananas very much.",
+          "fullZh": "我非常喜欢黄香蕉。"
+        }
+      ],
+      "rolePlayQuestion": "What fruit do you like?",
+      "rolePlayQuestionZh": "你喜欢什么水果？",
+      "prebakedAudioNormalAsset": "sentences/audio/u02_s03_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u02_s03_slow.wav"
+    },
+    {
+      "id": "u02_s04",
+      "unitId": "u02",
+      "unitTitle": "Unit 2 · 美食点餐与礼貌请求 (10句)",
+      "pattern": "My favorite food is ___.",
+      "en": "My favorite food is ice cream.",
+      "zh": "我最喜欢的食物是冰淇淋。",
+      "emoji": "🍦",
+      "chunks": [
+        "My favorite",
+        "food is",
+        "ice cream."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "My",
+          "startMs": 0,
+          "durationMs": 298
+        },
+        {
+          "word": "favorite",
+          "startMs": 326,
+          "durationMs": 572
+        },
+        {
+          "word": "food",
+          "startMs": 926,
+          "durationMs": 326
+        },
+        {
+          "word": "is",
+          "startMs": 1280,
+          "durationMs": 298
+        },
+        {
+          "word": "ice",
+          "startMs": 1606,
+          "durationMs": 312
+        },
+        {
+          "word": "cream.",
+          "startMs": 1946,
+          "durationMs": 430
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "My",
+          "startMs": 0,
+          "durationMs": 411
+        },
+        {
+          "word": "favorite",
+          "startMs": 456,
+          "durationMs": 789
+        },
+        {
+          "word": "food",
+          "startMs": 1290,
+          "durationMs": 449
+        },
+        {
+          "word": "is",
+          "startMs": 1784,
+          "durationMs": 411
+        },
+        {
+          "word": "ice",
+          "startMs": 2240,
+          "durationMs": 430
+        },
+        {
+          "word": "cream.",
+          "startMs": 2715,
+          "durationMs": 593
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "roast chicken",
+          "zhHint": "烤鸡",
+          "emoji": "🍗",
+          "fullEn": "My favorite food is roast chicken.",
+          "fullZh": "我最喜欢的食物是烤鸡。"
+        },
+        {
+          "keyword": "fresh fish",
+          "zhHint": "鲜鱼",
+          "emoji": "🐟",
+          "fullEn": "My favorite food is fresh fish.",
+          "fullZh": "我最喜欢的食物是鲜鱼。"
+        }
+      ],
+      "rolePlayQuestion": "What is your favorite food?",
+      "rolePlayQuestionZh": "你最喜欢的食物是什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u02_s04_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u02_s04_slow.wav"
+    },
+    {
+      "id": "u02_s05",
+      "unitId": "u02",
+      "unitTitle": "Unit 2 · 美食点餐与礼貌请求 (10句)",
+      "pattern": "Yes, please. / No, thank you.",
+      "en": "Yes, please. I love orange juice.",
+      "zh": "好的，麻烦了。我很喜欢橙汁。",
+      "emoji": "🧃",
+      "chunks": [
+        "Yes, please.",
+        "I love",
+        "orange juice."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Yes,",
+          "startMs": 0,
+          "durationMs": 402
+        },
+        {
+          "word": "please.",
+          "startMs": 430,
+          "durationMs": 444
+        },
+        {
+          "word": "I",
+          "startMs": 902,
+          "durationMs": 284
+        },
+        {
+          "word": "love",
+          "startMs": 1214,
+          "durationMs": 326
+        },
+        {
+          "word": "orange",
+          "startMs": 1568,
+          "durationMs": 449
+        },
+        {
+          "word": "juice.",
+          "startMs": 2045,
+          "durationMs": 430
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Yes,",
+          "startMs": 0,
+          "durationMs": 554
+        },
+        {
+          "word": "please.",
+          "startMs": 599,
+          "durationMs": 612
+        },
+        {
+          "word": "I",
+          "startMs": 1256,
+          "durationMs": 391
+        },
+        {
+          "word": "love",
+          "startMs": 1692,
+          "durationMs": 449
+        },
+        {
+          "word": "orange",
+          "startMs": 2186,
+          "durationMs": 619
+        },
+        {
+          "word": "juice.",
+          "startMs": 2850,
+          "durationMs": 593
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "green tea",
+          "zhHint": "绿茶",
+          "emoji": "🍵",
+          "fullEn": "Yes, please. I love green tea.",
+          "fullZh": "好的，我很喜欢绿茶。"
+        },
+        {
+          "keyword": "hot soup",
+          "zhHint": "热汤",
+          "emoji": "🥣",
+          "fullEn": "Yes, please. I love hot soup.",
+          "fullZh": "好的，我很喜欢热汤。"
+        }
+      ],
+      "rolePlayQuestion": "Would you like some orange juice?",
+      "rolePlayQuestionZh": "你想喝点橙汁吗？",
+      "prebakedAudioNormalAsset": "sentences/audio/u02_s05_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u02_s05_slow.wav"
+    },
+    {
+      "id": "u02_s06",
+      "unitId": "u02",
+      "unitTitle": "Unit 2 · 美食点餐与礼貌请求 (10句)",
+      "pattern": "Pass me the ___, please.",
+      "en": "Pass me the spoon, please.",
+      "zh": "请把勺子递给我。",
+      "emoji": "🥄",
+      "chunks": [
+        "Pass me",
+        "the spoon,",
+        "please."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Pass",
+          "startMs": 0,
+          "durationMs": 326
+        },
+        {
+          "word": "me",
+          "startMs": 354,
+          "durationMs": 298
+        },
+        {
+          "word": "the",
+          "startMs": 680,
+          "durationMs": 312
+        },
+        {
+          "word": "spoon,",
+          "startMs": 1020,
+          "durationMs": 430
+        },
+        {
+          "word": "please.",
+          "startMs": 1478,
+          "durationMs": 444
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Pass",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "me",
+          "startMs": 494,
+          "durationMs": 411
+        },
+        {
+          "word": "the",
+          "startMs": 950,
+          "durationMs": 430
+        },
+        {
+          "word": "spoon,",
+          "startMs": 1425,
+          "durationMs": 593
+        },
+        {
+          "word": "please.",
+          "startMs": 2063,
+          "durationMs": 612
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "chopsticks",
+          "zhHint": "筷子",
+          "emoji": "🥢",
+          "fullEn": "Pass me the chopsticks, please.",
+          "fullZh": "请把筷子递给我。"
+        },
+        {
+          "keyword": "dinner plate",
+          "zhHint": "餐盘",
+          "emoji": "🍽️",
+          "fullEn": "Pass me the dinner plate, please.",
+          "fullZh": "请把餐盘递给我。"
+        }
+      ],
+      "rolePlayQuestion": "How can I help you at the table?",
+      "rolePlayQuestionZh": "餐桌上有什么需要帮你的？",
+      "prebakedAudioNormalAsset": "sentences/audio/u02_s06_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u02_s06_slow.wav"
+    },
+    {
+      "id": "u02_s07",
+      "unitId": "u02",
+      "unitTitle": "Unit 2 · 美食点餐与礼貌请求 (10句)",
+      "pattern": "It tastes so ___!",
+      "en": "The cake tastes so delicious!",
+      "zh": "这块蛋糕尝起来太美味了！",
+      "emoji": "🍰",
+      "chunks": [
+        "The cake",
+        "tastes so",
+        "delicious!"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "The",
+          "startMs": 0,
+          "durationMs": 312
+        },
+        {
+          "word": "cake",
+          "startMs": 340,
+          "durationMs": 326
+        },
+        {
+          "word": "tastes",
+          "startMs": 694,
+          "durationMs": 449
+        },
+        {
+          "word": "so",
+          "startMs": 1171,
+          "durationMs": 298
+        },
+        {
+          "word": "delicious!",
+          "startMs": 1497,
+          "durationMs": 676
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "The",
+          "startMs": 0,
+          "durationMs": 430
+        },
+        {
+          "word": "cake",
+          "startMs": 475,
+          "durationMs": 449
+        },
+        {
+          "word": "tastes",
+          "startMs": 969,
+          "durationMs": 619
+        },
+        {
+          "word": "so",
+          "startMs": 1633,
+          "durationMs": 411
+        },
+        {
+          "word": "delicious!",
+          "startMs": 2089,
+          "durationMs": 932
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "sweet and fresh",
+          "zhHint": "又甜又新鲜",
+          "emoji": "🍉",
+          "fullEn": "The watermelon tastes sweet and fresh!",
+          "fullZh": "西瓜尝起来又甜又新鲜！"
+        },
+        {
+          "keyword": "warm and nice",
+          "zhHint": "又暖又香",
+          "emoji": "🥐",
+          "fullEn": "The bread tastes warm and nice!",
+          "fullZh": "面包尝起来又暖又香！"
+        }
+      ],
+      "rolePlayQuestion": "How does the cake taste?",
+      "rolePlayQuestionZh": "蛋糕尝起来味道怎么样？",
+      "prebakedAudioNormalAsset": "sentences/audio/u02_s07_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u02_s07_slow.wav"
+    },
+    {
+      "id": "u02_s08",
+      "unitId": "u02",
+      "unitTitle": "Unit 2 · 美食点餐与礼貌请求 (10句)",
+      "pattern": "I am hungry / thirsty.",
+      "en": "Mom, I am a little hungry.",
+      "zh": "妈妈，我有一点饿了。",
+      "emoji": "😋",
+      "chunks": [
+        "Mom,",
+        "I am",
+        "a little hungry."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Mom,",
+          "startMs": 0,
+          "durationMs": 402
+        },
+        {
+          "word": "I",
+          "startMs": 430,
+          "durationMs": 284
+        },
+        {
+          "word": "am",
+          "startMs": 742,
+          "durationMs": 298
+        },
+        {
+          "word": "a",
+          "startMs": 1068,
+          "durationMs": 284
+        },
+        {
+          "word": "little",
+          "startMs": 1380,
+          "durationMs": 354
+        },
+        {
+          "word": "hungry.",
+          "startMs": 1762,
+          "durationMs": 539
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Mom,",
+          "startMs": 0,
+          "durationMs": 554
+        },
+        {
+          "word": "I",
+          "startMs": 599,
+          "durationMs": 391
+        },
+        {
+          "word": "am",
+          "startMs": 1035,
+          "durationMs": 411
+        },
+        {
+          "word": "a",
+          "startMs": 1491,
+          "durationMs": 391
+        },
+        {
+          "word": "little",
+          "startMs": 1927,
+          "durationMs": 488
+        },
+        {
+          "word": "hungry.",
+          "startMs": 2460,
+          "durationMs": 743
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "very thirsty",
+          "zhHint": "非常渴",
+          "emoji": "🥤",
+          "fullEn": "Mom, I am very thirsty.",
+          "fullZh": "妈妈，我非常口渴。"
+        },
+        {
+          "keyword": "full now",
+          "zhHint": "吃饱了",
+          "emoji": "😌",
+          "fullEn": "Mom, I am full now.",
+          "fullZh": "妈妈，我现在吃饱啦。"
+        }
+      ],
+      "rolePlayQuestion": "Are you hungry after school?",
+      "rolePlayQuestionZh": "放学后你饿了吗？",
+      "prebakedAudioNormalAsset": "sentences/audio/u02_s08_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u02_s08_slow.wav"
+    },
+    {
+      "id": "u02_s09",
+      "unitId": "u02",
+      "unitTitle": "Unit 2 · 美食点餐与礼貌请求 (10句)",
+      "pattern": "How much is ___?",
+      "en": "How much is this sandwich?",
+      "zh": "这个三明治多少钱？",
+      "emoji": "🥪",
+      "chunks": [
+        "How much",
+        "is this",
+        "sandwich?"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "How",
+          "startMs": 0,
+          "durationMs": 312
+        },
+        {
+          "word": "much",
+          "startMs": 340,
+          "durationMs": 326
+        },
+        {
+          "word": "is",
+          "startMs": 694,
+          "durationMs": 298
+        },
+        {
+          "word": "this",
+          "startMs": 1020,
+          "durationMs": 326
+        },
+        {
+          "word": "sandwich?",
+          "startMs": 1374,
+          "durationMs": 567
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "How",
+          "startMs": 0,
+          "durationMs": 430
+        },
+        {
+          "word": "much",
+          "startMs": 475,
+          "durationMs": 449
+        },
+        {
+          "word": "is",
+          "startMs": 969,
+          "durationMs": 411
+        },
+        {
+          "word": "this",
+          "startMs": 1425,
+          "durationMs": 449
+        },
+        {
+          "word": "sandwich?",
+          "startMs": 1919,
+          "durationMs": 782
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "this milk",
+          "zhHint": "这盒牛奶",
+          "emoji": "🥛",
+          "fullEn": "How much is this milk?",
+          "fullZh": "这盒牛奶多少钱？"
+        },
+        {
+          "keyword": "that cake",
+          "zhHint": "那个蛋糕",
+          "emoji": "🎂",
+          "fullEn": "How much is that cake?",
+          "fullZh": "那个蛋糕多少钱？"
+        }
+      ],
+      "rolePlayQuestion": "Can I help you?",
+      "rolePlayQuestionZh": "请问需要买点什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u02_s09_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u02_s09_slow.wav"
+    },
+    {
+      "id": "u02_s10",
+      "unitId": "u02",
+      "unitTitle": "Unit 2 · 美食点餐与礼貌请求 (10句)",
+      "pattern": "Here you are.",
+      "en": "Here is your hot breakfast.",
+      "zh": "给你热腾腾的早餐。",
+      "emoji": "🍳",
+      "chunks": [
+        "Here is",
+        "your hot",
+        "breakfast."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Here",
+          "startMs": 0,
+          "durationMs": 326
+        },
+        {
+          "word": "is",
+          "startMs": 354,
+          "durationMs": 298
+        },
+        {
+          "word": "your",
+          "startMs": 680,
+          "durationMs": 326
+        },
+        {
+          "word": "hot",
+          "startMs": 1034,
+          "durationMs": 312
+        },
+        {
+          "word": "breakfast.",
+          "startMs": 1374,
+          "durationMs": 581
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Here",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "is",
+          "startMs": 494,
+          "durationMs": 411
+        },
+        {
+          "word": "your",
+          "startMs": 950,
+          "durationMs": 449
+        },
+        {
+          "word": "hot",
+          "startMs": 1444,
+          "durationMs": 430
+        },
+        {
+          "word": "breakfast.",
+          "startMs": 1919,
+          "durationMs": 801
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "fresh salad",
+          "zhHint": "新鲜沙拉",
+          "emoji": "🥗",
+          "fullEn": "Here is your fresh salad.",
+          "fullZh": "给你新鲜的沙拉。"
+        },
+        {
+          "keyword": "lunch box",
+          "zhHint": "午餐盒",
+          "emoji": "🍱",
+          "fullEn": "Here is your lunch box.",
+          "fullZh": "给你准备好的午餐盒。"
+        }
+      ],
+      "rolePlayQuestion": "Where is my breakfast?",
+      "rolePlayQuestionZh": "我的早餐在哪里呀？",
+      "prebakedAudioNormalAsset": "sentences/audio/u02_s10_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u02_s10_slow.wav"
+    },
+    {
+      "id": "u03_s01",
+      "unitId": "u03",
+      "unitTitle": "Unit 3 · 校园生活与文具物品 (10句)",
+      "pattern": "I have a new ___.",
+      "en": "I have a new schoolbag.",
+      "zh": "我有一个新书包。",
+      "emoji": "🎒",
+      "chunks": [
+        "I have",
+        "a new",
+        "schoolbag."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "have",
+          "startMs": 312,
+          "durationMs": 326
+        },
+        {
+          "word": "a",
+          "startMs": 666,
+          "durationMs": 284
+        },
+        {
+          "word": "new",
+          "startMs": 978,
+          "durationMs": 312
+        },
+        {
+          "word": "schoolbag.",
+          "startMs": 1318,
+          "durationMs": 581
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "have",
+          "startMs": 436,
+          "durationMs": 449
+        },
+        {
+          "word": "a",
+          "startMs": 930,
+          "durationMs": 391
+        },
+        {
+          "word": "new",
+          "startMs": 1366,
+          "durationMs": 430
+        },
+        {
+          "word": "schoolbag.",
+          "startMs": 1841,
+          "durationMs": 801
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "pencil box",
+          "zhHint": "铅笔盒",
+          "emoji": "✏️",
+          "fullEn": "I have a new pencil box.",
+          "fullZh": "我有一个新铅笔盒。"
+        },
+        {
+          "keyword": "story book",
+          "zhHint": "故事书",
+          "emoji": "📗",
+          "fullEn": "I have a new story book.",
+          "fullZh": "我有一本新故事书。"
+        }
+      ],
+      "rolePlayQuestion": "What do you have in your hand?",
+      "rolePlayQuestionZh": "你手里拿着什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u03_s01_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u03_s01_slow.wav"
+    },
+    {
+      "id": "u03_s02",
+      "unitId": "u03",
+      "unitTitle": "Unit 3 · 校园生活与文具物品 (10句)",
+      "pattern": "May I borrow your ___?",
+      "en": "May I borrow your ruler, please?",
+      "zh": "请问我可以借用一下你的尺子吗？",
+      "emoji": "📏",
+      "chunks": [
+        "May I borrow",
+        "your ruler,",
+        "please?"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "May",
+          "startMs": 0,
+          "durationMs": 312
+        },
+        {
+          "word": "I",
+          "startMs": 340,
+          "durationMs": 284
+        },
+        {
+          "word": "borrow",
+          "startMs": 652,
+          "durationMs": 449
+        },
+        {
+          "word": "your",
+          "startMs": 1129,
+          "durationMs": 326
+        },
+        {
+          "word": "ruler,",
+          "startMs": 1483,
+          "durationMs": 525
+        },
+        {
+          "word": "please?",
+          "startMs": 2036,
+          "durationMs": 444
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "May",
+          "startMs": 0,
+          "durationMs": 430
+        },
+        {
+          "word": "I",
+          "startMs": 475,
+          "durationMs": 391
+        },
+        {
+          "word": "borrow",
+          "startMs": 911,
+          "durationMs": 619
+        },
+        {
+          "word": "your",
+          "startMs": 1575,
+          "durationMs": 449
+        },
+        {
+          "word": "ruler,",
+          "startMs": 2069,
+          "durationMs": 724
+        },
+        {
+          "word": "please?",
+          "startMs": 2838,
+          "durationMs": 612
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "eraser",
+          "zhHint": "橡皮",
+          "emoji": "🧼",
+          "fullEn": "May I borrow your eraser, please?",
+          "fullZh": "请问我可以借用你的橡皮吗？"
+        },
+        {
+          "keyword": "blue pen",
+          "zhHint": "蓝钢笔",
+          "emoji": "🖊️",
+          "fullEn": "May I borrow your blue pen, please?",
+          "fullZh": "请问我可以借用你的蓝钢笔吗？"
+        }
+      ],
+      "rolePlayQuestion": "Sure! What do you need?",
+      "rolePlayQuestionZh": "当然可以！你需要什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u03_s02_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u03_s02_slow.wav"
+    },
+    {
+      "id": "u03_s03",
+      "unitId": "u03",
+      "unitTitle": "Unit 3 · 校园生活与文具物品 (10句)",
+      "pattern": "Where is my ___?",
+      "en": "Where is my English book?",
+      "zh": "我的英语书在哪里？",
+      "emoji": "📘",
+      "chunks": [
+        "Where is",
+        "my English",
+        "book?"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Where",
+          "startMs": 0,
+          "durationMs": 340
+        },
+        {
+          "word": "is",
+          "startMs": 368,
+          "durationMs": 298
+        },
+        {
+          "word": "my",
+          "startMs": 694,
+          "durationMs": 298
+        },
+        {
+          "word": "English",
+          "startMs": 1020,
+          "durationMs": 463
+        },
+        {
+          "word": "book?",
+          "startMs": 1511,
+          "durationMs": 416
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Where",
+          "startMs": 0,
+          "durationMs": 469
+        },
+        {
+          "word": "is",
+          "startMs": 514,
+          "durationMs": 411
+        },
+        {
+          "word": "my",
+          "startMs": 970,
+          "durationMs": 411
+        },
+        {
+          "word": "English",
+          "startMs": 1426,
+          "durationMs": 638
+        },
+        {
+          "word": "book?",
+          "startMs": 2109,
+          "durationMs": 574
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "red crayon",
+          "zhHint": "红蜡笔",
+          "emoji": "🖍️",
+          "fullEn": "Where is my red crayon?",
+          "fullZh": "我的红蜡笔在哪里？"
+        },
+        {
+          "keyword": "notebook",
+          "zhHint": "笔记本",
+          "emoji": "📓",
+          "fullEn": "Where is my notebook?",
+          "fullZh": "我的笔记本在哪里？"
+        }
+      ],
+      "rolePlayQuestion": "Look! It is on the desk.",
+      "rolePlayQuestionZh": "看！它在书桌上。",
+      "prebakedAudioNormalAsset": "sentences/audio/u03_s03_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u03_s03_slow.wav"
+    },
+    {
+      "id": "u03_s04",
+      "unitId": "u03",
+      "unitTitle": "Unit 3 · 校园生活与文具物品 (10句)",
+      "pattern": "It is in / on / under the ___.",
+      "en": "It is under the teacher's desk.",
+      "zh": "它在讲台桌子的下面。",
+      "emoji": "🏫",
+      "chunks": [
+        "It is",
+        "under the",
+        "teacher's desk."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "It",
+          "startMs": 0,
+          "durationMs": 298
+        },
+        {
+          "word": "is",
+          "startMs": 326,
+          "durationMs": 298
+        },
+        {
+          "word": "under",
+          "startMs": 652,
+          "durationMs": 435
+        },
+        {
+          "word": "the",
+          "startMs": 1115,
+          "durationMs": 312
+        },
+        {
+          "word": "teacher's",
+          "startMs": 1455,
+          "durationMs": 477
+        },
+        {
+          "word": "desk.",
+          "startMs": 1960,
+          "durationMs": 416
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "It",
+          "startMs": 0,
+          "durationMs": 411
+        },
+        {
+          "word": "is",
+          "startMs": 456,
+          "durationMs": 411
+        },
+        {
+          "word": "under",
+          "startMs": 912,
+          "durationMs": 600
+        },
+        {
+          "word": "the",
+          "startMs": 1557,
+          "durationMs": 430
+        },
+        {
+          "word": "teacher's",
+          "startMs": 2032,
+          "durationMs": 658
+        },
+        {
+          "word": "desk.",
+          "startMs": 2735,
+          "durationMs": 574
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "in your bag",
+          "zhHint": "在你书包里",
+          "emoji": "🎒",
+          "fullEn": "It is in your schoolbag.",
+          "fullZh": "它在你的书包里面。"
+        },
+        {
+          "keyword": "on the chair",
+          "zhHint": "在椅子上",
+          "emoji": "🪑",
+          "fullEn": "It is on the wooden chair.",
+          "fullZh": "它在木椅子上面。"
+        }
+      ],
+      "rolePlayQuestion": "Where is the ball?",
+      "rolePlayQuestionZh": "球在哪里呀？",
+      "prebakedAudioNormalAsset": "sentences/audio/u03_s04_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u03_s04_slow.wav"
+    },
+    {
+      "id": "u03_s05",
+      "unitId": "u03",
+      "unitTitle": "Unit 3 · 校园生活与文具物品 (10句)",
+      "pattern": "My favorite subject is ___.",
+      "en": "My favorite subject is English.",
+      "zh": "我最喜欢的科目是英语。",
+      "emoji": "🔤",
+      "chunks": [
+        "My favorite",
+        "subject is",
+        "English."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "My",
+          "startMs": 0,
+          "durationMs": 298
+        },
+        {
+          "word": "favorite",
+          "startMs": 326,
+          "durationMs": 572
+        },
+        {
+          "word": "subject",
+          "startMs": 926,
+          "durationMs": 463
+        },
+        {
+          "word": "is",
+          "startMs": 1417,
+          "durationMs": 298
+        },
+        {
+          "word": "English.",
+          "startMs": 1743,
+          "durationMs": 553
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "My",
+          "startMs": 0,
+          "durationMs": 411
+        },
+        {
+          "word": "favorite",
+          "startMs": 456,
+          "durationMs": 789
+        },
+        {
+          "word": "subject",
+          "startMs": 1290,
+          "durationMs": 638
+        },
+        {
+          "word": "is",
+          "startMs": 1973,
+          "durationMs": 411
+        },
+        {
+          "word": "English.",
+          "startMs": 2429,
+          "durationMs": 763
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "music class",
+          "zhHint": "音乐课",
+          "emoji": "🎵",
+          "fullEn": "My favorite subject is music.",
+          "fullZh": "我最喜欢的科目是音乐。"
+        },
+        {
+          "keyword": "science",
+          "zhHint": "科学课",
+          "emoji": "🔬",
+          "fullEn": "My favorite subject is science.",
+          "fullZh": "我最喜欢的科目是科学。"
+        }
+      ],
+      "rolePlayQuestion": "What subject do you like best?",
+      "rolePlayQuestionZh": "你最喜欢哪门课？",
+      "prebakedAudioNormalAsset": "sentences/audio/u03_s05_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u03_s05_slow.wav"
+    },
+    {
+      "id": "u03_s06",
+      "unitId": "u03",
+      "unitTitle": "Unit 3 · 校园生活与文具物品 (10句)",
+      "pattern": "Let's clean the ___!",
+      "en": "Let's clean the classroom together!",
+      "zh": "让我们一起打扫教室吧！",
+      "emoji": "🧹",
+      "chunks": [
+        "Let's clean",
+        "the classroom",
+        "together!"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Let's",
+          "startMs": 0,
+          "durationMs": 326
+        },
+        {
+          "word": "clean",
+          "startMs": 354,
+          "durationMs": 340
+        },
+        {
+          "word": "the",
+          "startMs": 722,
+          "durationMs": 312
+        },
+        {
+          "word": "classroom",
+          "startMs": 1062,
+          "durationMs": 491
+        },
+        {
+          "word": "together!",
+          "startMs": 1581,
+          "durationMs": 662
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Let's",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "clean",
+          "startMs": 494,
+          "durationMs": 469
+        },
+        {
+          "word": "the",
+          "startMs": 1008,
+          "durationMs": 430
+        },
+        {
+          "word": "classroom",
+          "startMs": 1483,
+          "durationMs": 677
+        },
+        {
+          "word": "together!",
+          "startMs": 2205,
+          "durationMs": 913
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "blackboard",
+          "zhHint": "黑板",
+          "emoji": "🧽",
+          "fullEn": "Let's clean the blackboard together!",
+          "fullZh": "让我们一起擦黑板吧！"
+        },
+        {
+          "keyword": "windows",
+          "zhHint": "窗户",
+          "emoji": "🪟",
+          "fullEn": "Let's clean the windows together!",
+          "fullZh": "让我们一起擦窗户吧！"
+        }
+      ],
+      "rolePlayQuestion": "Classroom duty time!",
+      "rolePlayQuestionZh": "现在是班级值日时间！",
+      "prebakedAudioNormalAsset": "sentences/audio/u03_s06_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u03_s06_slow.wav"
+    },
+    {
+      "id": "u03_s07",
+      "unitId": "u03",
+      "unitTitle": "Unit 3 · 校园生活与文具物品 (10句)",
+      "pattern": "Open your ___, please.",
+      "en": "Open your books to page ten.",
+      "zh": "请把书翻到第十页。",
+      "emoji": "📖",
+      "chunks": [
+        "Open your",
+        "books to",
+        "page ten."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Open",
+          "startMs": 0,
+          "durationMs": 421
+        },
+        {
+          "word": "your",
+          "startMs": 449,
+          "durationMs": 326
+        },
+        {
+          "word": "books",
+          "startMs": 803,
+          "durationMs": 340
+        },
+        {
+          "word": "to",
+          "startMs": 1171,
+          "durationMs": 298
+        },
+        {
+          "word": "page",
+          "startMs": 1497,
+          "durationMs": 326
+        },
+        {
+          "word": "ten.",
+          "startMs": 1851,
+          "durationMs": 402
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Open",
+          "startMs": 0,
+          "durationMs": 580
+        },
+        {
+          "word": "your",
+          "startMs": 625,
+          "durationMs": 449
+        },
+        {
+          "word": "books",
+          "startMs": 1119,
+          "durationMs": 469
+        },
+        {
+          "word": "to",
+          "startMs": 1633,
+          "durationMs": 411
+        },
+        {
+          "word": "page",
+          "startMs": 2089,
+          "durationMs": 449
+        },
+        {
+          "word": "ten.",
+          "startMs": 2583,
+          "durationMs": 554
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "page twenty",
+          "zhHint": "第二十页",
+          "emoji": "📑",
+          "fullEn": "Open your books to page twenty.",
+          "fullZh": "请把书翻到第二十页。"
+        },
+        {
+          "keyword": "unit three",
+          "zhHint": "第三单元",
+          "emoji": "📚",
+          "fullEn": "Open your books to unit three.",
+          "fullZh": "请把书翻到第三单元。"
+        }
+      ],
+      "rolePlayQuestion": "Are you ready for class?",
+      "rolePlayQuestionZh": "准备好上课了吗？",
+      "prebakedAudioNormalAsset": "sentences/audio/u03_s07_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u03_s07_slow.wav"
+    },
+    {
+      "id": "u03_s08",
+      "unitId": "u03",
+      "unitTitle": "Unit 3 · 校园生活与文具物品 (10句)",
+      "pattern": "Is this your ___?",
+      "en": "Yes, this is my dictionary.",
+      "zh": "是的，这是我的词典。",
+      "emoji": "📕",
+      "chunks": [
+        "Yes,",
+        "this is",
+        "my dictionary."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Yes,",
+          "startMs": 0,
+          "durationMs": 402
+        },
+        {
+          "word": "this",
+          "startMs": 430,
+          "durationMs": 326
+        },
+        {
+          "word": "is",
+          "startMs": 784,
+          "durationMs": 298
+        },
+        {
+          "word": "my",
+          "startMs": 1110,
+          "durationMs": 298
+        },
+        {
+          "word": "dictionary.",
+          "startMs": 1436,
+          "durationMs": 785
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Yes,",
+          "startMs": 0,
+          "durationMs": 554
+        },
+        {
+          "word": "this",
+          "startMs": 599,
+          "durationMs": 449
+        },
+        {
+          "word": "is",
+          "startMs": 1093,
+          "durationMs": 411
+        },
+        {
+          "word": "my",
+          "startMs": 1549,
+          "durationMs": 411
+        },
+        {
+          "word": "dictionary.",
+          "startMs": 2005,
+          "durationMs": 1083
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "water bottle",
+          "zhHint": "水杯",
+          "emoji": "🍼",
+          "fullEn": "Yes, this is my water bottle.",
+          "fullZh": "是的，这是我的水杯。"
+        },
+        {
+          "keyword": "umbrella",
+          "zhHint": "雨伞",
+          "emoji": "☂️",
+          "fullEn": "Yes, this is my umbrella.",
+          "fullZh": "是的，这是我的雨伞。"
+        }
+      ],
+      "rolePlayQuestion": "Is this your dictionary?",
+      "rolePlayQuestionZh": "这是你的词典吗？",
+      "prebakedAudioNormalAsset": "sentences/audio/u03_s08_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u03_s08_slow.wav"
+    },
+    {
+      "id": "u03_s09",
+      "unitId": "u03",
+      "unitTitle": "Unit 3 · 校园生活与文具物品 (10句)",
+      "pattern": "We have ___ today.",
+      "en": "We have art and music today.",
+      "zh": "我们今天有美术课和音乐课。",
+      "emoji": "🎨",
+      "chunks": [
+        "We have",
+        "art and music",
+        "today."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "We",
+          "startMs": 0,
+          "durationMs": 298
+        },
+        {
+          "word": "have",
+          "startMs": 326,
+          "durationMs": 326
+        },
+        {
+          "word": "art",
+          "startMs": 680,
+          "durationMs": 312
+        },
+        {
+          "word": "and",
+          "startMs": 1020,
+          "durationMs": 312
+        },
+        {
+          "word": "music",
+          "startMs": 1360,
+          "durationMs": 435
+        },
+        {
+          "word": "today.",
+          "startMs": 1823,
+          "durationMs": 525
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "We",
+          "startMs": 0,
+          "durationMs": 411
+        },
+        {
+          "word": "have",
+          "startMs": 456,
+          "durationMs": 449
+        },
+        {
+          "word": "art",
+          "startMs": 950,
+          "durationMs": 430
+        },
+        {
+          "word": "and",
+          "startMs": 1425,
+          "durationMs": 430
+        },
+        {
+          "word": "music",
+          "startMs": 1900,
+          "durationMs": 600
+        },
+        {
+          "word": "today.",
+          "startMs": 2545,
+          "durationMs": 724
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "math and PE",
+          "zhHint": "数学与体育",
+          "emoji": "🏃",
+          "fullEn": "We have math and PE today.",
+          "fullZh": "我们今天有数学课和体育课。"
+        },
+        {
+          "keyword": "computer class",
+          "zhHint": "电脑课",
+          "emoji": "💻",
+          "fullEn": "We have computer class today.",
+          "fullZh": "我们今天有电脑课。"
+        }
+      ],
+      "rolePlayQuestion": "What classes do we have today?",
+      "rolePlayQuestionZh": "我们今天有什么课？",
+      "prebakedAudioNormalAsset": "sentences/audio/u03_s09_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u03_s09_slow.wav"
+    },
+    {
+      "id": "u03_s10",
+      "unitId": "u03",
+      "unitTitle": "Unit 3 · 校园生活与文具物品 (10句)",
+      "pattern": "Listen to the teacher ___.",
+      "en": "Listen to the teacher carefully.",
+      "zh": "请认真听老师讲课。",
+      "emoji": "👂",
+      "chunks": [
+        "Listen to",
+        "the teacher",
+        "carefully."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Listen",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "to",
+          "startMs": 477,
+          "durationMs": 298
+        },
+        {
+          "word": "the",
+          "startMs": 803,
+          "durationMs": 312
+        },
+        {
+          "word": "teacher",
+          "startMs": 1143,
+          "durationMs": 463
+        },
+        {
+          "word": "carefully.",
+          "startMs": 1634,
+          "durationMs": 771
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Listen",
+          "startMs": 0,
+          "durationMs": 619
+        },
+        {
+          "word": "to",
+          "startMs": 664,
+          "durationMs": 411
+        },
+        {
+          "word": "the",
+          "startMs": 1120,
+          "durationMs": 430
+        },
+        {
+          "word": "teacher",
+          "startMs": 1595,
+          "durationMs": 638
+        },
+        {
+          "word": "carefully.",
+          "startMs": 2278,
+          "durationMs": 1063
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "read aloud",
+          "zhHint": "大声朗读",
+          "emoji": "🗣️",
+          "fullEn": "Read the English text aloud.",
+          "fullZh": "请大声朗读英语课文。"
+        },
+        {
+          "keyword": "raise your hand",
+          "zhHint": "举手发言",
+          "emoji": "✋",
+          "fullEn": "Please raise your hand first.",
+          "fullZh": "发言前请先举手。"
+        }
+      ],
+      "rolePlayQuestion": "What is our class rule?",
+      "rolePlayQuestionZh": "我们的课堂规则是什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u03_s10_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u03_s10_slow.wav"
+    },
+    {
+      "id": "u04_s01",
+      "unitId": "u04",
+      "unitTitle": "Unit 4 · 家庭成员与兴趣运动 (10句)",
+      "pattern": "This is my ___.",
+      "en": "This is my loving family.",
+      "zh": "这是我充满爱的家庭。",
+      "emoji": "👨‍👩‍👧‍👦",
+      "chunks": [
+        "This is",
+        "my loving",
+        "family."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "This",
+          "startMs": 0,
+          "durationMs": 326
+        },
+        {
+          "word": "is",
+          "startMs": 354,
+          "durationMs": 298
+        },
+        {
+          "word": "my",
+          "startMs": 680,
+          "durationMs": 298
+        },
+        {
+          "word": "loving",
+          "startMs": 1006,
+          "durationMs": 449
+        },
+        {
+          "word": "family.",
+          "startMs": 1483,
+          "durationMs": 634
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "This",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "is",
+          "startMs": 494,
+          "durationMs": 411
+        },
+        {
+          "word": "my",
+          "startMs": 950,
+          "durationMs": 411
+        },
+        {
+          "word": "loving",
+          "startMs": 1406,
+          "durationMs": 619
+        },
+        {
+          "word": "family.",
+          "startMs": 2070,
+          "durationMs": 874
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "kind father",
+          "zhHint": "和蔼的爸爸",
+          "emoji": "👨",
+          "fullEn": "This is my kind father.",
+          "fullZh": "这是我和蔼的爸爸。"
+        },
+        {
+          "keyword": "pretty mother",
+          "zhHint": "漂亮的妈妈",
+          "emoji": "👩",
+          "fullEn": "This is my pretty mother.",
+          "fullZh": "这是我漂亮的妈妈。"
+        }
+      ],
+      "rolePlayQuestion": "Who are they in the photo?",
+      "rolePlayQuestionZh": "照片里的人是谁呀？",
+      "prebakedAudioNormalAsset": "sentences/audio/u04_s01_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u04_s01_slow.wav"
+    },
+    {
+      "id": "u04_s02",
+      "unitId": "u04",
+      "unitTitle": "Unit 4 · 家庭成员与兴趣运动 (10句)",
+      "pattern": "He / She is a ___.",
+      "en": "My father is a busy doctor.",
+      "zh": "我的爸爸是一名忙碌的医生。",
+      "emoji": "🩺",
+      "chunks": [
+        "My father",
+        "is a",
+        "busy doctor."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "My",
+          "startMs": 0,
+          "durationMs": 298
+        },
+        {
+          "word": "father",
+          "startMs": 326,
+          "durationMs": 449
+        },
+        {
+          "word": "is",
+          "startMs": 803,
+          "durationMs": 298
+        },
+        {
+          "word": "a",
+          "startMs": 1129,
+          "durationMs": 284
+        },
+        {
+          "word": "busy",
+          "startMs": 1441,
+          "durationMs": 421
+        },
+        {
+          "word": "doctor.",
+          "startMs": 1890,
+          "durationMs": 539
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "My",
+          "startMs": 0,
+          "durationMs": 411
+        },
+        {
+          "word": "father",
+          "startMs": 456,
+          "durationMs": 619
+        },
+        {
+          "word": "is",
+          "startMs": 1120,
+          "durationMs": 411
+        },
+        {
+          "word": "a",
+          "startMs": 1576,
+          "durationMs": 391
+        },
+        {
+          "word": "busy",
+          "startMs": 2012,
+          "durationMs": 580
+        },
+        {
+          "word": "doctor.",
+          "startMs": 2637,
+          "durationMs": 743
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "great teacher",
+          "zhHint": "优秀的老师",
+          "emoji": "👩‍🏫",
+          "fullEn": "My mother is a great teacher.",
+          "fullZh": "我的妈妈是一名优秀的老师。"
+        },
+        {
+          "keyword": "brave driver",
+          "zhHint": "勇敢的司机",
+          "emoji": "🚌",
+          "fullEn": "My uncle is a brave driver.",
+          "fullZh": "我的叔叔是一名勇敢的司机。"
+        }
+      ],
+      "rolePlayQuestion": "What does your father do?",
+      "rolePlayQuestionZh": "你爸爸是做什么工作的？",
+      "prebakedAudioNormalAsset": "sentences/audio/u04_s02_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u04_s02_slow.wav"
+    },
+    {
+      "id": "u04_s03",
+      "unitId": "u04",
+      "unitTitle": "Unit 4 · 家庭成员与兴趣运动 (10句)",
+      "pattern": "I can ___ very well.",
+      "en": "I can play basketball very well.",
+      "zh": "我篮球打得非常好。",
+      "emoji": "🏀",
+      "chunks": [
+        "I can",
+        "play basketball",
+        "very well."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "can",
+          "startMs": 312,
+          "durationMs": 312
+        },
+        {
+          "word": "play",
+          "startMs": 652,
+          "durationMs": 326
+        },
+        {
+          "word": "basketball",
+          "startMs": 1006,
+          "durationMs": 600
+        },
+        {
+          "word": "very",
+          "startMs": 1634,
+          "durationMs": 421
+        },
+        {
+          "word": "well.",
+          "startMs": 2083,
+          "durationMs": 416
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "can",
+          "startMs": 436,
+          "durationMs": 430
+        },
+        {
+          "word": "play",
+          "startMs": 911,
+          "durationMs": 449
+        },
+        {
+          "word": "basketball",
+          "startMs": 1405,
+          "durationMs": 827
+        },
+        {
+          "word": "very",
+          "startMs": 2277,
+          "durationMs": 580
+        },
+        {
+          "word": "well.",
+          "startMs": 2902,
+          "durationMs": 574
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "swim fast",
+          "zhHint": "游得很快",
+          "emoji": "🏊",
+          "fullEn": "I can swim very fast.",
+          "fullZh": "我游泳游得非常快。"
+        },
+        {
+          "keyword": "sing English songs",
+          "zhHint": "唱英文歌",
+          "emoji": "🎤",
+          "fullEn": "I can sing English songs well.",
+          "fullZh": "我英文歌唱得很好。"
+        }
+      ],
+      "rolePlayQuestion": "What sports can you do?",
+      "rolePlayQuestionZh": "你会什么运动或才艺？",
+      "prebakedAudioNormalAsset": "sentences/audio/u04_s03_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u04_s03_slow.wav"
+    },
+    {
+      "id": "u04_s04",
+      "unitId": "u04",
+      "unitTitle": "Unit 4 · 家庭成员与兴趣运动 (10句)",
+      "pattern": "Can you play ___?",
+      "en": "Yes, I can play football.",
+      "zh": "是的，我会踢足球。",
+      "emoji": "⚽",
+      "chunks": [
+        "Yes,",
+        "I can",
+        "play football."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Yes,",
+          "startMs": 0,
+          "durationMs": 402
+        },
+        {
+          "word": "I",
+          "startMs": 430,
+          "durationMs": 284
+        },
+        {
+          "word": "can",
+          "startMs": 742,
+          "durationMs": 312
+        },
+        {
+          "word": "play",
+          "startMs": 1082,
+          "durationMs": 326
+        },
+        {
+          "word": "football.",
+          "startMs": 1436,
+          "durationMs": 567
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Yes,",
+          "startMs": 0,
+          "durationMs": 554
+        },
+        {
+          "word": "I",
+          "startMs": 599,
+          "durationMs": 391
+        },
+        {
+          "word": "can",
+          "startMs": 1035,
+          "durationMs": 430
+        },
+        {
+          "word": "play",
+          "startMs": 1510,
+          "durationMs": 449
+        },
+        {
+          "word": "football.",
+          "startMs": 2004,
+          "durationMs": 782
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "ping-pong",
+          "zhHint": "乒乓球",
+          "emoji": "🏓",
+          "fullEn": "Yes, I can play ping-pong.",
+          "fullZh": "是的，我会打乒乓球。"
+        },
+        {
+          "keyword": "the piano",
+          "zhHint": "弹钢琴",
+          "emoji": "🎹",
+          "fullEn": "Yes, I can play the piano.",
+          "fullZh": "是的，我会弹钢琴。"
+        }
+      ],
+      "rolePlayQuestion": "Can you play football with me?",
+      "rolePlayQuestionZh": "你能和我一起踢足球吗？",
+      "prebakedAudioNormalAsset": "sentences/audio/u04_s04_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u04_s04_slow.wav"
+    },
+    {
+      "id": "u04_s05",
+      "unitId": "u04",
+      "unitTitle": "Unit 4 · 家庭成员与兴趣运动 (10句)",
+      "pattern": "My hobby is ___.",
+      "en": "I like reading storybooks at home.",
+      "zh": "我喜欢在家里读故事书。",
+      "emoji": "📚",
+      "chunks": [
+        "I like",
+        "reading storybooks",
+        "at home."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "like",
+          "startMs": 312,
+          "durationMs": 326
+        },
+        {
+          "word": "reading",
+          "startMs": 666,
+          "durationMs": 463
+        },
+        {
+          "word": "storybooks",
+          "startMs": 1157,
+          "durationMs": 600
+        },
+        {
+          "word": "at",
+          "startMs": 1785,
+          "durationMs": 298
+        },
+        {
+          "word": "home.",
+          "startMs": 2111,
+          "durationMs": 416
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "like",
+          "startMs": 436,
+          "durationMs": 449
+        },
+        {
+          "word": "reading",
+          "startMs": 930,
+          "durationMs": 638
+        },
+        {
+          "word": "storybooks",
+          "startMs": 1613,
+          "durationMs": 827
+        },
+        {
+          "word": "at",
+          "startMs": 2485,
+          "durationMs": 411
+        },
+        {
+          "word": "home.",
+          "startMs": 2941,
+          "durationMs": 574
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "drawing pictures",
+          "zhHint": "画画",
+          "emoji": "🎨",
+          "fullEn": "I like drawing cartoons at home.",
+          "fullZh": "我喜欢在家里画卡通画。"
+        },
+        {
+          "keyword": "riding a bike",
+          "zhHint": "骑自行车",
+          "emoji": "🚲",
+          "fullEn": "I like riding my bike in the park.",
+          "fullZh": "我喜欢在公园里骑自行车。"
+        }
+      ],
+      "rolePlayQuestion": "What is your hobby?",
+      "rolePlayQuestionZh": "你的业余爱好是什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u04_s05_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u04_s05_slow.wav"
+    },
+    {
+      "id": "u04_s06",
+      "unitId": "u04",
+      "unitTitle": "Unit 4 · 家庭成员与兴趣运动 (10句)",
+      "pattern": "Let's ___ after school!",
+      "en": "Let's play badminton after school!",
+      "zh": "放学后我们一起打羽毛球吧！",
+      "emoji": "🏸",
+      "chunks": [
+        "Let's play",
+        "badminton",
+        "after school!"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Let's",
+          "startMs": 0,
+          "durationMs": 326
+        },
+        {
+          "word": "play",
+          "startMs": 354,
+          "durationMs": 326
+        },
+        {
+          "word": "badminton",
+          "startMs": 708,
+          "durationMs": 586
+        },
+        {
+          "word": "after",
+          "startMs": 1322,
+          "durationMs": 435
+        },
+        {
+          "word": "school!",
+          "startMs": 1785,
+          "durationMs": 444
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Let's",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "play",
+          "startMs": 494,
+          "durationMs": 449
+        },
+        {
+          "word": "badminton",
+          "startMs": 988,
+          "durationMs": 808
+        },
+        {
+          "word": "after",
+          "startMs": 1841,
+          "durationMs": 600
+        },
+        {
+          "word": "school!",
+          "startMs": 2486,
+          "durationMs": 612
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "fly a kite",
+          "zhHint": "放风筝",
+          "emoji": "🪁",
+          "fullEn": "Let's fly a kite in the park!",
+          "fullZh": "我们去公园放风筝吧！"
+        },
+        {
+          "keyword": "jump rope",
+          "zhHint": "跳绳",
+          "emoji": "🪢",
+          "fullEn": "Let's jump rope on the playground!",
+          "fullZh": "我们在操场上跳绳吧！"
+        }
+      ],
+      "rolePlayQuestion": "What shall we do after school?",
+      "rolePlayQuestionZh": "放学后我们玩什么好呢？",
+      "prebakedAudioNormalAsset": "sentences/audio/u04_s06_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u04_s06_slow.wav"
+    },
+    {
+      "id": "u04_s07",
+      "unitId": "u04",
+      "unitTitle": "Unit 4 · 家庭成员与兴趣运动 (10句)",
+      "pattern": "There are ___ people in my family.",
+      "en": "There are four people in my family.",
+      "zh": "我家有四口人。",
+      "emoji": "🏠",
+      "chunks": [
+        "There are",
+        "four people",
+        "in my family."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "There",
+          "startMs": 0,
+          "durationMs": 340
+        },
+        {
+          "word": "are",
+          "startMs": 368,
+          "durationMs": 312
+        },
+        {
+          "word": "four",
+          "startMs": 708,
+          "durationMs": 326
+        },
+        {
+          "word": "people",
+          "startMs": 1062,
+          "durationMs": 354
+        },
+        {
+          "word": "in",
+          "startMs": 1444,
+          "durationMs": 298
+        },
+        {
+          "word": "my",
+          "startMs": 1770,
+          "durationMs": 298
+        },
+        {
+          "word": "family.",
+          "startMs": 2096,
+          "durationMs": 634
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "There",
+          "startMs": 0,
+          "durationMs": 469
+        },
+        {
+          "word": "are",
+          "startMs": 514,
+          "durationMs": 430
+        },
+        {
+          "word": "four",
+          "startMs": 989,
+          "durationMs": 449
+        },
+        {
+          "word": "people",
+          "startMs": 1483,
+          "durationMs": 488
+        },
+        {
+          "word": "in",
+          "startMs": 2016,
+          "durationMs": 411
+        },
+        {
+          "word": "my",
+          "startMs": 2472,
+          "durationMs": 411
+        },
+        {
+          "word": "family.",
+          "startMs": 2928,
+          "durationMs": 874
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "three people",
+          "zhHint": "三口人",
+          "emoji": "👪",
+          "fullEn": "There are three people in my family.",
+          "fullZh": "我家有三口人。"
+        },
+        {
+          "keyword": "five people",
+          "zhHint": "五口人",
+          "emoji": "👨‍👩‍👧‍👦",
+          "fullEn": "There are five people in my family.",
+          "fullZh": "我家有五口人。"
+        }
+      ],
+      "rolePlayQuestion": "How many people are there in your family?",
+      "rolePlayQuestionZh": "你家里有几口人？",
+      "prebakedAudioNormalAsset": "sentences/audio/u04_s07_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u04_s07_slow.wav"
+    },
+    {
+      "id": "u04_s08",
+      "unitId": "u04",
+      "unitTitle": "Unit 4 · 家庭成员与兴趣运动 (10句)",
+      "pattern": "I often help my mom ___.",
+      "en": "I often help my mom wash dishes.",
+      "zh": "我经常帮妈妈洗碗。",
+      "emoji": "🍽️",
+      "chunks": [
+        "I often",
+        "help my mom",
+        "wash dishes."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "often",
+          "startMs": 312,
+          "durationMs": 435
+        },
+        {
+          "word": "help",
+          "startMs": 775,
+          "durationMs": 326
+        },
+        {
+          "word": "my",
+          "startMs": 1129,
+          "durationMs": 298
+        },
+        {
+          "word": "mom",
+          "startMs": 1455,
+          "durationMs": 312
+        },
+        {
+          "word": "wash",
+          "startMs": 1795,
+          "durationMs": 326
+        },
+        {
+          "word": "dishes.",
+          "startMs": 2149,
+          "durationMs": 539
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "often",
+          "startMs": 436,
+          "durationMs": 600
+        },
+        {
+          "word": "help",
+          "startMs": 1081,
+          "durationMs": 449
+        },
+        {
+          "word": "my",
+          "startMs": 1575,
+          "durationMs": 411
+        },
+        {
+          "word": "mom",
+          "startMs": 2031,
+          "durationMs": 430
+        },
+        {
+          "word": "wash",
+          "startMs": 2506,
+          "durationMs": 449
+        },
+        {
+          "word": "dishes.",
+          "startMs": 3000,
+          "durationMs": 743
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "sweep the floor",
+          "zhHint": "扫地",
+          "emoji": "🧹",
+          "fullEn": "I often help my mom sweep the floor.",
+          "fullZh": "我经常帮妈妈扫地。"
+        },
+        {
+          "keyword": "water the flowers",
+          "zhHint": "浇花",
+          "emoji": "🌻",
+          "fullEn": "I often help my mom water the flowers.",
+          "fullZh": "我经常帮妈妈浇花。"
+        }
+      ],
+      "rolePlayQuestion": "Are you helpful at home?",
+      "rolePlayQuestionZh": "你在家里会帮爸妈做家务吗？",
+      "prebakedAudioNormalAsset": "sentences/audio/u04_s08_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u04_s08_slow.wav"
+    },
+    {
+      "id": "u04_s09",
+      "unitId": "u04",
+      "unitTitle": "Unit 4 · 家庭成员与兴趣运动 (10句)",
+      "pattern": "She has ___ hair and big eyes.",
+      "en": "My sister has long hair and big eyes.",
+      "zh": "我的妹妹有一头长发和大眼睛。",
+      "emoji": "👧",
+      "chunks": [
+        "My sister has",
+        "long hair",
+        "and big eyes."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "My",
+          "startMs": 0,
+          "durationMs": 298
+        },
+        {
+          "word": "sister",
+          "startMs": 326,
+          "durationMs": 449
+        },
+        {
+          "word": "has",
+          "startMs": 803,
+          "durationMs": 312
+        },
+        {
+          "word": "long",
+          "startMs": 1143,
+          "durationMs": 326
+        },
+        {
+          "word": "hair",
+          "startMs": 1497,
+          "durationMs": 326
+        },
+        {
+          "word": "and",
+          "startMs": 1851,
+          "durationMs": 312
+        },
+        {
+          "word": "big",
+          "startMs": 2191,
+          "durationMs": 312
+        },
+        {
+          "word": "eyes.",
+          "startMs": 2531,
+          "durationMs": 416
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "My",
+          "startMs": 0,
+          "durationMs": 411
+        },
+        {
+          "word": "sister",
+          "startMs": 456,
+          "durationMs": 619
+        },
+        {
+          "word": "has",
+          "startMs": 1120,
+          "durationMs": 430
+        },
+        {
+          "word": "long",
+          "startMs": 1595,
+          "durationMs": 449
+        },
+        {
+          "word": "hair",
+          "startMs": 2089,
+          "durationMs": 449
+        },
+        {
+          "word": "and",
+          "startMs": 2583,
+          "durationMs": 430
+        },
+        {
+          "word": "big",
+          "startMs": 3058,
+          "durationMs": 430
+        },
+        {
+          "word": "eyes.",
+          "startMs": 3533,
+          "durationMs": 574
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "short hair",
+          "zhHint": "短发",
+          "emoji": "👦",
+          "fullEn": "My brother has short hair and bright eyes.",
+          "fullZh": "我弟弟留着短发，有一双明亮的眼睛。"
+        },
+        {
+          "keyword": "cute glasses",
+          "zhHint": "可爱的眼镜",
+          "emoji": "🤓",
+          "fullEn": "My friend wears cute glasses.",
+          "fullZh": "我的朋友戴着可爱的眼镜。"
+        }
+      ],
+      "rolePlayQuestion": "What does your sister look like?",
+      "rolePlayQuestionZh": "你妹妹长什么样？",
+      "prebakedAudioNormalAsset": "sentences/audio/u04_s09_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u04_s09_slow.wav"
+    },
+    {
+      "id": "u04_s10",
+      "unitId": "u04",
+      "unitTitle": "Unit 4 · 家庭成员与兴趣运动 (10句)",
+      "pattern": "We watch TV in the ___.",
+      "en": "We play games in the living room.",
+      "zh": "我们在客厅里一起做游戏。",
+      "emoji": "🛋️",
+      "chunks": [
+        "We play games",
+        "in the",
+        "living room."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "We",
+          "startMs": 0,
+          "durationMs": 298
+        },
+        {
+          "word": "play",
+          "startMs": 326,
+          "durationMs": 326
+        },
+        {
+          "word": "games",
+          "startMs": 680,
+          "durationMs": 435
+        },
+        {
+          "word": "in",
+          "startMs": 1143,
+          "durationMs": 298
+        },
+        {
+          "word": "the",
+          "startMs": 1469,
+          "durationMs": 312
+        },
+        {
+          "word": "living",
+          "startMs": 1809,
+          "durationMs": 449
+        },
+        {
+          "word": "room.",
+          "startMs": 2286,
+          "durationMs": 416
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "We",
+          "startMs": 0,
+          "durationMs": 411
+        },
+        {
+          "word": "play",
+          "startMs": 456,
+          "durationMs": 449
+        },
+        {
+          "word": "games",
+          "startMs": 950,
+          "durationMs": 600
+        },
+        {
+          "word": "in",
+          "startMs": 1595,
+          "durationMs": 411
+        },
+        {
+          "word": "the",
+          "startMs": 2051,
+          "durationMs": 430
+        },
+        {
+          "word": "living",
+          "startMs": 2526,
+          "durationMs": 619
+        },
+        {
+          "word": "room.",
+          "startMs": 3190,
+          "durationMs": 574
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "read in the study",
+          "zhHint": "在书房看书",
+          "emoji": "📖",
+          "fullEn": "We read books in the quiet study.",
+          "fullZh": "我们在安静的书房里看书。"
+        },
+        {
+          "keyword": "cook in the kitchen",
+          "zhHint": "在厨房做饭",
+          "emoji": "🍳",
+          "fullEn": "We make dinner in the kitchen.",
+          "fullZh": "我们在厨房里做晚饭。"
+        }
+      ],
+      "rolePlayQuestion": "Where are you playing now?",
+      "rolePlayQuestionZh": "你们现在在哪个房间玩？",
+      "prebakedAudioNormalAsset": "sentences/audio/u04_s10_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u04_s10_slow.wav"
+    },
+    {
+      "id": "u05_s01",
+      "unitId": "u05",
+      "unitTitle": "Unit 5 · 日常作息与天气穿搭 (10句)",
+      "pattern": "It is time to ___.",
+      "en": "It is time to go to school.",
+      "zh": "到去上学的时间了。",
+      "emoji": "🎒",
+      "chunks": [
+        "It is time",
+        "to go",
+        "to school."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "It",
+          "startMs": 0,
+          "durationMs": 298
+        },
+        {
+          "word": "is",
+          "startMs": 326,
+          "durationMs": 298
+        },
+        {
+          "word": "time",
+          "startMs": 652,
+          "durationMs": 326
+        },
+        {
+          "word": "to",
+          "startMs": 1006,
+          "durationMs": 298
+        },
+        {
+          "word": "go",
+          "startMs": 1332,
+          "durationMs": 298
+        },
+        {
+          "word": "to",
+          "startMs": 1658,
+          "durationMs": 298
+        },
+        {
+          "word": "school.",
+          "startMs": 1984,
+          "durationMs": 444
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "It",
+          "startMs": 0,
+          "durationMs": 411
+        },
+        {
+          "word": "is",
+          "startMs": 456,
+          "durationMs": 411
+        },
+        {
+          "word": "time",
+          "startMs": 912,
+          "durationMs": 449
+        },
+        {
+          "word": "to",
+          "startMs": 1406,
+          "durationMs": 411
+        },
+        {
+          "word": "go",
+          "startMs": 1862,
+          "durationMs": 411
+        },
+        {
+          "word": "to",
+          "startMs": 2318,
+          "durationMs": 411
+        },
+        {
+          "word": "school.",
+          "startMs": 2774,
+          "durationMs": 612
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "have dinner",
+          "zhHint": "吃晚饭",
+          "emoji": "🍲",
+          "fullEn": "It is time to have dinner.",
+          "fullZh": "到吃晚饭的时间了。"
+        },
+        {
+          "keyword": "go to bed",
+          "zhHint": "上床睡觉",
+          "emoji": "🛏️",
+          "fullEn": "It is time to go to bed.",
+          "fullZh": "到上床睡觉的时间了。"
+        }
+      ],
+      "rolePlayQuestion": "What time is it now?",
+      "rolePlayQuestionZh": "现在几点啦？",
+      "prebakedAudioNormalAsset": "sentences/audio/u05_s01_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u05_s01_slow.wav"
+    },
+    {
+      "id": "u05_s02",
+      "unitId": "u05",
+      "unitTitle": "Unit 5 · 日常作息与天气穿搭 (10句)",
+      "pattern": "I get up at ___ o'clock.",
+      "en": "I get up at seven o'clock.",
+      "zh": "我早上七点钟起床。",
+      "emoji": "⏰",
+      "chunks": [
+        "I get up",
+        "at seven",
+        "o'clock."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "get",
+          "startMs": 312,
+          "durationMs": 312
+        },
+        {
+          "word": "up",
+          "startMs": 652,
+          "durationMs": 298
+        },
+        {
+          "word": "at",
+          "startMs": 978,
+          "durationMs": 298
+        },
+        {
+          "word": "seven",
+          "startMs": 1304,
+          "durationMs": 435
+        },
+        {
+          "word": "o'clock.",
+          "startMs": 1767,
+          "durationMs": 539
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "get",
+          "startMs": 436,
+          "durationMs": 430
+        },
+        {
+          "word": "up",
+          "startMs": 911,
+          "durationMs": 411
+        },
+        {
+          "word": "at",
+          "startMs": 1367,
+          "durationMs": 411
+        },
+        {
+          "word": "seven",
+          "startMs": 1823,
+          "durationMs": 600
+        },
+        {
+          "word": "o'clock.",
+          "startMs": 2468,
+          "durationMs": 743
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "do homework at five",
+          "zhHint": "五点写作业",
+          "emoji": "📝",
+          "fullEn": "I do my homework at five o'clock.",
+          "fullZh": "我下午五点钟写作业。"
+        },
+        {
+          "keyword": "sleep at nine",
+          "zhHint": "九点睡觉",
+          "emoji": "🌙",
+          "fullEn": "I go to sleep at nine o'clock.",
+          "fullZh": "我晚上九点钟睡觉。"
+        }
+      ],
+      "rolePlayQuestion": "When do you get up every day?",
+      "rolePlayQuestionZh": "你每天几点起床？",
+      "prebakedAudioNormalAsset": "sentences/audio/u05_s02_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u05_s02_slow.wav"
+    },
+    {
+      "id": "u05_s03",
+      "unitId": "u05",
+      "unitTitle": "Unit 5 · 日常作息与天气穿搭 (10句)",
+      "pattern": "It is ___ and ___ today.",
+      "en": "It is sunny and warm today.",
+      "zh": "今天天气晴朗又温暖。",
+      "emoji": "☀️",
+      "chunks": [
+        "It is",
+        "sunny and warm",
+        "today."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "It",
+          "startMs": 0,
+          "durationMs": 298
+        },
+        {
+          "word": "is",
+          "startMs": 326,
+          "durationMs": 298
+        },
+        {
+          "word": "sunny",
+          "startMs": 652,
+          "durationMs": 435
+        },
+        {
+          "word": "and",
+          "startMs": 1115,
+          "durationMs": 312
+        },
+        {
+          "word": "warm",
+          "startMs": 1455,
+          "durationMs": 326
+        },
+        {
+          "word": "today.",
+          "startMs": 1809,
+          "durationMs": 525
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "It",
+          "startMs": 0,
+          "durationMs": 411
+        },
+        {
+          "word": "is",
+          "startMs": 456,
+          "durationMs": 411
+        },
+        {
+          "word": "sunny",
+          "startMs": 912,
+          "durationMs": 600
+        },
+        {
+          "word": "and",
+          "startMs": 1557,
+          "durationMs": 430
+        },
+        {
+          "word": "warm",
+          "startMs": 2032,
+          "durationMs": 449
+        },
+        {
+          "word": "today.",
+          "startMs": 2526,
+          "durationMs": 724
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "windy and cool",
+          "zhHint": "有风又凉爽",
+          "emoji": "🍃",
+          "fullEn": "It is windy and cool today.",
+          "fullZh": "今天有风又凉爽。"
+        },
+        {
+          "keyword": "snowy and cold",
+          "zhHint": "下雪又寒冷",
+          "emoji": "❄️",
+          "fullEn": "It is snowy and cold today.",
+          "fullZh": "今天下雪又寒冷。"
+        }
+      ],
+      "rolePlayQuestion": "What is the weather like today?",
+      "rolePlayQuestionZh": "今天天气怎么样？",
+      "prebakedAudioNormalAsset": "sentences/audio/u05_s03_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u05_s03_slow.wav"
+    },
+    {
+      "id": "u05_s04",
+      "unitId": "u05",
+      "unitTitle": "Unit 5 · 日常作息与天气穿搭 (10句)",
+      "pattern": "Put on your ___.",
+      "en": "It is cold. Put on your coat.",
+      "zh": "天冷了，穿上你的外套吧。",
+      "emoji": "🧥",
+      "chunks": [
+        "It is cold.",
+        "Put on",
+        "your coat."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "It",
+          "startMs": 0,
+          "durationMs": 298
+        },
+        {
+          "word": "is",
+          "startMs": 326,
+          "durationMs": 298
+        },
+        {
+          "word": "cold.",
+          "startMs": 652,
+          "durationMs": 416
+        },
+        {
+          "word": "Put",
+          "startMs": 1096,
+          "durationMs": 312
+        },
+        {
+          "word": "on",
+          "startMs": 1436,
+          "durationMs": 298
+        },
+        {
+          "word": "your",
+          "startMs": 1762,
+          "durationMs": 326
+        },
+        {
+          "word": "coat.",
+          "startMs": 2116,
+          "durationMs": 416
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "It",
+          "startMs": 0,
+          "durationMs": 411
+        },
+        {
+          "word": "is",
+          "startMs": 456,
+          "durationMs": 411
+        },
+        {
+          "word": "cold.",
+          "startMs": 912,
+          "durationMs": 574
+        },
+        {
+          "word": "Put",
+          "startMs": 1531,
+          "durationMs": 430
+        },
+        {
+          "word": "on",
+          "startMs": 2006,
+          "durationMs": 411
+        },
+        {
+          "word": "your",
+          "startMs": 2462,
+          "durationMs": 449
+        },
+        {
+          "word": "coat.",
+          "startMs": 2956,
+          "durationMs": 574
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "warm hat",
+          "zhHint": "暖和的帽子",
+          "emoji": "🧢",
+          "fullEn": "It is cold. Put on your warm hat.",
+          "fullZh": "天冷了，戴上你暖和的帽子吧。"
+        },
+        {
+          "keyword": "rain boots",
+          "zhHint": "雨靴",
+          "emoji": "🥾",
+          "fullEn": "It is raining. Put on your rain boots.",
+          "fullZh": "下雨了，穿上你的雨靴吧。"
+        }
+      ],
+      "rolePlayQuestion": "It is windy outside. What should I wear?",
+      "rolePlayQuestionZh": "外面风大，我该穿什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u05_s04_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u05_s04_slow.wav"
+    },
+    {
+      "id": "u05_s05",
+      "unitId": "u05",
+      "unitTitle": "Unit 5 · 日常作息与天气穿搭 (10句)",
+      "pattern": "I like ___ best.",
+      "en": "I like spring because of the flowers.",
+      "zh": "我最喜欢春天，因为百花盛开。",
+      "emoji": "🌸",
+      "chunks": [
+        "I like spring",
+        "because of",
+        "the flowers."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "like",
+          "startMs": 312,
+          "durationMs": 326
+        },
+        {
+          "word": "spring",
+          "startMs": 666,
+          "durationMs": 354
+        },
+        {
+          "word": "because",
+          "startMs": 1048,
+          "durationMs": 463
+        },
+        {
+          "word": "of",
+          "startMs": 1539,
+          "durationMs": 298
+        },
+        {
+          "word": "the",
+          "startMs": 1865,
+          "durationMs": 312
+        },
+        {
+          "word": "flowers.",
+          "startMs": 2205,
+          "durationMs": 553
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "like",
+          "startMs": 436,
+          "durationMs": 449
+        },
+        {
+          "word": "spring",
+          "startMs": 930,
+          "durationMs": 488
+        },
+        {
+          "word": "because",
+          "startMs": 1463,
+          "durationMs": 638
+        },
+        {
+          "word": "of",
+          "startMs": 2146,
+          "durationMs": 411
+        },
+        {
+          "word": "the",
+          "startMs": 2602,
+          "durationMs": 430
+        },
+        {
+          "word": "flowers.",
+          "startMs": 3077,
+          "durationMs": 763
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "summer / swim",
+          "zhHint": "夏天可以游泳",
+          "emoji": "🏖️",
+          "fullEn": "I like summer because I can swim.",
+          "fullZh": "我喜欢夏天，因为我可以去游泳。"
+        },
+        {
+          "keyword": "winter / snowman",
+          "zhHint": "冬天堆雪人",
+          "emoji": "⛄",
+          "fullEn": "I like winter because of the snow.",
+          "fullZh": "我喜欢冬天，因为可以玩雪。"
+        }
+      ],
+      "rolePlayQuestion": "Which season do you like best?",
+      "rolePlayQuestionZh": "你最喜欢哪个季节？",
+      "prebakedAudioNormalAsset": "sentences/audio/u05_s05_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u05_s05_slow.wav"
+    },
+    {
+      "id": "u05_s06",
+      "unitId": "u05",
+      "unitTitle": "Unit 5 · 日常作息与天气穿搭 (10句)",
+      "pattern": "Whose ___ is this?",
+      "en": "This blue sweater is mine.",
+      "zh": "这件蓝色的毛衣是我的。",
+      "emoji": "🧶",
+      "chunks": [
+        "This blue",
+        "sweater",
+        "is mine."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "This",
+          "startMs": 0,
+          "durationMs": 326
+        },
+        {
+          "word": "blue",
+          "startMs": 354,
+          "durationMs": 326
+        },
+        {
+          "word": "sweater",
+          "startMs": 708,
+          "durationMs": 463
+        },
+        {
+          "word": "is",
+          "startMs": 1199,
+          "durationMs": 298
+        },
+        {
+          "word": "mine.",
+          "startMs": 1525,
+          "durationMs": 416
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "This",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "blue",
+          "startMs": 494,
+          "durationMs": 449
+        },
+        {
+          "word": "sweater",
+          "startMs": 988,
+          "durationMs": 638
+        },
+        {
+          "word": "is",
+          "startMs": 1671,
+          "durationMs": 411
+        },
+        {
+          "word": "mine.",
+          "startMs": 2127,
+          "durationMs": 574
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "white shirt",
+          "zhHint": "白衬衫",
+          "emoji": "👔",
+          "fullEn": "This white shirt is my father's.",
+          "fullZh": "这件白衬衫是我爸爸的。"
+        },
+        {
+          "keyword": "pink dress",
+          "zhHint": "粉裙子",
+          "emoji": "👗",
+          "fullEn": "This pink dress is my sister's.",
+          "fullZh": "这条粉色连衣裙是我妹妹的。"
+        }
+      ],
+      "rolePlayQuestion": "Whose blue sweater is this?",
+      "rolePlayQuestionZh": "这件蓝色毛衣是谁的？",
+      "prebakedAudioNormalAsset": "sentences/audio/u05_s06_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u05_s06_slow.wav"
+    },
+    {
+      "id": "u05_s07",
+      "unitId": "u05",
+      "unitTitle": "Unit 5 · 日常作息与天气穿搭 (10句)",
+      "pattern": "What day is it today?",
+      "en": "Today is Friday. Tomorrow is Saturday!",
+      "zh": "今天是星期五，明天就是星期六啦！",
+      "emoji": "🎉",
+      "chunks": [
+        "Today is Friday.",
+        "Tomorrow is",
+        "Saturday!"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Today",
+          "startMs": 0,
+          "durationMs": 435
+        },
+        {
+          "word": "is",
+          "startMs": 463,
+          "durationMs": 298
+        },
+        {
+          "word": "Friday.",
+          "startMs": 789,
+          "durationMs": 539
+        },
+        {
+          "word": "Tomorrow",
+          "startMs": 1356,
+          "durationMs": 572
+        },
+        {
+          "word": "is",
+          "startMs": 1956,
+          "durationMs": 298
+        },
+        {
+          "word": "Saturday!",
+          "startMs": 2282,
+          "durationMs": 662
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Today",
+          "startMs": 0,
+          "durationMs": 600
+        },
+        {
+          "word": "is",
+          "startMs": 645,
+          "durationMs": 411
+        },
+        {
+          "word": "Friday.",
+          "startMs": 1101,
+          "durationMs": 743
+        },
+        {
+          "word": "Tomorrow",
+          "startMs": 1889,
+          "durationMs": 789
+        },
+        {
+          "word": "is",
+          "startMs": 2723,
+          "durationMs": 411
+        },
+        {
+          "word": "Saturday!",
+          "startMs": 3179,
+          "durationMs": 913
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "Monday",
+          "zhHint": "星期一",
+          "emoji": "📅",
+          "fullEn": "Today is Monday. Let's work hard!",
+          "fullZh": "今天是星期一，我们努力学习吧！"
+        },
+        {
+          "keyword": "Sunday",
+          "zhHint": "星期日",
+          "emoji": "🎈",
+          "fullEn": "Today is Sunday. Let's go out!",
+          "fullZh": "今天是星期日，我们出去玩吧！"
+        }
+      ],
+      "rolePlayQuestion": "What day is it today?",
+      "rolePlayQuestionZh": "今天是星期几？",
+      "prebakedAudioNormalAsset": "sentences/audio/u05_s07_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u05_s07_slow.wav"
+    },
+    {
+      "id": "u05_s08",
+      "unitId": "u05",
+      "unitTitle": "Unit 5 · 日常作息与天气穿搭 (10句)",
+      "pattern": "Don't forget your ___!",
+      "en": "It is rainy. Take your umbrella!",
+      "zh": "外面下雨了，记得带上你的雨伞！",
+      "emoji": "☔",
+      "chunks": [
+        "It is rainy.",
+        "Take your",
+        "umbrella!"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "It",
+          "startMs": 0,
+          "durationMs": 298
+        },
+        {
+          "word": "is",
+          "startMs": 326,
+          "durationMs": 298
+        },
+        {
+          "word": "rainy.",
+          "startMs": 652,
+          "durationMs": 525
+        },
+        {
+          "word": "Take",
+          "startMs": 1205,
+          "durationMs": 326
+        },
+        {
+          "word": "your",
+          "startMs": 1559,
+          "durationMs": 326
+        },
+        {
+          "word": "umbrella!",
+          "startMs": 1913,
+          "durationMs": 662
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "It",
+          "startMs": 0,
+          "durationMs": 411
+        },
+        {
+          "word": "is",
+          "startMs": 456,
+          "durationMs": 411
+        },
+        {
+          "word": "rainy.",
+          "startMs": 912,
+          "durationMs": 724
+        },
+        {
+          "word": "Take",
+          "startMs": 1681,
+          "durationMs": 449
+        },
+        {
+          "word": "your",
+          "startMs": 2175,
+          "durationMs": 449
+        },
+        {
+          "word": "umbrella!",
+          "startMs": 2669,
+          "durationMs": 913
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "sunglasses",
+          "zhHint": "太阳镜",
+          "emoji": "🕶️",
+          "fullEn": "It is sunny. Take your sunglasses!",
+          "fullZh": "太阳很大，带上你的太阳镜！"
+        },
+        {
+          "keyword": "water bottle",
+          "zhHint": "水壶",
+          "emoji": "🍼",
+          "fullEn": "It is hot. Take your water bottle!",
+          "fullZh": "天气很热，带上你的水壶！"
+        }
+      ],
+      "rolePlayQuestion": "I am going outside now, Mom!",
+      "rolePlayQuestionZh": "妈妈，我现在要出门啦！",
+      "prebakedAudioNormalAsset": "sentences/audio/u05_s08_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u05_s08_slow.wav"
+    },
+    {
+      "id": "u05_s09",
+      "unitId": "u05",
+      "unitTitle": "Unit 5 · 日常作息与天气穿搭 (10句)",
+      "pattern": "I brush my teeth ___.",
+      "en": "I brush my teeth every morning.",
+      "zh": "我每天早上都会刷牙。",
+      "emoji": "🪥",
+      "chunks": [
+        "I brush",
+        "my teeth",
+        "every morning."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "brush",
+          "startMs": 312,
+          "durationMs": 340
+        },
+        {
+          "word": "my",
+          "startMs": 680,
+          "durationMs": 298
+        },
+        {
+          "word": "teeth",
+          "startMs": 1006,
+          "durationMs": 340
+        },
+        {
+          "word": "every",
+          "startMs": 1374,
+          "durationMs": 530
+        },
+        {
+          "word": "morning.",
+          "startMs": 1932,
+          "durationMs": 553
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "brush",
+          "startMs": 436,
+          "durationMs": 469
+        },
+        {
+          "word": "my",
+          "startMs": 950,
+          "durationMs": 411
+        },
+        {
+          "word": "teeth",
+          "startMs": 1406,
+          "durationMs": 469
+        },
+        {
+          "word": "every",
+          "startMs": 1920,
+          "durationMs": 731
+        },
+        {
+          "word": "morning.",
+          "startMs": 2696,
+          "durationMs": 763
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "wash my face",
+          "zhHint": "洗脸",
+          "emoji": "🧼",
+          "fullEn": "I wash my face every morning.",
+          "fullZh": "我每天早上都会洗脸。"
+        },
+        {
+          "keyword": "comb my hair",
+          "zhHint": "梳头",
+          "emoji": "🪮",
+          "fullEn": "I comb my hair every morning.",
+          "fullZh": "我每天早上都会梳头。"
+        }
+      ],
+      "rolePlayQuestion": "What do you do after getting up?",
+      "rolePlayQuestionZh": "你起床后会做什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u05_s09_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u05_s09_slow.wav"
+    },
+    {
+      "id": "u05_s10",
+      "unitId": "u05",
+      "unitTitle": "Unit 5 · 日常作息与天气穿搭 (10句)",
+      "pattern": "Have a good ___!",
+      "en": "Good night! Sweet dreams to you!",
+      "zh": "晚安！祝你做个甜甜的美梦！",
+      "emoji": "🌟",
+      "chunks": [
+        "Good night!",
+        "Sweet dreams",
+        "to you!"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Good",
+          "startMs": 0,
+          "durationMs": 326
+        },
+        {
+          "word": "night!",
+          "startMs": 354,
+          "durationMs": 430
+        },
+        {
+          "word": "Sweet",
+          "startMs": 812,
+          "durationMs": 340
+        },
+        {
+          "word": "dreams",
+          "startMs": 1180,
+          "durationMs": 354
+        },
+        {
+          "word": "to",
+          "startMs": 1562,
+          "durationMs": 298
+        },
+        {
+          "word": "you!",
+          "startMs": 1888,
+          "durationMs": 402
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Good",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "night!",
+          "startMs": 494,
+          "durationMs": 593
+        },
+        {
+          "word": "Sweet",
+          "startMs": 1132,
+          "durationMs": 469
+        },
+        {
+          "word": "dreams",
+          "startMs": 1646,
+          "durationMs": 488
+        },
+        {
+          "word": "to",
+          "startMs": 2179,
+          "durationMs": 411
+        },
+        {
+          "word": "you!",
+          "startMs": 2635,
+          "durationMs": 554
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "Have a nice weekend",
+          "zhHint": "周末愉快",
+          "emoji": "🎡",
+          "fullEn": "Have a wonderful weekend!",
+          "fullZh": "祝你度过一个愉快的周末！"
+        },
+        {
+          "keyword": "Have a good trip",
+          "zhHint": "旅途愉快",
+          "emoji": "✈️",
+          "fullEn": "Have a safe and happy trip!",
+          "fullZh": "祝你旅途平安愉快！"
+        }
+      ],
+      "rolePlayQuestion": "Time for bed. Good night!",
+      "rolePlayQuestionZh": "该睡觉啦，晚安！",
+      "prebakedAudioNormalAsset": "sentences/audio/u05_s10_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u05_s10_slow.wav"
+    },
+    {
+      "id": "u06_s01",
+      "unitId": "u06",
+      "unitTitle": "Unit 6 · 动物世界与问路出行 (10句)",
+      "pattern": "Look at that ___!",
+      "en": "Look at that cute panda!",
+      "zh": "快看那只可爱的大熊猫！",
+      "emoji": "🐼",
+      "chunks": [
+        "Look at",
+        "that cute",
+        "panda!"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Look",
+          "startMs": 0,
+          "durationMs": 326
+        },
+        {
+          "word": "at",
+          "startMs": 354,
+          "durationMs": 298
+        },
+        {
+          "word": "that",
+          "startMs": 680,
+          "durationMs": 326
+        },
+        {
+          "word": "cute",
+          "startMs": 1034,
+          "durationMs": 326
+        },
+        {
+          "word": "panda!",
+          "startMs": 1388,
+          "durationMs": 525
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Look",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "at",
+          "startMs": 494,
+          "durationMs": 411
+        },
+        {
+          "word": "that",
+          "startMs": 950,
+          "durationMs": 449
+        },
+        {
+          "word": "cute",
+          "startMs": 1444,
+          "durationMs": 449
+        },
+        {
+          "word": "panda!",
+          "startMs": 1938,
+          "durationMs": 724
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "tall giraffe",
+          "zhHint": "高高的长颈鹿",
+          "emoji": "🦒",
+          "fullEn": "Look at that tall giraffe!",
+          "fullZh": "快看那只高高的长颈鹿！"
+        },
+        {
+          "keyword": "clever monkey",
+          "zhHint": "聪明的小猴子",
+          "emoji": "🐒",
+          "fullEn": "Look at that clever monkey!",
+          "fullZh": "快看那只聪明的小猴子！"
+        }
+      ],
+      "rolePlayQuestion": "What do you see in the zoo?",
+      "rolePlayQuestionZh": "你在动物园里看到了什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u06_s01_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u06_s01_slow.wav"
+    },
+    {
+      "id": "u06_s02",
+      "unitId": "u06",
+      "unitTitle": "Unit 6 · 动物世界与问路出行 (10句)",
+      "pattern": "It has a ___ nose / tail.",
+      "en": "The elephant has a long nose.",
+      "zh": "大象有一条长长的鼻子。",
+      "emoji": "🐘",
+      "chunks": [
+        "The elephant",
+        "has a",
+        "long nose."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "The",
+          "startMs": 0,
+          "durationMs": 312
+        },
+        {
+          "word": "elephant",
+          "startMs": 340,
+          "durationMs": 572
+        },
+        {
+          "word": "has",
+          "startMs": 940,
+          "durationMs": 312
+        },
+        {
+          "word": "a",
+          "startMs": 1280,
+          "durationMs": 284
+        },
+        {
+          "word": "long",
+          "startMs": 1592,
+          "durationMs": 326
+        },
+        {
+          "word": "nose.",
+          "startMs": 1946,
+          "durationMs": 416
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "The",
+          "startMs": 0,
+          "durationMs": 430
+        },
+        {
+          "word": "elephant",
+          "startMs": 475,
+          "durationMs": 789
+        },
+        {
+          "word": "has",
+          "startMs": 1309,
+          "durationMs": 430
+        },
+        {
+          "word": "a",
+          "startMs": 1784,
+          "durationMs": 391
+        },
+        {
+          "word": "long",
+          "startMs": 2220,
+          "durationMs": 449
+        },
+        {
+          "word": "nose.",
+          "startMs": 2714,
+          "durationMs": 574
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "rabbit / long ears",
+          "zhHint": "兔子长耳朵",
+          "emoji": "🐰",
+          "fullEn": "The rabbit has two long ears.",
+          "fullZh": "小兔子有两只长长的耳朵。"
+        },
+        {
+          "keyword": "bird / colorful wings",
+          "zhHint": "彩色翅膀",
+          "emoji": "🦜",
+          "fullEn": "The bird has colorful wings.",
+          "fullZh": "这只小鸟有五彩缤纷的翅膀。"
+        }
+      ],
+      "rolePlayQuestion": "Why is the elephant so special?",
+      "rolePlayQuestionZh": "大象为什么这么特别？",
+      "prebakedAudioNormalAsset": "sentences/audio/u06_s02_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u06_s02_slow.wav"
+    },
+    {
+      "id": "u06_s03",
+      "unitId": "u06",
+      "unitTitle": "Unit 6 · 动物世界与问路出行 (10句)",
+      "pattern": "I go to school by ___.",
+      "en": "I go to school by bus.",
+      "zh": "我乘公共汽车去上学。",
+      "emoji": "🚌",
+      "chunks": [
+        "I go",
+        "to school",
+        "by bus."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "go",
+          "startMs": 312,
+          "durationMs": 298
+        },
+        {
+          "word": "to",
+          "startMs": 638,
+          "durationMs": 298
+        },
+        {
+          "word": "school",
+          "startMs": 964,
+          "durationMs": 354
+        },
+        {
+          "word": "by",
+          "startMs": 1346,
+          "durationMs": 298
+        },
+        {
+          "word": "bus.",
+          "startMs": 1672,
+          "durationMs": 402
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "go",
+          "startMs": 436,
+          "durationMs": 411
+        },
+        {
+          "word": "to",
+          "startMs": 892,
+          "durationMs": 411
+        },
+        {
+          "word": "school",
+          "startMs": 1348,
+          "durationMs": 488
+        },
+        {
+          "word": "by",
+          "startMs": 1881,
+          "durationMs": 411
+        },
+        {
+          "word": "bus.",
+          "startMs": 2337,
+          "durationMs": 554
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "by subway",
+          "zhHint": "乘地铁",
+          "emoji": "🚇",
+          "fullEn": "I go to school by subway.",
+          "fullZh": "我乘地铁去上学。"
+        },
+        {
+          "keyword": "on foot",
+          "zhHint": "步行",
+          "emoji": "🚶",
+          "fullEn": "I walk to school every day.",
+          "fullZh": "我每天步行去上学。"
+        }
+      ],
+      "rolePlayQuestion": "How do you go to school?",
+      "rolePlayQuestionZh": "你平时怎么去上学？",
+      "prebakedAudioNormalAsset": "sentences/audio/u06_s03_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u06_s03_slow.wav"
+    },
+    {
+      "id": "u06_s04",
+      "unitId": "u06",
+      "unitTitle": "Unit 6 · 动物世界与问路出行 (10句)",
+      "pattern": "Stop and wait at a ___ light.",
+      "en": "Stop and wait at a red light.",
+      "zh": "红灯亮时请停下来等待。",
+      "emoji": "🚦",
+      "chunks": [
+        "Stop and wait",
+        "at a",
+        "red light."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Stop",
+          "startMs": 0,
+          "durationMs": 326
+        },
+        {
+          "word": "and",
+          "startMs": 354,
+          "durationMs": 312
+        },
+        {
+          "word": "wait",
+          "startMs": 694,
+          "durationMs": 326
+        },
+        {
+          "word": "at",
+          "startMs": 1048,
+          "durationMs": 298
+        },
+        {
+          "word": "a",
+          "startMs": 1374,
+          "durationMs": 284
+        },
+        {
+          "word": "red",
+          "startMs": 1686,
+          "durationMs": 312
+        },
+        {
+          "word": "light.",
+          "startMs": 2026,
+          "durationMs": 430
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Stop",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "and",
+          "startMs": 494,
+          "durationMs": 430
+        },
+        {
+          "word": "wait",
+          "startMs": 969,
+          "durationMs": 449
+        },
+        {
+          "word": "at",
+          "startMs": 1463,
+          "durationMs": 411
+        },
+        {
+          "word": "a",
+          "startMs": 1919,
+          "durationMs": 391
+        },
+        {
+          "word": "red",
+          "startMs": 2355,
+          "durationMs": 430
+        },
+        {
+          "word": "light.",
+          "startMs": 2830,
+          "durationMs": 593
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "green light / go",
+          "zhHint": "绿灯行",
+          "emoji": "🟢",
+          "fullEn": "Go at a green traffic light.",
+          "fullZh": "绿灯亮时可以安全通行。"
+        },
+        {
+          "keyword": "yellow light / slow",
+          "zhHint": "黄灯减速",
+          "emoji": "🟡",
+          "fullEn": "Slow down at a yellow light.",
+          "fullZh": "黄灯亮时请减速慢行。"
+        }
+      ],
+      "rolePlayQuestion": "What is the traffic rule?",
+      "rolePlayQuestionZh": "过马路的交通规则是什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u06_s04_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u06_s04_slow.wav"
+    },
+    {
+      "id": "u06_s05",
+      "unitId": "u06",
+      "unitTitle": "Unit 6 · 动物世界与问路出行 (10句)",
+      "pattern": "Where is the ___?",
+      "en": "Excuse me, where is the library?",
+      "zh": "打扰一下，请问图书馆在哪里？",
+      "emoji": "🏛️",
+      "chunks": [
+        "Excuse me,",
+        "where is",
+        "the library?"
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Excuse",
+          "startMs": 0,
+          "durationMs": 449
+        },
+        {
+          "word": "me,",
+          "startMs": 477,
+          "durationMs": 388
+        },
+        {
+          "word": "where",
+          "startMs": 893,
+          "durationMs": 340
+        },
+        {
+          "word": "is",
+          "startMs": 1261,
+          "durationMs": 298
+        },
+        {
+          "word": "the",
+          "startMs": 1587,
+          "durationMs": 312
+        },
+        {
+          "word": "library?",
+          "startMs": 1927,
+          "durationMs": 648
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Excuse",
+          "startMs": 0,
+          "durationMs": 619
+        },
+        {
+          "word": "me,",
+          "startMs": 664,
+          "durationMs": 535
+        },
+        {
+          "word": "where",
+          "startMs": 1244,
+          "durationMs": 469
+        },
+        {
+          "word": "is",
+          "startMs": 1758,
+          "durationMs": 411
+        },
+        {
+          "word": "the",
+          "startMs": 2214,
+          "durationMs": 430
+        },
+        {
+          "word": "library?",
+          "startMs": 2689,
+          "durationMs": 894
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "city park",
+          "zhHint": "城市公园",
+          "emoji": "🏞️",
+          "fullEn": "Excuse me, where is the city park?",
+          "fullZh": "打扰一下，请问城市公园在哪里？"
+        },
+        {
+          "keyword": "post office",
+          "zhHint": "邮局",
+          "emoji": "📮",
+          "fullEn": "Excuse me, where is the post office?",
+          "fullZh": "打扰一下，请问邮局在哪里？"
+        }
+      ],
+      "rolePlayQuestion": "How can I help you, little boy?",
+      "rolePlayQuestionZh": "小朋友，有什么可以帮你的吗？",
+      "prebakedAudioNormalAsset": "sentences/audio/u06_s05_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u06_s05_slow.wav"
+    },
+    {
+      "id": "u06_s06",
+      "unitId": "u06",
+      "unitTitle": "Unit 6 · 动物世界与问路出行 (10句)",
+      "pattern": "Go straight and turn ___.",
+      "en": "Go straight and turn left here.",
+      "zh": "一直往前走，然后在这里左转。",
+      "emoji": "⬅️",
+      "chunks": [
+        "Go straight",
+        "and turn",
+        "left here."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Go",
+          "startMs": 0,
+          "durationMs": 298
+        },
+        {
+          "word": "straight",
+          "startMs": 326,
+          "durationMs": 382
+        },
+        {
+          "word": "and",
+          "startMs": 736,
+          "durationMs": 312
+        },
+        {
+          "word": "turn",
+          "startMs": 1076,
+          "durationMs": 326
+        },
+        {
+          "word": "left",
+          "startMs": 1430,
+          "durationMs": 326
+        },
+        {
+          "word": "here.",
+          "startMs": 1784,
+          "durationMs": 416
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Go",
+          "startMs": 0,
+          "durationMs": 411
+        },
+        {
+          "word": "straight",
+          "startMs": 456,
+          "durationMs": 527
+        },
+        {
+          "word": "and",
+          "startMs": 1028,
+          "durationMs": 430
+        },
+        {
+          "word": "turn",
+          "startMs": 1503,
+          "durationMs": 449
+        },
+        {
+          "word": "left",
+          "startMs": 1997,
+          "durationMs": 449
+        },
+        {
+          "word": "here.",
+          "startMs": 2491,
+          "durationMs": 574
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "turn right",
+          "zhHint": "向右转",
+          "emoji": "➡️",
+          "fullEn": "Go straight and turn right at the corner.",
+          "fullZh": "直走然后在路口向右转。"
+        },
+        {
+          "keyword": "next to the hospital",
+          "zhHint": "在医院旁边",
+          "emoji": "🏥",
+          "fullEn": "It is right next to the hospital.",
+          "fullZh": "它就在医院的旁边。"
+        }
+      ],
+      "rolePlayQuestion": "How can I get to the bookstore?",
+      "rolePlayQuestionZh": "请问去书店怎么走？",
+      "prebakedAudioNormalAsset": "sentences/audio/u06_s06_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u06_s06_slow.wav"
+    },
+    {
+      "id": "u06_s07",
+      "unitId": "u06",
+      "unitTitle": "Unit 6 · 动物世界与问路出行 (10句)",
+      "pattern": "I am going to ___ this weekend.",
+      "en": "I am going to visit my grandparents.",
+      "zh": "这个周末我要去看望爷爷奶奶。",
+      "emoji": "👵",
+      "chunks": [
+        "I am going",
+        "to visit",
+        "my grandparents."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "am",
+          "startMs": 312,
+          "durationMs": 298
+        },
+        {
+          "word": "going",
+          "startMs": 638,
+          "durationMs": 340
+        },
+        {
+          "word": "to",
+          "startMs": 1006,
+          "durationMs": 298
+        },
+        {
+          "word": "visit",
+          "startMs": 1332,
+          "durationMs": 435
+        },
+        {
+          "word": "my",
+          "startMs": 1795,
+          "durationMs": 298
+        },
+        {
+          "word": "grandparents.",
+          "startMs": 2121,
+          "durationMs": 718
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "am",
+          "startMs": 436,
+          "durationMs": 411
+        },
+        {
+          "word": "going",
+          "startMs": 892,
+          "durationMs": 469
+        },
+        {
+          "word": "to",
+          "startMs": 1406,
+          "durationMs": 411
+        },
+        {
+          "word": "visit",
+          "startMs": 1862,
+          "durationMs": 600
+        },
+        {
+          "word": "my",
+          "startMs": 2507,
+          "durationMs": 411
+        },
+        {
+          "word": "grandparents.",
+          "startMs": 2963,
+          "durationMs": 990
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "take a trip",
+          "zhHint": "去旅行",
+          "emoji": "🚂",
+          "fullEn": "I am going to take a train trip.",
+          "fullZh": "我要坐火车去旅行。"
+        },
+        {
+          "keyword": "see a film",
+          "zhHint": "看电影",
+          "emoji": "🎬",
+          "fullEn": "I am going to see a funny film.",
+          "fullZh": "我要去看一场有趣的电影。"
+        }
+      ],
+      "rolePlayQuestion": "What are you going to do this weekend?",
+      "rolePlayQuestionZh": "你这个周末打算做什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u06_s07_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u06_s07_slow.wav"
+    },
+    {
+      "id": "u06_s08",
+      "unitId": "u06",
+      "unitTitle": "Unit 6 · 动物世界与问路出行 (10句)",
+      "pattern": "How many ___ can you see?",
+      "en": "I can see twelve white sheep.",
+      "zh": "我能看到十二只白色的小绵羊。",
+      "emoji": "🐑",
+      "chunks": [
+        "I can see",
+        "twelve white",
+        "sheep."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 284
+        },
+        {
+          "word": "can",
+          "startMs": 312,
+          "durationMs": 312
+        },
+        {
+          "word": "see",
+          "startMs": 652,
+          "durationMs": 312
+        },
+        {
+          "word": "twelve",
+          "startMs": 992,
+          "durationMs": 354
+        },
+        {
+          "word": "white",
+          "startMs": 1374,
+          "durationMs": 340
+        },
+        {
+          "word": "sheep.",
+          "startMs": 1742,
+          "durationMs": 430
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "I",
+          "startMs": 0,
+          "durationMs": 391
+        },
+        {
+          "word": "can",
+          "startMs": 436,
+          "durationMs": 430
+        },
+        {
+          "word": "see",
+          "startMs": 911,
+          "durationMs": 430
+        },
+        {
+          "word": "twelve",
+          "startMs": 1386,
+          "durationMs": 488
+        },
+        {
+          "word": "white",
+          "startMs": 1919,
+          "durationMs": 469
+        },
+        {
+          "word": "sheep.",
+          "startMs": 2433,
+          "durationMs": 593
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "fifteen ducks",
+          "zhHint": "十五只鸭子",
+          "emoji": "🦆",
+          "fullEn": "I can see fifteen yellow ducks.",
+          "fullZh": "我能看到十五只小黄鸭。"
+        },
+        {
+          "keyword": "twenty horses",
+          "zhHint": "二十匹马",
+          "emoji": "🐎",
+          "fullEn": "I can see twenty strong horses.",
+          "fullZh": "我能看到二十匹强壮的骏马。"
+        }
+      ],
+      "rolePlayQuestion": "How many sheep are there on the farm?",
+      "rolePlayQuestionZh": "农场里有多少只绵羊？",
+      "prebakedAudioNormalAsset": "sentences/audio/u06_s08_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u06_s08_slow.wav"
+    },
+    {
+      "id": "u06_s09",
+      "unitId": "u06",
+      "unitTitle": "Unit 6 · 动物世界与问路出行 (10句)",
+      "pattern": "What are the ___ doing?",
+      "en": "The birds are singing in the tree.",
+      "zh": "小鸟们正在树上唱歌呢。",
+      "emoji": "🐦",
+      "chunks": [
+        "The birds",
+        "are singing",
+        "in the tree."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "The",
+          "startMs": 0,
+          "durationMs": 312
+        },
+        {
+          "word": "birds",
+          "startMs": 340,
+          "durationMs": 340
+        },
+        {
+          "word": "are",
+          "startMs": 708,
+          "durationMs": 312
+        },
+        {
+          "word": "singing",
+          "startMs": 1048,
+          "durationMs": 463
+        },
+        {
+          "word": "in",
+          "startMs": 1539,
+          "durationMs": 298
+        },
+        {
+          "word": "the",
+          "startMs": 1865,
+          "durationMs": 312
+        },
+        {
+          "word": "tree.",
+          "startMs": 2205,
+          "durationMs": 416
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "The",
+          "startMs": 0,
+          "durationMs": 430
+        },
+        {
+          "word": "birds",
+          "startMs": 475,
+          "durationMs": 469
+        },
+        {
+          "word": "are",
+          "startMs": 989,
+          "durationMs": 430
+        },
+        {
+          "word": "singing",
+          "startMs": 1464,
+          "durationMs": 638
+        },
+        {
+          "word": "in",
+          "startMs": 2147,
+          "durationMs": 411
+        },
+        {
+          "word": "the",
+          "startMs": 2603,
+          "durationMs": 430
+        },
+        {
+          "word": "tree.",
+          "startMs": 3078,
+          "durationMs": 574
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "rabbits / jumping",
+          "zhHint": "兔子在跳",
+          "emoji": "🐇",
+          "fullEn": "The rabbits are jumping on the grass.",
+          "fullZh": "小兔子们正在草地上蹦蹦跳跳。"
+        },
+        {
+          "keyword": "fish / swimming",
+          "zhHint": "鱼儿在游",
+          "emoji": "🐠",
+          "fullEn": "The fish are swimming in the river.",
+          "fullZh": "小鱼们正在河里游来游去。"
+        }
+      ],
+      "rolePlayQuestion": "Listen! What are the birds doing?",
+      "rolePlayQuestionZh": "听！小鸟们在做什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u06_s09_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u06_s09_slow.wav"
+    },
+    {
+      "id": "u06_s10",
+      "unitId": "u06",
+      "unitTitle": "Unit 6 · 动物世界与问路出行 (10句)",
+      "pattern": "Let's protect the ___!",
+      "en": "Animals are our good friends.",
+      "zh": "动物是我们的好朋友。",
+      "emoji": "🌍",
+      "chunks": [
+        "Animals are",
+        "our good",
+        "friends."
+      ],
+      "wordTimingsNormal": [
+        {
+          "word": "Animals",
+          "startMs": 0,
+          "durationMs": 558
+        },
+        {
+          "word": "are",
+          "startMs": 586,
+          "durationMs": 312
+        },
+        {
+          "word": "our",
+          "startMs": 926,
+          "durationMs": 312
+        },
+        {
+          "word": "good",
+          "startMs": 1266,
+          "durationMs": 326
+        },
+        {
+          "word": "friends.",
+          "startMs": 1620,
+          "durationMs": 458
+        }
+      ],
+      "wordTimingsSlow": [
+        {
+          "word": "Animals",
+          "startMs": 0,
+          "durationMs": 770
+        },
+        {
+          "word": "are",
+          "startMs": 815,
+          "durationMs": 430
+        },
+        {
+          "word": "our",
+          "startMs": 1290,
+          "durationMs": 430
+        },
+        {
+          "word": "good",
+          "startMs": 1765,
+          "durationMs": 449
+        },
+        {
+          "word": "friends.",
+          "startMs": 2259,
+          "durationMs": 632
+        }
+      ],
+      "substitutions": [
+        {
+          "keyword": "keep the park clean",
+          "zhHint": "保持公园整洁",
+          "emoji": "🌳",
+          "fullEn": "Let's keep the green park clean!",
+          "fullZh": "让我们保持绿色公园的整洁！"
+        },
+        {
+          "keyword": "love nature",
+          "zhHint": "热爱大自然",
+          "emoji": "🌿",
+          "fullEn": "Let's love and protect nature!",
+          "fullZh": "让我们热爱并保护大自然！"
+        }
+      ],
+      "rolePlayQuestion": "What did you learn at the zoo today?",
+      "rolePlayQuestionZh": "今天在动物园你学到了什么？",
+      "prebakedAudioNormalAsset": "sentences/audio/u06_s10_normal.wav",
+      "prebakedAudioSlowAsset": "sentences/audio/u06_s10_slow.wav"
+    }
+  ]
+}

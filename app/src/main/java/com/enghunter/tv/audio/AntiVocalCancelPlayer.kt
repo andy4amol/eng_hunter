@@ -114,8 +114,10 @@ class AntiVocalCancelPlayer(private val context: Context) {
 
     /**
      * 播放英語句子帶讀，並按毫秒回調當前進度以驅動卡拉 OK 逐詞高亮
-     * 1. 若電視安裝了英文 TTS 引擎，先把 TTS 合成到臨時 WAV 再通過防消原唱立體聲通道播放（確保 100% 防消原唱且進度精確）
-     * 2. 若部分國產電視精簡了系統 TTS，自動使用清脆的音節節拍合成器驅動卡拉 OK 帶讀演示，確保零依賴可運行
+     * 優先級順序：
+     * 1. 若存在 M2 離線預烘焙的 Edge-TTS WAV 資源（`assets/sentences/audio/{id}_{normal|slow}.wav`），優先通過防消原唱立體聲通道播放
+     * 2. 若電視安裝了英文 TTS 引擎，把 TTS 合成到臨時 WAV 再通過防消原唱立體聲通道播放
+     * 3. 若部分國產電視精簡了系統 TTS，自動使用清脆的音節節拍合成器驅動卡拉 OK 帶讀演示，確保零依賴可運行
      */
     suspend fun playSentenceWithKaraoke(
         text: String,
@@ -123,8 +125,27 @@ class AntiVocalCancelPlayer(private val context: Context) {
         slowMode: Boolean,
         enableAntiVocalCancel: Boolean,
         bluetoothLatencyOffsetMs: Long,
+        prebakedWavFile: File? = null,
         onProgressMs: (Long) -> Unit
     ) = withContext(Dispatchers.IO) {
+        if (prebakedWavFile != null && prebakedWavFile.exists() && prebakedWavFile.length() > 256L) {
+            val pair = RingBufferAudioCache.readWavFile(prebakedWavFile)
+            if (pair != null) {
+                val (monoPcm, sr) = pair
+                val actualDurationMs = (monoPcm.size * 1000L / sr).coerceAtLeast(1L)
+                playMonoPcmWithAntiVocalCancel(
+                    monoPcm = monoPcm,
+                    sampleRate = sr,
+                    enableProtection = enableAntiVocalCancel
+                ) { playedMs ->
+                    val compensated = (playedMs - bluetoothLatencyOffsetMs).coerceAtLeast(0L)
+                    val scaledMs = (compensated * durationMs) / actualDurationMs
+                    onProgressMs(scaledMs)
+                }
+                return@withContext
+            }
+        }
+
         val tempWav = File(context.cacheDir, "tts_synth_temp.wav")
         val synthesized = synthesizeTtsToWav(text, if (slowMode) 0.78f else 1.0f, tempWav)
 

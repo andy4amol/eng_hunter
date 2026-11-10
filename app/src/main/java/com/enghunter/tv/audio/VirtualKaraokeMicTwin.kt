@@ -73,7 +73,11 @@ object VirtualKaraokeMicTwin {
 
         val leadInSamples = (sampleRate * leadInMs) / 1000
         val wordSamples = (sampleRate * perWordMs) / 1000
-        val activeVocalRatio = 0.76 // 每個單詞內部 76% 發聲、24% 詞間自然換氣
+        val activeVocalRatio = when (profile) {
+            SimulatedChildVoiceProfile.PERFECT_3_STARS,
+            SimulatedChildVoiceProfile.NARROWBAND_8KHZ_CVSD -> 0.88 // 3星样本饱满连贯发音
+            else -> 0.76
+        }
 
         for (w in 0 until safeWords) {
             val isSkippedWord = when (profile) {

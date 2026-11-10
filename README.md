@@ -34,6 +34,12 @@
      - `📡 样本D：8kHz CVSD 蓝牙窄带重采样`（验证老款电视 HFP 8000Hz 自动线性插值重采样至 16000Hz）
    - **GitHub Actions 自动构建 (`android-ci.yml`)**：每次 `git push` 自动运行全部 JVM 单元测试并构建可安装的 `enghunter-tv-debug-apk` 产物。
 
+6. **里程碑 M2：《小学英语核心 60 句高保真卡拉 OK 资源包》 (`PrimarySchool60Catalog` + `OfflineKaraokePackLoader`)**
+   - **6 大主题单元 × 每单元 10 句 = 60 句完整课程体系**：
+     - `U1 礼貌交际` · `U2 点餐请求` · `U3 校园文具` · `U4 家人爱好` · `U5 时间天气` · `U6 动物出行`
+   - **四维结构化标注**：每句均内置 **意群拆解 (`chunks`)**、**看图换词造句 (`substitutions`)**、**双麦对唱问答 (`rolePlayQuestion`)** 以及 **常速 (1.0x) / 慢速 (0.78x) 毫秒级卡拉 OK 逐词时间轴 (`WordBoundary`)**。
+   - **离线烘焙脚本 (`tools/bake_edge_tts_pack.py`)**：支持零网络导出 `app/src/main/assets/sentences/sentences_manifest.json` 清单，或联网通过 `edge-tts` (`en-US-AnaNeural` 美式少儿音色) 批量烘焙高保真音频包。
+
 ---
 
 ## 📂 项目目录结构
@@ -42,29 +48,35 @@
 EngHunter/
 ├── .github/workflows/
 │   └── android-ci.yml                               # GitHub Actions 自动测试与 APK 打包流水线
+├── tools/
+│   └── bake_edge_tts_pack.py                        # M2 离线预烘焙 60 句卡拉 OK 资源包脚本 (支持 Edge-TTS)
 ├── app/
 │   ├── build.gradle.kts
 │   └── src/
 │       ├── main/
 │       │   ├── AndroidManifest.xml
+│       │   ├── assets/sentences/
+│       │   │   └── sentences_manifest.json          # M2 预烘焙的小学英语核心 60 句卡拉 OK 词级时间戳清单
 │       │   ├── java/com/enghunter/tv/
 │       │   │   ├── MainActivity.kt                  # TV 入口与录音/蓝牙权限管理
 │       │   │   ├── audio/
 │       │   │   │   ├── AntiVocalCancelPlayer.kt     # 防一键消原唱立体声播放器 & 卡拉OK高亮同步
+│       │   │   │   ├── OfflineKaraokePackLoader.kt  # M2 离线 60 句卡拉 OK 资源包加载与 JSON 解析器
 │       │   │   │   ├── RingBufferAudioCache.kt      # 20槽位环形 WAV 缓存管理
 │       │   │   │   ├── VirtualKaraokeMicTwin.kt     # M1 开发机硬件数字孪生模拟器 (4种儿童语音样本)
 │       │   │   │   └── XiaomiKaraokeMicManager.kt   # XMKGMKF01YM A2DP/HFP 路由与 VAD 录音引擎
 │       │   │   ├── model/
+│       │   │   │   ├── PrimarySchool60Catalog.kt    # M2 小学英语 1~6 年级 6 大单元 60 句完整题库
 │       │   │   │   └── SentenceModels.kt            # 句式卡片、逐词时间戳与双麦问答模型
 │       │   │   ├── scoring/
 │       │   │   │   └── PronunciationScorer.kt       # 小学生护心发音评测器
 │       │   │   ├── ui/
-│       │   │   │   └── EngHunterTvApp.kt            # Jetpack Compose for TV 双页面大屏 UI
+│       │   │   │   └── EngHunterTvApp.kt            # Jetpack Compose for TV 双页面大屏 UI (含6单元筛选栏)
 │       │   │   └── viewmodel/
 │       │   │       └── EngHunterViewModel.kt        # 模式 A 全无线闭环 & 数字孪生状态机
 │       │   └── res/
 │       └── test/java/com/enghunter/tv/
-│           └── AudioAndScoringTest.kt               # 防消原唱、数字孪生4样本与护心打分单元测试
+│           └── AudioAndScoringTest.kt               # 防消原唱、数字孪生4样本、M2 60句题库与清单解析单元测试
 ├── build.gradle.kts
 ├── settings.gradle.kts
 └── gradlew

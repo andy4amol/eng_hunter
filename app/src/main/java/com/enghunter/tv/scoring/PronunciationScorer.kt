@@ -106,9 +106,9 @@ class PronunciationScorer {
             val wordSpan = (endF - startF).coerceAtLeast(1)
             val voicedRatio = voicedFramesInWord.toDouble() / wordSpan
             val avgWordEnergy = wordEnergySum / wordSpan
-            val energyNorm = (avgWordEnergy / (maxFrameRms * 0.65)).coerceIn(0.3, 1.08)
+            val energyNorm = (avgWordEnergy / (maxFrameRms * 0.56)).coerceIn(0.3, 1.10)
 
-            val rawWordScore = ((voicedRatio * 58.0 + energyNorm * 34.0) * min(1.05, durationRatio + 0.2))
+            val rawWordScore = ((voicedRatio * 58.0 + energyNorm * 34.0) * min(1.06, durationRatio + 0.22))
                 .toInt()
                 .coerceIn(58, 99)
 

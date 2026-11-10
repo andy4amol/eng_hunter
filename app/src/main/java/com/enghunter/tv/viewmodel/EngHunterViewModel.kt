@@ -5,9 +5,11 @@ import android.view.KeyEvent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.enghunter.tv.audio.AntiVocalCancelPlayer
+import com.enghunter.tv.audio.OfflineKaraokePackLoader
 import com.enghunter.tv.audio.RingBufferAudioCache
 import com.enghunter.tv.audio.VirtualKaraokeMicTwin
 import com.enghunter.tv.audio.XiaomiKaraokeMicManager
+import com.enghunter.tv.model.CurriculumUnit
 import com.enghunter.tv.model.PronunciationReport
 import com.enghunter.tv.model.SampleSentenceRepository
 import com.enghunter.tv.model.SentenceCard
@@ -69,7 +71,9 @@ data class EngHunterUiState(
     val ringCacheCount: Int = 0,
     val ringCacheBytes: Long = 0L,
 
-    // 單句跟讀閉環狀態
+    // 單句跟讀閉環狀態（里程碑 M2：支持 6 大主題單元 × 60 句核心卡拉 OK 題庫篩選）
+    val allCatalogSentences: List<SentenceCard> = SampleSentenceRepository.builtInSentences,
+    val selectedUnit: CurriculumUnit = CurriculumUnit.ALL,
     val sentences: List<SentenceCard> = SampleSentenceRepository.builtInSentences,
     val currentSentenceIndex: Int = 0,
     val practiceStage: PracticeStage = PracticeStage.READY,
@@ -132,7 +136,32 @@ class EngHunterViewModel(application: Application) : AndroidViewModel(applicatio
     private var activeTaskJob: Job? = null
 
     init {
+        val loadedCatalog = OfflineKaraokePackLoader.loadSentenceCatalog(application)
+        _uiState.update {
+            it.copy(
+                allCatalogSentences = loadedCatalog,
+                sentences = SampleSentenceRepository.filterByUnit(it.selectedUnit, loadedCatalog),
+                currentSentenceIndex = 0
+            )
+        }
         refreshAudioDevices()
+    }
+
+    fun selectUnit(unit: CurriculumUnit) {
+        cancelActiveJob()
+        _uiState.update { state ->
+            val filtered = SampleSentenceRepository.filterByUnit(unit, state.allCatalogSentences)
+            state.copy(
+                selectedUnit = unit,
+                sentences = filtered.ifEmpty { state.allCatalogSentences },
+                currentSentenceIndex = 0,
+                selectedSlotIndex = 0,
+                activeChunkIndex = 0,
+                practiceStage = PracticeStage.READY,
+                highlightedWordIndex = -1,
+                latestReport = null
+            )
+        }
     }
 
     fun updatePermissionGranted(granted: Boolean) {
@@ -541,13 +570,19 @@ class EngHunterViewModel(application: Application) : AndroidViewModel(applicatio
         val timings = if (slowMode) card.wordTimingsSlow else card.wordTimingsNormal
         val totalDurationMs = timings.lastOrNull()?.endMs ?: 2200L
         val spokenText = state.activeTargetEnglish
+        val prebakedWav = if (state.practiceSubMode == PracticeSubMode.FOLLOW_READ ||
+            state.practiceSubMode == PracticeSubMode.DUAL_MIC_ROLE_PLAY
+        ) {
+            OfflineKaraokePackLoader.resolvePrebakedWavIfPresent(getApplication(), card, slowMode)
+        } else null
 
         player.playSentenceWithKaraoke(
             text = spokenText,
             durationMs = totalDurationMs,
             slowMode = slowMode,
             enableAntiVocalCancel = state.enableAntiVocalCancel,
-            bluetoothLatencyOffsetMs = state.bluetoothLatencyOffsetMs
+            bluetoothLatencyOffsetMs = state.bluetoothLatencyOffsetMs,
+            prebakedWavFile = prebakedWav
         ) { currentMs ->
             val words = state.activeWordsList
             if (words.isNotEmpty()) {

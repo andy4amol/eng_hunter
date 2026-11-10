@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.enghunter.tv.audio.VirtualKaraokeMicTwin
 import com.enghunter.tv.audio.XiaomiKaraokeMicManager
+import com.enghunter.tv.model.CurriculumUnit
 import com.enghunter.tv.model.WordFeedbackLevel
 import com.enghunter.tv.viewmodel.ActiveTab
 import com.enghunter.tv.viewmodel.EngHunterUiState
@@ -215,6 +216,22 @@ private fun PracticeClosedLoopScreen(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
+        // 0. 里程碑 M2：《小學英語核心 60 句高保真卡拉 OK 資源包》6 大主題單元篩選欄
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CurriculumUnit.entries.forEach { unit ->
+                TvFocusableButton(
+                    text = "${unit.emoji} ${unit.shortTitle}",
+                    selected = uiState.selectedUnit == unit,
+                    accentColor = Color(0xFF10B981),
+                    onClick = { viewModel.selectUnit(unit) }
+                )
+            }
+        }
+
         // 1. 頂部四種教學子模式切換欄（跟讀 / 意群分段 / 看圖換詞造句 / 雙麥對唱問答）
         Row(
             modifier = Modifier.fillMaxWidth(),
