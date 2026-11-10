@@ -3,6 +3,9 @@ package com.enghunter.tv
 import com.enghunter.tv.audio.AntiVocalCancelPlayer
 import com.enghunter.tv.audio.OfflineKaraokePackLoader
 import com.enghunter.tv.audio.VirtualKaraokeMicTwin
+import com.enghunter.tv.llm.LlmActiveConfig
+import com.enghunter.tv.llm.LlmSentenceExpansionEngine
+import com.enghunter.tv.llm.LlmVendorPreset
 import com.enghunter.tv.model.CurriculumUnit
 import com.enghunter.tv.model.PrimarySchool60Catalog
 import com.enghunter.tv.model.SampleSentenceRepository
@@ -257,5 +260,52 @@ class AudioAndScoringTest {
         assertEquals(44 + vadResult.pcm16kMono.size * 2, wavBytes.size)
         assertEquals("RIFF", String(wavBytes.copyOfRange(0, 4), Charsets.US_ASCII))
         assertEquals("WAVE", String(wavBytes.copyOfRange(8, 12), Charsets.US_ASCII))
+    }
+
+    @Test
+    fun `M4 LlmVendorPreset provides 7 preconfigured vendors and parses OpenAI compatible JSON`() = runBlocking {
+        // 1. 验证 7 大预置供应商与默认模型齐全
+        assertEquals(7, LlmVendorPreset.entries.size)
+        val deepseek = LlmVendorPreset.fromId("DEEPSEEK")
+        assertEquals("https://api.deepseek.com/v1", deepseek.defaultBaseUrl)
+        assertTrue(deepseek.candidateModels.contains("deepseek-chat"))
+
+        val qwen = LlmVendorPreset.fromId("ALIYUN_QWEN")
+        assertTrue(qwen.candidateModels.contains("qwen-plus"))
+
+        // 2. 验证 OpenAI / DeepSeek /v1/chat/completions 响应解析（支持带 markdown 代码块包裹的 JSON）
+        val seedCard = SampleSentenceRepository.builtInSentences.first()
+        val mockOpenAiResponse = """
+            {
+              "id": "chatcmpl-123",
+              "choices": [
+                {
+                  "index": 0,
+                  "message": {
+                    "role": "assistant",
+                    "content": "```json\n{\n  \"items\": [\n    {\n      \"en\": \"Can I have a mango pudding, please?\",\n      \"zh\": \"请给我一份芒果布丁好吗？\",\n      \"emoji\": \"🍮\",\n      \"chunks\": [\"Can I have\", \"a mango pudding,\", \"please?\"],\n      \"rolePlayQuestion\": \"Welcome! What dessert would you like?\",\n      \"rolePlayQuestionZh\": \"欢迎！你想吃什么甜点？\"\n    }\n  ]\n}\n```"
+                  }
+                }
+              ]
+            }
+        """.trimIndent()
+
+        val parsedCards = LlmSentenceExpansionEngine.parseOpenAiChatCompletionResponse(
+            rawResponse = mockOpenAiResponse,
+            seedCard = seedCard
+        )
+        assertEquals(1, parsedCards.size)
+        assertEquals("Can I have a mango pudding, please?", parsedCards.first().en)
+        assertEquals(7, parsedCards.first().wordTimingsNormal.size)
+        assertEquals(7, parsedCards.first().wordTimingsSlow.size)
+
+        // 3. 验证无 Key 时自动回退到内置离线 AI 魔法裂变引擎，生成 3 句全新拓展句
+        val engine = LlmSentenceExpansionEngine()
+        val offlineExpansion = engine.expandFromSeedSentence(
+            seedCard = seedCard,
+            config = LlmActiveConfig(vendor = LlmVendorPreset.DEEPSEEK, apiKey = ""),
+            existingSentences = SampleSentenceRepository.builtInSentences
+        )
+        assertEquals(3, offlineExpansion.generatedCards.size)
     }
 }

@@ -46,6 +46,27 @@
      - `音素仿真(Phoneme)` (`MOCK_AZURE_PHONEME_SIMULATOR`)：无需联网与云端 Key，在开发机上根据声学包络自动生成标准 Azure Detailed JSON（含音标级评分如 `/w/`, `/ɔː/`, `/θ/`, `/r/`）并输出音标纠音提示。
      - `纯离线(L0包络)` (`LOCAL_L0_ENVELOPE`)：纯本地 16kHz PCM 能量包络与音节节奏对齐评测。
 
+8. **里程碑 M4：大模型供应商与模型灵活配置中心 + AI 魔法举一反三生题 (`LlmProviderConfig` + `LlmSentenceExpansionEngine`)**
+   - **7 大主流供应商一键点选（遥控器零打字）**：
+     - 内置 **`DeepSeek`（官方）**、**`SiliconFlow`（硅基流动，含免费模型）**、**`ALIYUN_QWEN`（阿里云百炼千问）**、**`VOLC_DOUBAO`（字节火山豆包）**、**`OPENAI`（兼容网关）**、**`LOCAL_OLLAMA`（家里电脑局域网 Ollama，免 Key）**、**`OFFLINE_SMART_TEMPLATE`（内置离线 AI 魔法裂变引擎，零网络零 Key）**。
+     - 每个供应商预置热门候选模型按钮，用小米遥控器方向键点一下即可切换，同时支持自定义修改 `BaseURL`、`Model ID` 与 `API Key`。
+   - **电脑 ADB 一行命令极速注入配置（免遥控器输入密钥）**：
+     ```bash
+     # 1. 一键配置 DeepSeek 官方模型
+     adb shell am broadcast -a com.enghunter.tv.CONFIG_LLM \
+       --es provider DEEPSEEK --es model deepseek-chat --es api_key sk-你的密钥
+
+     # 2. 一键配置阿里云百炼 Qwen 或硅基流动
+     adb shell am broadcast -a com.enghunter.tv.CONFIG_LLM \
+       --es provider ALIYUN_QWEN --es model qwen-plus --es api_key sk-你的密钥
+
+     # 3. 一键连接家里电脑局域网 Ollama (免Key)
+     adb shell am broadcast -a com.enghunter.tv.CONFIG_LLM \
+       --es provider LOCAL_OLLAMA --es base_url http://192.168.1.88:11434/v1 --es model qwen2.5:7b
+     ```
+   - **自动生成卡拉 OK 时间轴与持久化题库 (`PersistedExpansionStore`)**：
+     - 点击 **`✨ AI魔法举一反三 (+3句)`** 按钮后，新生成的 3 句拓展句自动补齐常速/慢速卡拉 OK 逐词时间戳、意群拆解与双麦问答，并持久化保存在 `filesDir/ai_expanded_sentences.json`，重启电视不丢失。
+
 ---
 
 ## 📂 项目目录结构
@@ -64,13 +85,16 @@ EngHunter/
 │       │   ├── assets/sentences/
 │       │   │   └── sentences_manifest.json          # M2 预烘焙的小学英语核心 60 句卡拉 OK 词级时间戳清单
 │       │   ├── java/com/enghunter/tv/
-│       │   │   ├── MainActivity.kt                  # TV 入口与录音/蓝牙权限管理
+│       │   │   ├── MainActivity.kt                  # TV 入口、权限管理与 ADB 大模型配置广播接收器
 │       │   │   ├── audio/
 │       │   │   │   ├── AntiVocalCancelPlayer.kt     # 防一键消原唱立体声播放器 & 卡拉OK高亮同步
 │       │   │   │   ├── OfflineKaraokePackLoader.kt  # M2 离线 60 句卡拉 OK 资源包加载与 JSON 解析器
 │       │   │   │   ├── RingBufferAudioCache.kt      # 20槽位环形 WAV 缓存管理
 │       │   │   │   ├── VirtualKaraokeMicTwin.kt     # M1 开发机硬件数字孪生模拟器 (4种儿童语音样本)
 │       │   │   │   └── XiaomiKaraokeMicManager.kt   # XMKGMKF01YM A2DP/HFP 路由与 VAD 录音引擎
+│       │   │   ├── llm/
+│       │   │   │   ├── LlmProviderConfig.kt         # M4 7大主流大模型供应商预设、持久化与 ADB 广播注入
+│       │   │   │   └── LlmSentenceExpansionEngine.kt # M4 OpenAI兼容动态生题引擎、离线裂变兜底与题库持久化
 │       │   │   ├── model/
 │       │   │   │   ├── PrimarySchool60Catalog.kt    # M2 小学英语 1~6 年级 6 大单元 60 句完整题库
 │       │   │   │   └── SentenceModels.kt            # 句式卡片、逐词时间戳与双麦问答模型
@@ -78,12 +102,12 @@ EngHunter/
 │       │   │   │   ├── AzureSpeechAssessmentClient.kt # M3 微软 Azure Speech F0 音素级评测与离线仿真器
 │       │   │   │   └── PronunciationScorer.kt       # M3 可插拔三级小学生护心发音评测器
 │       │   │   ├── ui/
-│       │   │   │   └── EngHunterTvApp.kt            # Jetpack Compose for TV 双页面大屏 UI
+│       │   │   │   └── EngHunterTvApp.kt            # Jetpack Compose for TV 三页面大屏 UI (含AI供应商设置中心)
 │       │   │   └── viewmodel/
-│       │   │       └── EngHunterViewModel.kt        # 模式 A 全无线闭环 & 数字孪生状态机
+│       │   │       └── EngHunterViewModel.kt        # 模式 A 全无线闭环、数字孪生与 AI 拓展状态机
 │       │   └── res/
 │       └── test/java/com/enghunter/tv/
-│           └── AudioAndScoringTest.kt               # 防消原唱、数字孪生4样本、M2 60句题库与 M3 音素评测单元测试
+│           └── AudioAndScoringTest.kt               # M1~M4 全链路 11 项 JUnit 单元测试
 ├── build.gradle.kts
 ├── settings.gradle.kts
 └── gradlew

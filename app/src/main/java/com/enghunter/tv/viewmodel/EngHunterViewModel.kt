@@ -1,6 +1,7 @@
 package com.enghunter.tv.viewmodel
 
 import android.app.Application
+import android.content.Intent
 import android.view.KeyEvent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,6 +10,11 @@ import com.enghunter.tv.audio.OfflineKaraokePackLoader
 import com.enghunter.tv.audio.RingBufferAudioCache
 import com.enghunter.tv.audio.VirtualKaraokeMicTwin
 import com.enghunter.tv.audio.XiaomiKaraokeMicManager
+import com.enghunter.tv.llm.LlmActiveConfig
+import com.enghunter.tv.llm.LlmConfigStore
+import com.enghunter.tv.llm.LlmSentenceExpansionEngine
+import com.enghunter.tv.llm.LlmVendorPreset
+import com.enghunter.tv.llm.PersistedExpansionStore
 import com.enghunter.tv.model.CurriculumUnit
 import com.enghunter.tv.model.PronunciationReport
 import com.enghunter.tv.model.SampleSentenceRepository
@@ -25,7 +31,8 @@ import kotlinx.coroutines.launch
 
 enum class ActiveTab {
     PRACTICE_PROTOTYPE, // 小學生單句開口跟讀原型（模式 A 全無線閉環）
-    PHASE0_DIAGNOSTIC   // 階段 0：小米電視 & XMKGMKF01YM 麥克風硬件探測台
+    PHASE0_DIAGNOSTIC,  // 階段 0：小米電視 & XMKGMKF01YM 麥克風硬件探測台
+    AI_MODEL_SETTINGS   // 里程碑 M4：大模型供應商與模型靈活配置中心
 }
 
 enum class PracticeStage(val label: String) {
@@ -37,7 +44,8 @@ enum class PracticeStage(val label: String) {
     SCORING("✨ 正在评测你的发音..."),
     FEEDBACK("🏆 跟读完成！查看星星与发音反馈"),
     PLAYING_COMPARISON("🔁 正在对比回放：先听标准音 ➔ 再听你的声音"),
-    MAGIC_SOUND_SHOW("🎭 三星奖励：切换麦克风【怪兽/卡通音效】自由搞怪配音！")
+    MAGIC_SOUND_SHOW("🎭 三星奖励：切换麦克风【怪兽/卡通音效】自由搞怪配音！"),
+    EXPANDING_WITH_AI("🪄 AI 老师正在为你生成 3 句全新魔法挑战句...")
 }
 
 enum class PracticeSubMode(val title: String) {
@@ -58,6 +66,10 @@ data class EngHunterUiState(
         PronunciationScorer.ScoringEngineMode.AUTO_CLOUD_WITH_LOCAL_FALLBACK,
     val azureSubscriptionKey: String = "",
     val azureRegion: String = "eastasia",
+    val llmConfig: LlmActiveConfig = LlmActiveConfig(),
+    val aiStatusMessage: String = "支持 7 大主流供应商一键切换，也可通过 ADB 命令一行设置 API Key",
+    val isExpandingAi: Boolean = false,
+    val aiExpandedCount: Int = 0,
     val enableAntiVocalCancel: Boolean = true,
     val bluetoothLatencyOffsetMs: Long = 180L,
     val autoFlowHandsFree: Boolean = true, // 模式 A 核心：播完自動叮一聲開麥，說完 VAD 自動停
@@ -134,6 +146,9 @@ class EngHunterViewModel(application: Application) : AndroidViewModel(applicatio
     private val player = AntiVocalCancelPlayer(application)
     private val ringCache = RingBufferAudioCache(application, maxRingFiles = 20)
     private val scorer = PronunciationScorer()
+    private val llmConfigStore = LlmConfigStore(application)
+    private val llmExpansionEngine = LlmSentenceExpansionEngine()
+    private val persistedExpansionStore = PersistedExpansionStore(application)
 
     private val _uiState = MutableStateFlow(EngHunterUiState())
     val uiState: StateFlow<EngHunterUiState> = _uiState.asStateFlow()
@@ -141,15 +156,30 @@ class EngHunterViewModel(application: Application) : AndroidViewModel(applicatio
     private var activeTaskJob: Job? = null
 
     init {
-        val loadedCatalog = OfflineKaraokePackLoader.loadSentenceCatalog(application)
+        val baseCatalog = OfflineKaraokePackLoader.loadSentenceCatalog(application)
+        val savedExpansions = persistedExpansionStore.loadSavedExpansions()
+        val combinedCatalog = mergeCatalogWithExpansions(baseCatalog, savedExpansions)
+        val savedLlmConfig = llmConfigStore.load()
+
         _uiState.update {
             it.copy(
-                allCatalogSentences = loadedCatalog,
-                sentences = SampleSentenceRepository.filterByUnit(it.selectedUnit, loadedCatalog),
+                llmConfig = savedLlmConfig,
+                aiExpandedCount = savedExpansions.size,
+                allCatalogSentences = combinedCatalog,
+                sentences = SampleSentenceRepository.filterByUnit(it.selectedUnit, combinedCatalog),
                 currentSentenceIndex = 0
             )
         }
         refreshAudioDevices()
+    }
+
+    private fun mergeCatalogWithExpansions(
+        base: List<SentenceCard>,
+        expansions: List<SentenceCard>
+    ): List<SentenceCard> {
+        val seenEn = base.map { it.en.lowercase() }.toMutableSet()
+        val extra = expansions.filter { seenEn.add(it.en.lowercase()) }
+        return base + extra
     }
 
     fun selectUnit(unit: CurriculumUnit) {
@@ -204,6 +234,127 @@ class EngHunterViewModel(application: Application) : AndroidViewModel(applicatio
                 azureSubscriptionKey = key.trim(),
                 azureRegion = region.trim().ifEmpty { "eastasia" }
             )
+        }
+    }
+
+    // =========================================================================
+    // 里程碑 M4：大模型供應商與模型靈活配置 + AI 魔法舉一反三生題
+    // =========================================================================
+
+    fun selectLlmVendor(vendor: LlmVendorPreset) {
+        _uiState.update { state ->
+            val updated = state.llmConfig.copy(
+                vendor = vendor,
+                baseUrl = vendor.defaultBaseUrl,
+                modelName = vendor.candidateModels.first()
+            )
+            llmConfigStore.save(updated)
+            state.copy(
+                llmConfig = updated,
+                aiStatusMessage = "✅ 已切换供应商为【${vendor.displayName}】，默认模型：${updated.modelName}"
+            )
+        }
+    }
+
+    fun selectLlmModel(modelName: String) {
+        _uiState.update { state ->
+            val updated = state.llmConfig.copy(modelName = modelName.trim())
+            llmConfigStore.save(updated)
+            state.copy(
+                llmConfig = updated,
+                aiStatusMessage = "✅ 已切换模型为：$modelName"
+            )
+        }
+    }
+
+    fun updateLlmCustomEndpointAndKey(baseUrl: String, modelName: String, apiKey: String) {
+        _uiState.update { state ->
+            val updated = state.llmConfig.copy(
+                baseUrl = baseUrl.trim().ifEmpty { state.llmConfig.vendor.defaultBaseUrl },
+                modelName = modelName.trim().ifEmpty { state.llmConfig.vendor.candidateModels.first() },
+                apiKey = apiKey.trim()
+            )
+            llmConfigStore.save(updated)
+            state.copy(
+                llmConfig = updated,
+                aiStatusMessage = "✅ 已保存自定义配置：${updated.toSummaryBadge()} | Key: ${updated.maskedApiKey}"
+            )
+        }
+    }
+
+    fun toggleLlmAutoFallback() {
+        _uiState.update { state ->
+            val updated = state.llmConfig.copy(autoFallbackToOffline = !state.llmConfig.autoFallbackToOffline)
+            llmConfigStore.save(updated)
+            state.copy(llmConfig = updated)
+        }
+    }
+
+    /**
+     * 接收來自 ADB 廣播或啟動 Intent 的一鍵配置命令
+     */
+    fun applyAdbLlmConfigIntent(intent: Intent?) {
+        val merged = LlmConfigStore.mergeFromIntent(_uiState.value.llmConfig, intent) ?: return
+        llmConfigStore.save(merged)
+        _uiState.update {
+            it.copy(
+                llmConfig = merged,
+                aiStatusMessage = "📡 已通过 ADB 命令动态更新配置：${merged.toSummaryBadge()} (${merged.baseUrl})"
+            )
+        }
+    }
+
+    /**
+     * 一鍵觸發「✨ AI 魔法挑戰」：基於當前句式動態生成 3 句全新拓展句，並自動跳轉到第一句新題
+     */
+    fun triggerAiMagicExpansion() {
+        cancelActiveJob()
+        activeTaskJob = viewModelScope.launch {
+            val seedCard = _uiState.value.currentSentence
+            val config = _uiState.value.llmConfig
+            _uiState.update {
+                it.copy(
+                    isExpandingAi = true,
+                    practiceStage = PracticeStage.EXPANDING_WITH_AI,
+                    aiStatusMessage = "🪄 正在通过 ${config.toSummaryBadge()} 为「${seedCard.pattern}」生成 3 句新挑战..."
+                )
+            }
+
+            val result = llmExpansionEngine.expandFromSeedSentence(
+                seedCard = seedCard,
+                config = config,
+                existingSentences = _uiState.value.allCatalogSentences
+            )
+
+            if (result.generatedCards.isNotEmpty()) {
+                val allSavedExpansions = persistedExpansionStore.appendAndSaveExpansions(result.generatedCards)
+                val baseCatalog = OfflineKaraokePackLoader.loadSentenceCatalog(getApplication())
+                val mergedAll = mergeCatalogWithExpansions(baseCatalog, allSavedExpansions)
+                val firstNewId = result.generatedCards.first().id
+
+                _uiState.update { state ->
+                    val filtered = SampleSentenceRepository.filterByUnit(state.selectedUnit, mergedAll)
+                    val jumpIdx = filtered.indexOfFirst { it.id == firstNewId }.coerceAtLeast(0)
+                    state.copy(
+                        isExpandingAi = false,
+                        practiceStage = PracticeStage.READY,
+                        allCatalogSentences = mergedAll,
+                        sentences = filtered,
+                        currentSentenceIndex = jumpIdx,
+                        aiExpandedCount = allSavedExpansions.size,
+                        aiStatusMessage = result.statusMessage,
+                        latestReport = null
+                    )
+                }
+            } else {
+                _uiState.update {
+                    it.copy(
+                        isExpandingAi = false,
+                        practiceStage = PracticeStage.READY,
+                        aiStatusMessage = result.statusMessage
+                    )
+                }
+            }
         }
     }
 

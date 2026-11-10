@@ -26,6 +26,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.enghunter.tv.audio.VirtualKaraokeMicTwin
 import com.enghunter.tv.audio.XiaomiKaraokeMicManager
+import com.enghunter.tv.llm.LlmVendorPreset
 import com.enghunter.tv.model.CurriculumUnit
 import com.enghunter.tv.model.WordFeedbackLevel
 import com.enghunter.tv.scoring.PronunciationScorer
@@ -108,6 +111,12 @@ fun EngHunterTvApp(
                         uiState = uiState,
                         viewModel = viewModel,
                         onRequestPermission = onRequestPermission
+                    )
+                }
+                ActiveTab.AI_MODEL_SETTINGS -> {
+                    AiModelProviderSettingsScreen(
+                        uiState = uiState,
+                        viewModel = viewModel
                     )
                 }
             }
@@ -170,6 +179,13 @@ private fun TopTvNavigationBar(
                 selected = uiState.activeTab == ActiveTab.PHASE0_DIAGNOSTIC,
                 accentColor = Color(0xFFF59E0B),
                 onClick = { onSwitchTab(ActiveTab.PHASE0_DIAGNOSTIC) }
+            )
+
+            TvFocusableButton(
+                text = "🤖 AI供应商设置 (${uiState.llmConfig.vendor.badge})",
+                selected = uiState.activeTab == ActiveTab.AI_MODEL_SETTINGS,
+                accentColor = Color(0xFFEC4899),
+                onClick = { onSwitchTab(ActiveTab.AI_MODEL_SETTINGS) }
             )
 
             TvFocusableButton(
@@ -483,6 +499,13 @@ private fun PracticeClosedLoopScreen(
                     val nextMode = modes[(modes.indexOf(uiState.selectedScoringEngineMode) + 1) % modes.size]
                     viewModel.selectScoringEngineMode(nextMode)
                 }
+            )
+
+            TvFocusableButton(
+                text = if (uiState.isExpandingAi) "🪄 AI生题中..." else "✨ AI魔法举一反三 (+3句)",
+                selected = true,
+                accentColor = Color(0xFFEC4899),
+                onClick = { viewModel.triggerAiMagicExpansion() }
             )
 
             if (uiState.lastSavedRecording != null) {
@@ -850,6 +873,259 @@ private fun Phase0HardwareDiagnosticScreen(
             )
             uiState.outputDevices.forEach { dev ->
                 EndpointCard(dev)
+            }
+        }
+    }
+}
+
+/**
+ * 頁面 3：【里程碑 M4：大模型供應商與模型靈活配置中心】
+ * 支持：
+ * 1. 遙控器一鍵切換 7 大主流供應商（DeepSeek / 硅基流動 / 阿里千問 / 火山豆包 / OpenAI / 局域網 Ollama / 離線 AI 魔法引擎）
+ * 2. 一鍵點選該供應商旗下的推薦模型，無需在電視上艱難打字
+ * 3. 可選填自定義 BaseURL、模型名與 API Key，同時展示一行式 ADB 遠程注入命令
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun AiModelProviderSettingsScreen(
+    uiState: EngHunterUiState,
+    viewModel: EngHunterViewModel
+) {
+    val cfg = uiState.llmConfig
+    var customBaseUrl by remember(cfg.vendor, cfg.baseUrl) { mutableStateOf(cfg.baseUrl) }
+    var customModel by remember(cfg.vendor, cfg.modelName) { mutableStateOf(cfg.modelName) }
+    var customApiKey by remember(cfg.vendor, cfg.apiKey) { mutableStateOf(cfg.apiKey) }
+
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        // 左側：7 大預置供應商與推薦模型一鍵選擇器（遙控器零打字體驗）
+        Column(
+            modifier = Modifier
+                .weight(1.1f)
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(20.dp))
+                .background(Color(0xFF1E293B))
+                .padding(20.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(
+                text = "🤖 M4 大模型供应商与模型快捷切换（遥控器一键点选）",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color(0xFFFACC15)
+            )
+
+            Text(
+                text = "① 选择大模型供应商（切换后自动填入对应官方 BaseURL 与推荐模型）：",
+                fontSize = 14.sp,
+                color = Color(0xFF93C5FD),
+                fontWeight = FontWeight.Bold
+            )
+
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                LlmVendorPreset.entries.forEach { preset ->
+                    TvFocusableButton(
+                        text = if (cfg.vendor == preset) "✅ ${preset.displayName}" else preset.displayName,
+                        selected = cfg.vendor == preset,
+                        accentColor = Color(0xFFEC4899),
+                        onClick = { viewModel.selectLlmVendor(preset) }
+                    )
+                }
+            }
+
+            Text(
+                text = "💡 供应商说明：${cfg.vendor.description}",
+                fontSize = 13.sp,
+                color = Color(0xFFCBD5E1)
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = "② 一键选择【${cfg.vendor.badge}】推荐模型：",
+                fontSize = 14.sp,
+                color = Color(0xFF4ADE80),
+                fontWeight = FontWeight.Bold
+            )
+
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                cfg.vendor.candidateModels.forEach { modelCandidate ->
+                    TvFocusableButton(
+                        text = if (cfg.modelName == modelCandidate) "🌟 $modelCandidate" else modelCandidate,
+                        selected = cfg.modelName == modelCandidate,
+                        accentColor = Color(0xFF22C55E),
+                        onClick = { viewModel.selectLlmModel(modelCandidate) }
+                    )
+                }
+            }
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TvFocusableButton(
+                    text = if (cfg.autoFallbackToOffline) "🛡️ 断网/无Key自动回退离线AI裂变：开启" else "🛡️ 断网/无Key自动回退离线AI裂变：关闭",
+                    selected = cfg.autoFallbackToOffline,
+                    accentColor = Color(0xFF10B981),
+                    onClick = { viewModel.toggleLlmAutoFallback() }
+                )
+
+                TvFocusableButton(
+                    text = if (uiState.isExpandingAi) "🪄 正在测试生成..." else "✨ 立即测试生成 3 句拓展句",
+                    selected = true,
+                    accentColor = Color(0xFF8B5CF6),
+                    onClick = { viewModel.triggerAiMagicExpansion() }
+                )
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color(0xFF0F172A))
+                    .padding(14.dp)
+            ) {
+                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Text(
+                        text = "当前生效配置：${cfg.toSummaryBadge()}  |  已累计生成持久化拓展句：${uiState.aiExpandedCount} 句",
+                        fontSize = 14.sp,
+                        color = Color(0xFFFDE047),
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "接口地址：${cfg.baseUrl}  |  密钥状态：${cfg.maskedApiKey}",
+                        fontSize = 13.sp,
+                        color = Color(0xFFA7F3D0)
+                    )
+                    Text(
+                        text = uiState.aiStatusMessage,
+                        fontSize = 13.sp,
+                        color = Color(0xFF93C5FD)
+                    )
+                }
+            }
+        }
+
+        // 右側：自定義參數輸入框 + 開發電腦 ADB 一行命令極速注入指南
+        Column(
+            modifier = Modifier
+                .weight(0.9f)
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(20.dp))
+                .background(Color(0xFF1E293B))
+                .padding(20.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(
+                text = "⚡ 方式 A：在电视上直接修改 BaseURL / 模型 / API Key",
+                fontSize = 17.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+
+            OutlinedTextField(
+                value = customBaseUrl,
+                onValueChange = { customBaseUrl = it },
+                label = { Text("API Base URL (兼容 OpenAI /v1)") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = Color(0xFF38BDF8),
+                    unfocusedBorderColor = Color(0xFF64748B)
+                )
+            )
+
+            OutlinedTextField(
+                value = customModel,
+                onValueChange = { customModel = it },
+                label = { Text("模型名称 (Model ID，可任意自定义)") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = Color(0xFF38BDF8),
+                    unfocusedBorderColor = Color(0xFF64748B)
+                )
+            )
+
+            OutlinedTextField(
+                value = customApiKey,
+                onValueChange = { customApiKey = it },
+                label = { Text("API Key (留空则自动使用内置离线 AI 裂变)") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = Color(0xFF38BDF8),
+                    unfocusedBorderColor = Color(0xFF64748B)
+                )
+            )
+
+            TvFocusableButton(
+                text = "💾 保存自定义 BaseURL / 模型 / API Key",
+                selected = true,
+                accentColor = Color(0xFF22C55E),
+                onClick = {
+                    viewModel.updateLlmCustomEndpointAndKey(
+                        baseUrl = customBaseUrl,
+                        modelName = customModel,
+                        apiKey = customApiKey
+                    )
+                }
+            )
+
+            Spacer(modifier = Modifier.height(6.dp))
+
+            Text(
+                text = "💻 方式 B：免遥控器打字！电脑 ADB 一行命令推送配置",
+                fontSize = 17.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFFACC15)
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color(0xFF0F172A))
+                    .padding(14.dp)
+            ) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        text = "在电脑终端执行以下任一命令，电视即刻热更新并永久保存：",
+                        fontSize = 13.sp,
+                        color = Color(0xFFCBD5E1)
+                    )
+                    Text(
+                        text = "# 1. 一键配置 DeepSeek 官方模型\nadb shell am broadcast -a com.enghunter.tv.CONFIG_LLM \\\n  --es provider DEEPSEEK --es model deepseek-chat --es api_key sk-你的密钥",
+                        fontSize = 12.sp,
+                        color = Color(0xFF4ADE80)
+                    )
+                    Text(
+                        text = "# 2. 一键配置阿里云百炼 Qwen 或硅基流动\nadb shell am broadcast -a com.enghunter.tv.CONFIG_LLM \\\n  --es provider ALIYUN_QWEN --es model qwen-plus --es api_key sk-你的密钥",
+                        fontSize = 12.sp,
+                        color = Color(0xFF38BDF8)
+                    )
+                    Text(
+                        text = "# 3. 一键连接家里电脑局域网 Ollama (免Key)\nadb shell am broadcast -a com.enghunter.tv.CONFIG_LLM \\\n  --es provider LOCAL_OLLAMA --es base_url http://192.168.1.88:11434/v1 --es model qwen2.5:7b",
+                        fontSize = 12.sp,
+                        color = Color(0xFFFBBF24)
+                    )
+                }
             }
         }
     }
