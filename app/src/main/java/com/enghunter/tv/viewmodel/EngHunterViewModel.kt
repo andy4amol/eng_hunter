@@ -30,9 +30,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 enum class ActiveTab {
-    PRACTICE_PROTOTYPE, // 小學生單句開口跟讀原型（模式 A 全無線閉環）
+    PRACTICE_PROTOTYPE, // 小學生單句開口跟讀原型（星空魔法舞台）
     PHASE0_DIAGNOSTIC,  // 階段 0：小米電視 & XMKGMKF01YM 麥克風硬件探測台
-    AI_MODEL_SETTINGS   // 里程碑 M4：大模型供應商與模型靈活配置中心
+    AI_MODEL_SETTINGS,  // 里程碑 M4：大模型供應商與模型靈活配置中心
+    SETTINGS_DRAWER     // ⚙️ 家長與高級設置抽屜（整合硬件探測、AI 設置、模擬器開關）
 }
 
 enum class PracticeStage(val label: String) {

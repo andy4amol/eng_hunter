@@ -2,6 +2,7 @@ package com.enghunter.tv.ui
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -56,6 +57,7 @@ import com.enghunter.tv.llm.LlmVendorPreset
 import com.enghunter.tv.model.CurriculumUnit
 import com.enghunter.tv.model.WordFeedbackLevel
 import com.enghunter.tv.scoring.PronunciationScorer
+import com.enghunter.tv.ui.theme.StarStageTokens
 import com.enghunter.tv.viewmodel.ActiveTab
 import com.enghunter.tv.viewmodel.EngHunterUiState
 import com.enghunter.tv.viewmodel.EngHunterViewModel
@@ -71,13 +73,9 @@ fun EngHunterTvApp(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(Color(0xFF0F172A), Color(0xFF1E1B4B), Color(0xFF0F172A))
-                )
-            )
+            .background(StarStageTokens.StageBackdropBrush)
             // 5% 電視安全邊距（防止過掃描裁切）
-            .padding(horizontal = 20.dp, vertical = 8.dp)
+            .padding(horizontal = 24.dp, vertical = 10.dp)
             .onPreviewKeyEvent { keyEvent ->
                 if (keyEvent.type == KeyEventType.KeyDown) {
                     viewModel.onRemoteKeyIntercepted(
@@ -96,7 +94,7 @@ fun EngHunterTvApp(
                 onRequestPermission = onRequestPermission
             )
 
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Box(
                 modifier = Modifier
@@ -106,6 +104,13 @@ fun EngHunterTvApp(
                 when (uiState.activeTab) {
                     ActiveTab.PRACTICE_PROTOTYPE -> {
                         PracticeClosedLoopScreen(
+                            uiState = uiState,
+                            viewModel = viewModel,
+                            onRequestPermission = onRequestPermission
+                        )
+                    }
+                    ActiveTab.SETTINGS_DRAWER -> {
+                        SettingsHubScreen(
                             uiState = uiState,
                             viewModel = viewModel,
                             onRequestPermission = onRequestPermission
@@ -130,6 +135,10 @@ fun EngHunterTvApp(
     }
 }
 
+/**
+ * 顶部少儿沉浸式导航栏：
+ * 隐藏底层硬件与开发者专业词汇，突出品牌吉祥物、累计金星池、免按键开麦与设置中心入口
+ */
 @Composable
 private fun TopTvNavigationBar(
     uiState: EngHunterUiState,
@@ -140,67 +149,64 @@ private fun TopTvNavigationBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(Color(0xFF1E293B).copy(alpha = 0.92f))
-            .padding(horizontal = 14.dp, vertical = 6.dp),
+            .clip(RoundedCornerShape(16.dp))
+            .background(Color(0xFF1E1748).copy(alpha = 0.85f))
+            .border(1.dp, Color(0xFF6B58C4).copy(alpha = 0.35f), RoundedCornerShape(16.dp))
+            .padding(horizontal = 18.dp, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
+        // 左侧少儿品牌 Logo 强化
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = "🦁 EngHunter 少儿开口王",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.ExtraBold,
-                color = Color(0xFFFACC15)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(6.dp))
-                    .background(Color(0xFF065F46))
-                    .padding(horizontal = 8.dp, vertical = 2.dp)
+                    .size(36.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFFFBBF24).copy(alpha = 0.2f)),
+                contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = "XMKGMKF01YM",
-                    fontSize = 11.sp,
-                    color = Color(0xFFA7F3D0),
-                    fontWeight = FontWeight.Bold
-                )
+                Text(text = "🦁", fontSize = 22.sp)
             }
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(
+                text = "EngHunter",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Black,
+                color = StarStageTokens.GoldStar
+            )
+            Spacer(modifier = Modifier.width(6.dp))
+            Text(
+                text = "英语魔法舞台",
+                fontSize = 17.sp,
+                fontWeight = FontWeight.Bold,
+                color = StarStageTokens.TextSecondary
+            )
         }
 
+        // 右侧交互小岛
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            TvFocusableButton(
-                text = "🎯 跟读闯关",
-                selected = uiState.activeTab == ActiveTab.PRACTICE_PROTOTYPE,
-                accentColor = Color(0xFF38BDF8),
-                onClick = { onSwitchTab(ActiveTab.PRACTICE_PROTOTYPE) }
-            )
+            // 返回主舞台
+            if (uiState.activeTab != ActiveTab.PRACTICE_PROTOTYPE) {
+                TvFocusableButton(
+                    text = "🎪 返回练习舞台",
+                    selected = true,
+                    accentColor = StarStageTokens.GoldStar,
+                    onClick = { onSwitchTab(ActiveTab.PRACTICE_PROTOTYPE) }
+                )
+            }
 
+            // 免按键模式胶囊
             TvFocusableButton(
-                text = "🛠️ 硬件探测",
-                selected = uiState.activeTab == ActiveTab.PHASE0_DIAGNOSTIC,
-                accentColor = Color(0xFFF59E0B),
-                onClick = { onSwitchTab(ActiveTab.PHASE0_DIAGNOSTIC) }
-            )
-
-            TvFocusableButton(
-                text = "🤖 AI设置 (${uiState.llmConfig.vendor.badge})",
-                selected = uiState.activeTab == ActiveTab.AI_MODEL_SETTINGS,
-                accentColor = Color(0xFFEC4899),
-                onClick = { onSwitchTab(ActiveTab.AI_MODEL_SETTINGS) }
-            )
-
-            TvFocusableButton(
-                text = if (uiState.autoFlowHandsFree) "⚡ 免按键:开" else "⚡ 免按键:关",
+                text = if (uiState.autoFlowHandsFree) "⚡ 免按键开口: 开" else "⚡ 免按键开口: 关",
                 selected = uiState.autoFlowHandsFree,
-                accentColor = Color(0xFF10B981),
+                accentColor = StarStageTokens.MintGreen,
                 onClick = onToggleHandsFree
             )
 
+            // 麦克风权限提示
             if (!uiState.hasRecordPermission) {
                 TvFocusableButton(
                     text = "⚠️ 授权麦克风",
@@ -208,20 +214,149 @@ private fun TopTvNavigationBar(
                     accentColor = Color(0xFFEF4444),
                     onClick = onRequestPermission
                 )
-            } else {
+            }
+
+            // 金星收集池
+            Row(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(999.dp))
+                    .background(Color(0xFF3B2D0B))
+                    .border(1.5.dp, StarStageTokens.GoldStar, RoundedCornerShape(999.dp))
+                    .padding(horizontal = 14.dp, vertical = 5.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "⭐", fontSize = 16.sp)
+                Spacer(modifier = Modifier.width(6.dp))
                 Text(
-                    text = "⭐ ${uiState.totalStarsEarned}",
+                    text = "${uiState.totalStarsEarned} 颗星",
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFFFDE047)
+                    fontWeight = FontWeight.ExtraBold,
+                    color = StarStageTokens.GoldStar
                 )
+            }
+
+            // 统一设置中心
+            TvFocusableButton(
+                text = "⚙️ 家长与设置",
+                selected = uiState.activeTab == ActiveTab.SETTINGS_DRAWER,
+                accentColor = StarStageTokens.LavenderMuted,
+                onClick = { onSwitchTab(ActiveTab.SETTINGS_DRAWER) }
+            )
+        }
+    }
+}
+
+/**
+ * 家长与设置中心 (收纳硬件探测、AI 供应商设置、数字孪生模拟器与高级调优)
+ */
+@Composable
+private fun SettingsHubScreen(
+    uiState: EngHunterUiState,
+    viewModel: EngHunterViewModel,
+    onRequestPermission: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "⚙️ 家长与开发者设置控制中心",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = StarStageTokens.TextPrimary
+            )
+            TvFocusableButton(
+                text = "⬅️ 返回练习舞台",
+                selected = true,
+                accentColor = StarStageTokens.GoldStar,
+                onClick = { viewModel.switchTab(ActiveTab.PRACTICE_PROTOTYPE) }
+            )
+        }
+
+        // 快捷选项卡
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            TvFocusableButton(
+                text = "🛠️ 进入硬件探测完整控制台 (XMKGMKF01YM)",
+                selected = false,
+                accentColor = Color(0xFFF59E0B),
+                onClick = { viewModel.switchTab(ActiveTab.PHASE0_DIAGNOSTIC) }
+            )
+
+            TvFocusableButton(
+                text = "🤖 配置大模型供应商 (${uiState.llmConfig.vendor.badge})",
+                selected = false,
+                accentColor = StarStageTokens.CandyPink,
+                onClick = { viewModel.switchTab(ActiveTab.AI_MODEL_SETTINGS) }
+            )
+        }
+
+        // 数字孪生与发音评测快捷调控
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(20.dp))
+                .background(StarStageTokens.GlassStageBrush)
+                .border(1.5.dp, StarStageTokens.GlassCardBorder, RoundedCornerShape(20.dp))
+                .padding(20.dp)
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    text = "🧪 离线数字孪生麦克风仿真器 (无需硬件即可开发自测)",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = StarStageTokens.AuroraBlue
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    VirtualKaraokeMicTwin.SimulatedChildVoiceProfile.entries.forEach { profile ->
+                        TvFocusableButton(
+                            text = profile.badge,
+                            selected = uiState.selectedSimulatedProfile == profile,
+                            accentColor = StarStageTokens.AuroraBlue,
+                            onClick = { viewModel.selectSimulatedProfile(profile) }
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "🧠 发音评测策略引擎选择",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = StarStageTokens.MintGreen
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    PronunciationScorer.ScoringEngineMode.entries.forEach { mode ->
+                        TvFocusableButton(
+                            text = mode.badge,
+                            selected = uiState.selectedScoringEngineMode == mode,
+                            accentColor = StarStageTokens.MintGreen,
+                            onClick = { viewModel.selectScoringEngineMode(mode) }
+                        )
+                    }
+                }
             }
         }
     }
 }
 
 /**
- * 頁面 1：小學生單句開口練習完整閉環原型（模式 A：A2DP 雙 5W 喇叭帶讀 ➔ HFP 16mm 咪芯免按鍵拾音 ➔ 護心打分 ➔ 9種音效獎勵）
+ * 頁面 1：StarStage 星空魔法舞台（小學生單句開口練習核心）
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -237,9 +372,9 @@ private fun PracticeClosedLoopScreen(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(14.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        // 0. 里程碑 M2：《小學英語核心 60 句高保真卡拉 OK 資源包》6 大主題單元篩選欄
+        // 0. 里程碑 M2：6 大主題單元篩選欄（小巧糖果色膠囊）
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -249,110 +384,116 @@ private fun PracticeClosedLoopScreen(
                 TvFocusableButton(
                     text = "${unit.emoji} ${unit.shortTitle}",
                     selected = uiState.selectedUnit == unit,
-                    accentColor = Color(0xFF10B981),
+                    accentColor = StarStageTokens.MintGreen,
                     onClick = { viewModel.selectUnit(unit) }
                 )
             }
         }
 
-        // 1. 頂部四種教學子模式切換欄（跟讀 / 意群分段 / 看圖換詞造句 / 雙麥對唱問答）
+        // 1. 四種趣味練習模式切換欄
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 PracticeSubMode.entries.forEach { mode ->
                     TvFocusableButton(
                         text = mode.title,
                         selected = uiState.practiceSubMode == mode,
-                        accentColor = Color(0xFF818CF8),
+                        accentColor = StarStageTokens.AuroraBlue,
                         onClick = { viewModel.selectSubMode(mode) }
                     )
                 }
             }
 
             Text(
-                text = "${card.unitTitle}  (${uiState.currentSentenceIndex + 1}/${uiState.sentences.size})",
-                fontSize = 16.sp,
-                color = Color(0xFFCBD5E1),
+                text = "${card.unitTitle} · 第 ${uiState.currentSentenceIndex + 1}/${uiState.sentences.size} 关",
+                fontSize = 15.sp,
+                color = StarStageTokens.TextSecondary,
                 fontWeight = FontWeight.SemiBold
             )
         }
 
-        // 2. 中央大字號電視舞台卡片（字號 >= 44sp，支持卡拉 OK 逐詞高亮與綠/橙護心反饋）
+        // 2. 中央大字號魔法舞台卡片（磨砂玻璃拟态 + 卡拉OK逐词音符浮动）
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(24.dp))
-                .background(
-                    Brush.horizontalGradient(
-                        colors = listOf(Color(0xFF1E293B), Color(0xFF312E81))
-                    )
-                )
-                .border(2.dp, Color(0xFF4F46E5), RoundedCornerShape(24.dp))
-                .padding(horizontal = 28.dp, vertical = 22.dp)
+                .background(StarStageTokens.GlassStageBrush)
+                .border(2.dp, StarStageTokens.GlassCardBorder, RoundedCornerShape(24.dp))
+                .padding(horizontal = 26.dp, vertical = 16.dp)
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // 句式模板提示與狀態膠囊
+                // 顶部句型徽章与关卡状态胶囊
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = "核心句型：${card.pattern}",
-                        fontSize = 18.sp,
-                        color = Color(0xFF93C5FD),
-                        fontWeight = FontWeight.Bold
-                    )
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(Color(0xFF382B73))
+                            .padding(horizontal = 12.dp, vertical = 4.dp)
+                    ) {
+                        Text(
+                            text = "🎯 核心句型：${card.pattern}",
+                            fontSize = 15.sp,
+                            color = StarStageTokens.AuroraBlue,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(999.dp))
-                            .background(Color(0xFF0F172A))
-                            .padding(horizontal = 16.dp, vertical = 6.dp)
+                            .background(Color(0xFF0F0B26))
+                            .border(1.dp, StarStageTokens.GoldStar.copy(alpha = 0.5f), RoundedCornerShape(999.dp))
+                            .padding(horizontal = 14.dp, vertical = 4.dp)
                     ) {
                         Text(
                             text = uiState.practiceStage.label,
-                            fontSize = 16.sp,
-                            color = Color(0xFFFDE047),
+                            fontSize = 14.sp,
+                            color = StarStageTokens.GoldStar,
                             fontWeight = FontWeight.Bold
                         )
                     }
                 }
 
-                Spacer(modifier = Modifier.height(14.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
-                // 雙麥對唱角色提示（當選擇第 4 模式時）
+                // 雙麥對唱角色提示
                 if (uiState.practiceSubMode == PracticeSubMode.DUAL_MIC_ROLE_PLAY) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(12.dp))
-                            .background(Color(0xFF0F172A).copy(alpha = 0.7f))
-                            .padding(12.dp),
+                            .background(Color(0xFF130E2E).copy(alpha = 0.85f))
+                            .border(1.dp, StarStageTokens.AuroraBlue.copy(alpha = 0.4f), RoundedCornerShape(12.dp))
+                            .padding(10.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         Text(
-                            text = "🎤 1号K歌麦 (家长/伙伴问)：\"${card.rolePlayQuestion}\"",
-                            fontSize = 18.sp,
-                            color = Color(0xFF67E8F9),
+                            text = "🎤 1号麦 (家长/伙伴问)：\"${card.rolePlayQuestion}\"",
+                            fontSize = 17.sp,
+                            color = StarStageTokens.AuroraBlue,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "🎤 2号K歌麦 (小朋友答)：\"${card.en}\"",
-                            fontSize = 18.sp,
-                            color = Color(0xFFFDE047),
+                            text = "🎤 2号麦 (小朋友答)：\"${card.en}\"",
+                            fontSize = 17.sp,
+                            color = StarStageTokens.GoldStar,
                             fontWeight = FontWeight.Bold
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                 }
 
-                // 情景大圖標 + 大字號卡拉 OK 單詞流
+                // 3D 拟物情景大图标 + 逐词音符卡片流 (Word Token Cards)
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
@@ -360,12 +501,17 @@ private fun PracticeClosedLoopScreen(
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(92.dp)
+                            .size(86.dp)
                             .clip(CircleShape)
-                            .background(Color(0xFF0F172A)),
+                            .background(
+                                Brush.radialGradient(
+                                    colors = listOf(Color(0xFF4C3B99), Color(0xFF19133F))
+                                )
+                            )
+                            .border(2.dp, StarStageTokens.GoldStar.copy(alpha = 0.7f), CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = uiState.activeEmoji, fontSize = 52.sp)
+                        Text(text = uiState.activeEmoji, fontSize = 48.sp)
                     }
 
                     Spacer(modifier = Modifier.width(24.dp))
@@ -378,44 +524,57 @@ private fun PracticeClosedLoopScreen(
                             val isKaraokeActive = uiState.highlightedWordIndex == idx
                             val scoredWord = uiState.latestReport?.wordResults?.getOrNull(idx)
 
+                            // 单词卡片背景色与浮动动效
                             val wordColor by animateColorAsState(
                                 targetValue = when {
-                                    isKaraokeActive -> Color(0xFFFACC15) // 卡拉OK高亮亮黃色
-                                    scoredWord?.level == WordFeedbackLevel.EXCELLENT -> Color(0xFF4ADE80) // 優秀綠色
-                                    scoredWord?.level == WordFeedbackLevel.KEEP_TRYING -> Color(0xFFFB923C) // 溫和橙色
-                                    else -> Color.White
+                                    isKaraokeActive -> StarStageTokens.GoldStar // 卡拉OK高亮亮黃色
+                                    scoredWord?.level == WordFeedbackLevel.EXCELLENT -> StarStageTokens.MintGreen // 優秀綠色
+                                    scoredWord?.level == WordFeedbackLevel.KEEP_TRYING -> StarStageTokens.CoralOrange // 溫和橙色
+                                    else -> StarStageTokens.TextPrimary
                                 },
                                 label = "wordColor"
                             )
                             val wordScale by animateFloatAsState(
-                                targetValue = if (isKaraokeActive) 1.18f else 1.0f,
+                                targetValue = if (isKaraokeActive) 1.15f else 1.0f,
+                                animationSpec = spring(dampingRatio = 0.65f),
                                 label = "wordScale"
                             )
 
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
+                            Box(
                                 modifier = Modifier
                                     .scale(wordScale)
-                                    .clip(RoundedCornerShape(12.dp))
+                                    .clip(RoundedCornerShape(14.dp))
                                     .background(
-                                        if (isKaraokeActive) Color(0xFF4338CA)
-                                        else Color.Transparent
+                                        when {
+                                            isKaraokeActive -> Color(0xFF5A4404)
+                                            scoredWord?.level == WordFeedbackLevel.EXCELLENT -> Color(0xFF0F3A24)
+                                            scoredWord?.level == WordFeedbackLevel.KEEP_TRYING -> Color(0xFF4A2411)
+                                            else -> Color(0xFF1B153D).copy(alpha = 0.65f)
+                                        }
                                     )
-                                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                                    .border(
+                                        width = if (isKaraokeActive) 2.dp else 1.dp,
+                                        color = if (isKaraokeActive) StarStageTokens.GoldStar else Color(0xFF59489E).copy(alpha = 0.4f),
+                                        shape = RoundedCornerShape(14.dp)
+                                    )
+                                    .padding(horizontal = 14.dp, vertical = 6.dp)
                             ) {
-                                Text(
-                                    text = word,
-                                    fontSize = 46.sp,
-                                    fontWeight = FontWeight.ExtraBold,
-                                    color = wordColor
-                                )
-                                if (scoredWord != null) {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                     Text(
-                                        text = "${scoredWord.score}分",
-                                        fontSize = 13.sp,
+                                        text = word,
+                                        fontSize = 44.sp,
+                                        fontWeight = FontWeight.ExtraBold,
                                         color = wordColor,
-                                        fontWeight = FontWeight.SemiBold
+                                        letterSpacing = 1.sp
                                     )
+                                    if (scoredWord != null) {
+                                        Text(
+                                            text = "${scoredWord.score}分",
+                                            fontSize = 12.sp,
+                                            color = wordColor,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -424,18 +583,19 @@ private fun PracticeClosedLoopScreen(
 
                 Spacer(modifier = Modifier.height(10.dp))
 
+                // 优雅的中文辅助理解字幕
                 Text(
                     text = uiState.activeTargetChinese,
-                    fontSize = 24.sp,
-                    color = Color(0xFFE2E8F0),
+                    fontSize = 22.sp,
+                    color = StarStageTokens.TextSecondary,
                     fontWeight = FontWeight.Medium
                 )
 
-                // 實時麥克風聲波能量條（當處於錄音或搞怪音效秀時展示）
+                // 實時麥克風聲波能量條
                 if (uiState.practiceStage == PracticeStage.RECORDING_CHILD ||
                     uiState.practiceStage == PracticeStage.MAGIC_SOUND_SHOW
                 ) {
-                    Spacer(modifier = Modifier.height(14.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
                     LiveVoiceWaveMeter(
                         level = uiState.liveMicLevel,
                         elapsedMs = uiState.recordingElapsedMs,
@@ -445,16 +605,17 @@ private fun PracticeClosedLoopScreen(
             }
         }
 
-        // 3. 大尺寸遙控器焦點操作按鈕區（不劫持全局方向鍵，符合兒童電視直覺）
+        // 3. 精简、高频的核心操作控制栏（降低认知负荷，专注开口）
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // 主操作 1：听外教带读 + 自动开麦
             TvFocusableButton(
                 text = "🔊 听外教带读 + 自动开麦",
                 selected = true,
-                accentColor = Color(0xFF22C55E),
+                accentColor = StarStageTokens.MintGreen,
                 onClick = {
                     if (!uiState.hasRecordPermission &&
                         uiState.selectedInputMode != XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR
@@ -463,10 +624,11 @@ private fun PracticeClosedLoopScreen(
                 }
             )
 
+            // 主操作 2：慢速外教拆解
             TvFocusableButton(
-                text = "🐢 慢速带读 (0.8x)",
+                text = "🐢 慢速示范 (0.8x)",
                 selected = false,
-                accentColor = Color(0xFF38BDF8),
+                accentColor = StarStageTokens.AuroraBlue,
                 onClick = {
                     if (!uiState.hasRecordPermission &&
                         uiState.selectedInputMode != XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR
@@ -475,10 +637,11 @@ private fun PracticeClosedLoopScreen(
                 }
             )
 
+            // 主操作 3：直接开口
             TvFocusableButton(
-                text = "🎤 直接拿K歌麦开口说",
+                text = "🎤 拿麦直接读",
                 selected = false,
-                accentColor = Color(0xFFF59E0B),
+                accentColor = StarStageTokens.GoldStar,
                 onClick = {
                     if (!uiState.hasRecordPermission &&
                         uiState.selectedInputMode != XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR
@@ -487,36 +650,27 @@ private fun PracticeClosedLoopScreen(
                 }
             )
 
+            // 智能开发自测：数字孪生快速触碰
             TvFocusableButton(
-                text = "🧪 数字孪生模拟: ${uiState.selectedSimulatedProfile.badge}",
-                selected = uiState.selectedInputMode == XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR,
-                accentColor = Color(0xFF8B5CF6),
+                text = "🧪 仿真模拟开口 (${uiState.selectedSimulatedProfile.badge})",
+                selected = false,
+                accentColor = Color(0xFFA855F7),
                 onClick = {
                     viewModel.triggerSimulatedPractice(uiState.selectedSimulatedProfile)
                 }
             )
 
+            // 拓展操作：AI 魔法生题
             TvFocusableButton(
-                text = "🧠 评测引擎: ${uiState.selectedScoringEngineMode.badge}",
-                selected = uiState.selectedScoringEngineMode != PronunciationScorer.ScoringEngineMode.LOCAL_L0_ENVELOPE,
-                accentColor = Color(0xFF06B6D4),
-                onClick = {
-                    val modes = PronunciationScorer.ScoringEngineMode.entries
-                    val nextMode = modes[(modes.indexOf(uiState.selectedScoringEngineMode) + 1) % modes.size]
-                    viewModel.selectScoringEngineMode(nextMode)
-                }
-            )
-
-            TvFocusableButton(
-                text = if (uiState.isExpandingAi) "🪄 AI生题中..." else "✨ AI魔法举一反三 (+3句)",
-                selected = true,
-                accentColor = Color(0xFFEC4899),
+                text = if (uiState.isExpandingAi) "🪄 正在生成..." else "✨ AI魔法换句",
+                selected = false,
+                accentColor = StarStageTokens.CandyPink,
                 onClick = { viewModel.triggerAiMagicExpansion() }
             )
 
             if (uiState.lastSavedRecording != null) {
                 TvFocusableButton(
-                    text = "🔁 对比回放 (标准音 vs 我)",
+                    text = "🔁 对比回放",
                     selected = false,
                     accentColor = Color(0xFFA855F7),
                     onClick = { viewModel.playComparisonReplay() }
@@ -527,9 +681,9 @@ private fun PracticeClosedLoopScreen(
                 uiState.practiceSubMode == PracticeSubMode.SLOT_SUBSTITUTE
             ) {
                 TvFocusableButton(
-                    text = if (uiState.practiceSubMode == PracticeSubMode.CHUNK_READ) "🧩 切换下一意群" else "🔄 换一张图片造句",
+                    text = if (uiState.practiceSubMode == PracticeSubMode.CHUNK_READ) "🧩 下一意群" else "🔄 换图造句",
                     selected = false,
-                    accentColor = Color(0xFFEC4899),
+                    accentColor = StarStageTokens.CandyPink,
                     onClick = { viewModel.cycleSlotOrChunk() }
                 )
             }
@@ -537,14 +691,14 @@ private fun PracticeClosedLoopScreen(
             TvFocusableButton(
                 text = "⬅️ 上一句",
                 selected = false,
-                accentColor = Color(0xFF64748B),
+                accentColor = StarStageTokens.TextTertiary,
                 onClick = { viewModel.prevSentence() }
             )
 
             TvFocusableButton(
                 text = "➡️ 下一句",
                 selected = false,
-                accentColor = Color(0xFF64748B),
+                accentColor = StarStageTokens.TextTertiary,
                 onClick = { viewModel.nextSentence() }
             )
         }
@@ -569,8 +723,9 @@ private fun LiveVoiceWaveMeter(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(14.dp))
-            .background(Color(0xFF0F172A).copy(alpha = 0.85f))
-            .padding(horizontal = 20.dp, vertical = 12.dp),
+            .background(Color(0xFF130E2E).copy(alpha = 0.88f))
+            .border(1.dp, StarStageTokens.MintGreen.copy(alpha = 0.5f), RoundedCornerShape(14.dp))
+            .padding(horizontal = 18.dp, vertical = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
@@ -579,26 +734,26 @@ private fun LiveVoiceWaveMeter(
         ) {
             Text(
                 text = "🎙️ 正在通过 [$routedDevice] 收音 (说完停顿 0.8 秒自动结束)",
-                fontSize = 15.sp,
-                color = Color(0xFF4ADE80),
+                fontSize = 14.sp,
+                color = StarStageTokens.MintGreen,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = "${String.format("%.1f", elapsedMs / 1000.0)}s / 6.5s",
-                fontSize = 15.sp,
-                color = Color(0xFFFDE047),
+                fontSize = 14.sp,
+                color = StarStageTokens.GoldStar,
                 fontWeight = FontWeight.Bold
             )
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(6.dp))
         LinearProgressIndicator(
             progress = { level.coerceIn(0.05f, 1f) },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(14.dp)
-                .clip(RoundedCornerShape(7.dp)),
-            color = Color(0xFF22C55E),
-            trackColor = Color(0xFF334155)
+                .height(12.dp)
+                .clip(RoundedCornerShape(6.dp)),
+            color = StarStageTokens.MintGreen,
+            trackColor = Color(0xFF28205C)
         )
     }
 }
@@ -612,9 +767,9 @@ private fun PronunciationFeedbackBanner(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(18.dp))
-            .background(Color(0xFF1E293B))
-            .border(1.5.dp, Color(0xFFFACC15), RoundedCornerShape(18.dp))
-            .padding(horizontal = 22.dp, vertical = 14.dp),
+            .background(StarStageTokens.GlassStageBrush)
+            .border(1.5.dp, StarStageTokens.GoldStar, RoundedCornerShape(18.dp))
+            .padding(horizontal = 20.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -623,32 +778,32 @@ private fun PronunciationFeedbackBanner(
                 val starStr = "⭐".repeat(report.stars) + "☆".repeat(3 - report.stars)
                 Text(
                     text = "$starStr   总评 ${report.overallScore} 分",
-                    fontSize = 24.sp,
+                    fontSize = 22.sp,
                     fontWeight = FontWeight.ExtraBold,
-                    color = Color(0xFFFACC15)
+                    color = StarStageTokens.GoldStar
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
                     text = "完整度 ${report.completenessScore}% · 流利度 ${report.fluencyScore}% · [${report.engineSource}]",
-                    fontSize = 14.sp,
-                    color = Color(0xFF94A3B8)
+                    fontSize = 13.sp,
+                    color = StarStageTokens.TextSecondary
                 )
             }
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = report.encouragementMessage,
-                fontSize = 18.sp,
-                color = Color.White,
+                fontSize = 17.sp,
+                color = StarStageTokens.TextPrimary,
                 fontWeight = FontWeight.Medium
             )
         }
 
         if (report.unlockMagicSoundEffect) {
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(14.dp))
             TvFocusableButton(
-                text = "🎭 三星奖励：开启怪兽/卡通音效搞怪秀 (5秒)",
+                text = "🎭 三星奖励：怪兽/卡通变声音效秀 (5秒)",
                 selected = true,
-                accentColor = Color(0xFFEC4899),
+                accentColor = StarStageTokens.CandyPink,
                 onClick = onTriggerMagicSoundEffectShow
             )
         }
@@ -657,11 +812,6 @@ private fun PronunciationFeedbackBanner(
 
 /**
  * 頁面 2：【階段 0：小米電視 & XMKGMKF01YM 麥克風硬件探測台】
- * 用於 10 分鐘實測驗證：
- * 1. 電視識別到的 A2DP / HFP(SCO) / USB / 內置麥設備清單
- * 2. 模式 A 全無線 HFP 5秒錄音 + A2DP 雙 5W 喇叭回放閉環
- * 3. 防消原唱（Anti-Vocal-Cancel）立體聲保護與藍牙卡拉 OK 延遲毫秒微調
- * 4. 小米遙控器按鍵 KeyCode 實時捕獲與環形緩存狀態
  */
 @Composable
 private fun Phase0HardwareDiagnosticScreen(
@@ -669,503 +819,420 @@ private fun Phase0HardwareDiagnosticScreen(
     viewModel: EngHunterViewModel,
     onRequestPermission: () -> Unit
 ) {
-    Row(
-        modifier = Modifier.fillMaxSize(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
-        // 左側：控制與閉環測試面板
-        Column(
-            modifier = Modifier
-                .weight(1.15f)
-                .fillMaxHeight()
-                .clip(RoundedCornerShape(20.dp))
-                .background(Color(0xFF1E293B))
-                .padding(20.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+        // 頂部診斷控制欄
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "🛠️ 阶段 0：XMKGMKF01YM 无线 K歌麦探测与校准",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.ExtraBold,
-                color = Color(0xFFFACC15)
-            )
-
-            // 四種模式一鍵切換測試（含 M1 開發機數字孿生模擬）
-            XiaomiKaraokeMicManager.PreferredInputMode.entries.forEach { mode ->
-                TvFocusableButton(
-                    text = if (uiState.selectedInputMode == mode) "✅ ${mode.title}" else mode.title,
-                    selected = uiState.selectedInputMode == mode,
-                    accentColor = Color(0xFF38BDF8),
-                    onClick = { viewModel.selectInputMode(mode) }
-                )
-            }
-
-            // M1 開發機數字孿生模擬器：4 種兒童跟讀畫像選擇器
-            Text(
-                text = "🧪 M1 开发机数字孪生模拟样本（免真机/免麦克风）：",
-                fontSize = 14.sp,
+                fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFFC4B5FD)
+                color = Color.White
             )
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                VirtualKaraokeMicTwin.SimulatedChildVoiceProfile.entries.forEach { profile ->
-                    TvFocusableButton(
-                        text = profile.badge,
-                        selected = uiState.selectedSimulatedProfile == profile,
-                        accentColor = Color(0xFF8B5CF6),
-                        onClick = { viewModel.selectSimulatedProfile(profile) }
-                    )
-                }
-            }
 
-            // M3 可插拔發音評測引擎選擇器（Azure 音素級 F0 免費層 / 離線音素仿真 / 本地 L0 包絡）
-            Text(
-                text = "🧠 M3 可插拔发音评测引擎（支持 Azure 音素级纠音 + 本地 L0 自动降级）：",
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF67E8F9)
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                PronunciationScorer.ScoringEngineMode.entries.forEach { engineMode ->
-                    TvFocusableButton(
-                        text = engineMode.badge,
-                        selected = uiState.selectedScoringEngineMode == engineMode,
-                        accentColor = Color(0xFF06B6D4),
-                        onClick = { viewModel.selectScoringEngineMode(engineMode) }
-                    )
-                }
-            }
-
-            // 階段 0 核心測試按鈕
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 TvFocusableButton(
-                    text = if (uiState.isRunningProbe) "⏳ 测试进行中..." else "🎙️ ① 测 HFP 无线录音+双5W喇叭回放",
-                    selected = true,
-                    accentColor = Color(0xFF22C55E),
-                    onClick = {
-                        if (!uiState.hasRecordPermission &&
-                            uiState.selectedInputMode != XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR
-                        ) onRequestPermission()
-                        else viewModel.runPhase0WirelessHfpLoopbackTest()
-                    }
-                )
-
-                TvFocusableButton(
-                    text = "🔊 ② 测防消原唱+卡拉OK高亮同步",
-                    selected = false,
-                    accentColor = Color(0xFFF59E0B),
-                    onClick = { viewModel.runPhase0AntiVocalCancelKaraokeTest() }
-                )
-            }
-
-            // 防消原唱開關 & 藍牙延遲微調
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                TvFocusableButton(
-                    text = if (uiState.enableAntiVocalCancel) "🛡️ 防一键消原唱立体声保护：开启" else "🛡️ 防一键消原唱立体声保护：关闭",
-                    selected = uiState.enableAntiVocalCancel,
-                    accentColor = Color(0xFF10B981),
-                    onClick = { viewModel.toggleAntiVocalCancel() }
-                )
-
-                TvFocusableButton(
-                    text = "蓝牙延迟 -30ms",
-                    selected = false,
-                    accentColor = Color(0xFF64748B),
-                    onClick = { viewModel.adjustBluetoothLatency(-30L) }
-                )
-
-                Text(
-                    text = "补偿: ${uiState.bluetoothLatencyOffsetMs}ms",
-                    fontSize = 15.sp,
-                    color = Color(0xFFFDE047),
-                    fontWeight = FontWeight.Bold
-                )
-
-                TvFocusableButton(
-                    text = "蓝牙延迟 +30ms",
-                    selected = false,
-                    accentColor = Color(0xFF64748B),
-                    onClick = { viewModel.adjustBluetoothLatency(30L) }
-                )
-            }
-
-            // 實時狀態輸出日誌框
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFF0F172A))
-                    .padding(14.dp)
-            ) {
-                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Text(
-                        text = uiState.diagnosticStatusText,
-                        fontSize = 14.sp,
-                        color = Color(0xFFA7F3D0)
-                    )
-                    Text(
-                        text = "🎮 遥控器按键监听：${uiState.lastKeyEventInfo}",
-                        fontSize = 13.sp,
-                        color = Color(0xFF93C5FD)
-                    )
-                    Text(
-                        text = "💾 环形缓存 (最多20条防撑爆电视闪存)：已存 ${uiState.ringCacheCount}/20 条，共 ${uiState.ringCacheBytes / 1024} KB",
-                        fontSize = 13.sp,
-                        color = Color(0xFFCBD5E1)
-                    )
-                }
-            }
-        }
-
-        // 右側：小米電視當前音頻輸入/輸出硬件設備清單
-        Column(
-            modifier = Modifier
-                .weight(0.85f)
-                .fillMaxHeight()
-                .clip(RoundedCornerShape(20.dp))
-                .background(Color(0xFF1E293B))
-                .padding(20.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "📡 小米电视音频设备实时拓扑",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-                TvFocusableButton(
-                    text = "🔄 刷新设备",
+                    text = "🔄 重新扫描音频设备",
                     selected = false,
                     accentColor = Color(0xFF38BDF8),
                     onClick = { viewModel.refreshAudioDevices() }
                 )
             }
+        }
 
-            Text(
-                text = "【输入设备 INPUTS】(${uiState.inputDevices.size} 个)",
-                fontSize = 15.sp,
-                color = Color(0xFF4ADE80),
-                fontWeight = FontWeight.Bold
+        // 設備探測狀態面板（左右分欄：輸入端拾音 vs 輸出端放音）
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+            // 左欄：音頻輸入端（咪芯）
+            DiagnosticDeviceCard(
+                title = "🎙️ 输入设备 (Microphone Endpoints)",
+                devices = uiState.inputDevices,
+                highlightType = "BLUETOOTH_SCO (K歌麦咪芯)",
+                modifier = Modifier.weight(1f)
             )
-            if (uiState.inputDevices.isEmpty()) {
+
+            // 右欄：音頻輸出端（喇叭）
+            DiagnosticDeviceCard(
+                title = "🔊 输出设备 (Speaker Endpoints)",
+                devices = uiState.outputDevices,
+                highlightType = "BLUETOOTH_A2DP (双5W扬声器)",
+                modifier = Modifier.weight(1f)
+            )
+        }
+
+        // 模式 A 閉環 5 秒全無線實測卡片
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(16.dp))
+                .background(Color(0xFF1E293B))
+                .border(2.dp, Color(0xFF10B981), RoundedCornerShape(16.dp))
+                .padding(18.dp)
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(
-                    text = "• 暂无外置输入设备（开启 HFP 时将动态挂载蓝牙 SCO 通道）",
-                    fontSize = 13.sp,
-                    color = Color(0xFF94A3B8)
+                    text = "🧪 模式 A 全无线闭环实测 (5秒极速验收)",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF34D399)
                 )
-            } else {
-                uiState.inputDevices.forEach { dev ->
-                    EndpointCard(dev)
+                Text(
+                    text = "测试说明：点击后系统将通过 Bluetooth SCO 通道录制 5 秒，随后自动切回 A2DP 蓝牙立体声通过麦克风双 5W 扬声器回放。同时将自动激活防消原唱算法与 VAD 静音截断。",
+                    fontSize = 14.sp,
+                    color = Color(0xFFCBD5E1)
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    TvFocusableButton(
+                        text = if (uiState.isRunningProbe) "⏳ 正在探测录音中..." else "🚀 开始 5 秒无线录音回放闭环测试",
+                        selected = uiState.isRunningProbe,
+                        accentColor = Color(0xFF10B981),
+                        onClick = {
+                            if (!uiState.hasRecordPermission) {
+                                onRequestPermission()
+                            } else {
+                                viewModel.runPhase0WirelessHfpLoopbackTest()
+                            }
+                        }
+                    )
+
+                    TvFocusableButton(
+                        text = if (uiState.enableAntiVocalCancel) "🛡️ 防消原唱立体声保护: 已开启" else "⚠️ 防消原唱: 已关闭",
+                        selected = uiState.enableAntiVocalCancel,
+                        accentColor = Color(0xFF818CF8),
+                        onClick = { viewModel.toggleAntiVocalCancel() }
+                    )
+
+                    TvFocusableButton(
+                        text = "⏱️ 延迟补偿: ${uiState.bluetoothLatencyOffsetMs}ms (+50ms)",
+                        selected = false,
+                        accentColor = Color(0xFFFBBF24),
+                        onClick = {
+                            viewModel.adjustBluetoothLatency(50L)
+                        }
+                    )
+                }
+
+                // 實時聲波電平反饋
+                if (uiState.isRunningProbe) {
+                    LiveVoiceWaveMeter(
+                        level = uiState.liveMicLevel,
+                        elapsedMs = 0L,
+                        routedDevice = uiState.liveRoutedDevice
+                    )
                 }
             }
+        }
 
-            Spacer(modifier = Modifier.height(6.dp))
-
-            Text(
-                text = "【输出设备 OUTPUTS】(${uiState.outputDevices.size} 个)",
-                fontSize = 15.sp,
-                color = Color(0xFF60A5FA),
-                fontWeight = FontWeight.Bold
-            )
-            uiState.outputDevices.forEach { dev ->
-                EndpointCard(dev)
+        // 遙控器按鍵 KeyCode 實時捕獲展示
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(14.dp))
+                .background(Color(0xFF0F172A))
+                .border(1.dp, Color(0xFF334155), RoundedCornerShape(14.dp))
+                .padding(14.dp)
+        ) {
+            Column {
+                Text(
+                    text = "📡 小米遥控器与麦克风按键拦截监视器：",
+                    fontSize = 14.sp,
+                    color = Color(0xFF94A3B8),
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = uiState.lastKeyEventInfo,
+                    fontSize = 16.sp,
+                    color = Color(0xFF38BDF8),
+                    fontWeight = FontWeight.SemiBold
+                )
             }
         }
     }
 }
 
 /**
- * 頁面 3：【里程碑 M4：大模型供應商與模型靈活配置中心】
- * 支持：
- * 1. 遙控器一鍵切換 7 大主流供應商（DeepSeek / 硅基流動 / 阿里千問 / 火山豆包 / OpenAI / 局域網 Ollama / 離線 AI 魔法引擎）
- * 2. 一鍵點選該供應商旗下的推薦模型，無需在電視上艱難打字
- * 3. 可選填自定義 BaseURL、模型名與 API Key，同時展示一行式 ADB 遠程注入命令
+ * 頁面 3：【里程碑 M4：大模型供應商與靈活參數配置中心】
  */
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun AiModelProviderSettingsScreen(
     uiState: EngHunterUiState,
     viewModel: EngHunterViewModel
 ) {
-    val cfg = uiState.llmConfig
-    var customBaseUrl by remember(cfg.vendor, cfg.baseUrl) { mutableStateOf(cfg.baseUrl) }
-    var customModel by remember(cfg.vendor, cfg.modelName) { mutableStateOf(cfg.modelName) }
-    var customApiKey by remember(cfg.vendor, cfg.apiKey) { mutableStateOf(cfg.apiKey) }
+    var apiKeyInput by remember(uiState.llmConfig.apiKey) { mutableStateOf(uiState.llmConfig.apiKey) }
+    var modelInput by remember(uiState.llmConfig.modelName) { mutableStateOf(uiState.llmConfig.modelName) }
+    var baseUrlInput by remember(uiState.llmConfig.baseUrl) { mutableStateOf(uiState.llmConfig.baseUrl) }
 
-    Row(
-        modifier = Modifier.fillMaxSize(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
-        // 左側：7 大預置供應商與推薦模型一鍵選擇器（遙控器零打字體驗）
-        Column(
-            modifier = Modifier
-                .weight(1.1f)
-                .fillMaxHeight()
-                .clip(RoundedCornerShape(20.dp))
-                .background(Color(0xFF1E293B))
-                .padding(20.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+        // 頂部狀態欄
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = "🤖 M4 大模型供应商与模型快捷切换（遥控器一键点选）",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.ExtraBold,
-                color = Color(0xFFFACC15)
-            )
-
-            Text(
-                text = "① 选择大模型供应商（切换后自动填入对应官方 BaseURL 与推荐模型）：",
-                fontSize = 14.sp,
-                color = Color(0xFF93C5FD),
-                fontWeight = FontWeight.Bold
-            )
-
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                LlmVendorPreset.entries.forEach { preset ->
-                    TvFocusableButton(
-                        text = if (cfg.vendor == preset) "✅ ${preset.displayName}" else preset.displayName,
-                        selected = cfg.vendor == preset,
-                        accentColor = Color(0xFFEC4899),
-                        onClick = { viewModel.selectLlmVendor(preset) }
-                    )
-                }
-            }
-
-            Text(
-                text = "💡 供应商说明：${cfg.vendor.description}",
-                fontSize = 13.sp,
-                color = Color(0xFFCBD5E1)
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text = "② 一键选择【${cfg.vendor.badge}】推荐模型：",
-                fontSize = 14.sp,
-                color = Color(0xFF4ADE80),
-                fontWeight = FontWeight.Bold
-            )
-
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                cfg.vendor.candidateModels.forEach { modelCandidate ->
-                    TvFocusableButton(
-                        text = if (cfg.modelName == modelCandidate) "🌟 $modelCandidate" else modelCandidate,
-                        selected = cfg.modelName == modelCandidate,
-                        accentColor = Color(0xFF22C55E),
-                        onClick = { viewModel.selectLlmModel(modelCandidate) }
-                    )
-                }
-            }
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                TvFocusableButton(
-                    text = if (cfg.autoFallbackToOffline) "🛡️ 断网/无Key自动回退离线AI裂变：开启" else "🛡️ 断网/无Key自动回退离线AI裂变：关闭",
-                    selected = cfg.autoFallbackToOffline,
-                    accentColor = Color(0xFF10B981),
-                    onClick = { viewModel.toggleLlmAutoFallback() }
+            Column {
+                Text(
+                    text = "🤖 AI 英语拓展与大模型供应商设置",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
                 )
-
-                TvFocusableButton(
-                    text = if (uiState.isExpandingAi) "🪄 正在测试生成..." else "✨ 立即测试生成 3 句拓展句",
-                    selected = true,
-                    accentColor = Color(0xFF8B5CF6),
-                    onClick = { viewModel.triggerAiMagicExpansion() }
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "支持 7 大主流服务商预设，电视端输入繁琐时可直接通过 ADB 命令行秒级写入",
+                    fontSize = 14.sp,
+                    color = Color(0xFF94A3B8)
                 )
             }
 
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFF0F172A))
-                    .padding(14.dp)
+                    .clip(RoundedCornerShape(999.dp))
+                    .background(Color(0xFF065F46))
+                    .padding(horizontal = 14.dp, vertical = 6.dp)
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Text(
-                        text = "当前生效配置：${cfg.toSummaryBadge()}  |  已累计生成持久化拓展句：${uiState.aiExpandedCount} 句",
-                        fontSize = 14.sp,
-                        color = Color(0xFFFDE047),
-                        fontWeight = FontWeight.Bold
+                Text(
+                    text = "当前: ${uiState.llmConfig.vendor.displayName} · ${uiState.llmConfig.modelName}",
+                    fontSize = 14.sp,
+                    color = Color(0xFFA7F3D0),
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+
+        // 7 大供應商預設一鍵切換標籤欄
+        Text(
+            text = "① 选择预设服务商（自动填充最优 BaseURL 与标准 Model）：",
+            fontSize = 16.sp,
+            color = Color(0xFFE2E8F0),
+            fontWeight = FontWeight.SemiBold
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            LlmVendorPreset.entries.forEach { vendor ->
+                TvFocusableButton(
+                    text = vendor.badge,
+                    selected = uiState.llmConfig.vendor == vendor,
+                    accentColor = Color(0xFFEC4899),
+                    onClick = {
+                        viewModel.selectLlmVendor(vendor)
+                        apiKeyInput = ""
+                        modelInput = vendor.candidateModels.firstOrNull() ?: ""
+                        baseUrlInput = vendor.defaultBaseUrl
+                    }
+                )
+            }
+        }
+
+        // 參數編輯與保存卡片
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(16.dp))
+                .background(Color(0xFF1E293B))
+                .border(2.dp, Color(0xFFEC4899), RoundedCornerShape(16.dp))
+                .padding(18.dp)
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    text = "② 核心连接参数配置：",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFF472B6)
+                )
+
+                OutlinedTextField(
+                    value = apiKeyInput,
+                    onValueChange = { apiKeyInput = it },
+                    label = { Text("API Key (秘钥，若使用本地 Ollama 或离线模板可留空)") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color(0xFFCBD5E1),
+                        focusedBorderColor = Color(0xFFEC4899),
+                        unfocusedBorderColor = Color(0xFF64748B)
+                    ),
+                    singleLine = true
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    OutlinedTextField(
+                        value = modelInput,
+                        onValueChange = { modelInput = it },
+                        label = { Text("模型标识 (Model ID)") },
+                        modifier = Modifier.weight(1f),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedTextColor = Color.White,
+                            unfocusedTextColor = Color(0xFFCBD5E1),
+                            focusedBorderColor = Color(0xFFEC4899),
+                            unfocusedBorderColor = Color(0xFF64748B)
+                        ),
+                        singleLine = true
                     )
-                    Text(
-                        text = "接口地址：${cfg.baseUrl}  |  密钥状态：${cfg.maskedApiKey}",
-                        fontSize = 13.sp,
-                        color = Color(0xFFA7F3D0)
+
+                    OutlinedTextField(
+                        value = baseUrlInput,
+                        onValueChange = { baseUrlInput = it },
+                        label = { Text("Base URL 接口地址") },
+                        modifier = Modifier.weight(1.5f),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedTextColor = Color.White,
+                            unfocusedTextColor = Color(0xFFCBD5E1),
+                            focusedBorderColor = Color(0xFFEC4899),
+                            unfocusedBorderColor = Color(0xFF64748B)
+                        ),
+                        singleLine = true
                     )
-                    Text(
-                        text = uiState.aiStatusMessage,
-                        fontSize = 13.sp,
-                        color = Color(0xFF93C5FD)
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    TvFocusableButton(
+                        text = "💾 保存配置并激活",
+                        selected = true,
+                        accentColor = Color(0xFF10B981),
+                        onClick = {
+                            viewModel.updateLlmCustomEndpointAndKey(
+                                baseUrl = baseUrlInput,
+                                modelName = modelInput,
+                                apiKey = apiKeyInput
+                            )
+                        }
+                    )
+
+                    TvFocusableButton(
+                        text = "🧪 测试当前 AI 生题",
+                        selected = false,
+                        accentColor = Color(0xFF38BDF8),
+                        onClick = { viewModel.triggerAiMagicExpansion() }
                     )
                 }
             }
         }
 
-        // 右側：自定義參數輸入框 + 開發電腦 ADB 一行命令極速注入指南
-        Column(
+        // ADB 快速注入指南卡片
+        Box(
             modifier = Modifier
-                .weight(0.9f)
-                .fillMaxHeight()
-                .clip(RoundedCornerShape(20.dp))
-                .background(Color(0xFF1E293B))
-                .padding(20.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(14.dp))
+                .background(Color(0xFF0F172A))
+                .border(1.dp, Color(0xFF334155), RoundedCornerShape(14.dp))
+                .padding(14.dp)
         ) {
-            Text(
-                text = "⚡ 方式 A：在电视上直接修改 BaseURL / 模型 / API Key",
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-
-            OutlinedTextField(
-                value = customBaseUrl,
-                onValueChange = { customBaseUrl = it },
-                label = { Text("API Base URL (兼容 OpenAI /v1)") },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color(0xFF38BDF8),
-                    unfocusedBorderColor = Color(0xFF64748B)
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(
+                    text = "💡 极速配置技巧（无需在电视遥控器上痛苦输密码）：",
+                    fontSize = 14.sp,
+                    color = Color(0xFFFDE047),
+                    fontWeight = FontWeight.Bold
                 )
-            )
-
-            OutlinedTextField(
-                value = customModel,
-                onValueChange = { customModel = it },
-                label = { Text("模型名称 (Model ID，可任意自定义)") },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color(0xFF38BDF8),
-                    unfocusedBorderColor = Color(0xFF64748B)
+                Text(
+                    text = "在电脑终端输入以下 ADB 命令即可一键将你的 API Key 发送到小米电视：",
+                    fontSize = 13.sp,
+                    color = Color(0xFF94A3B8)
                 )
-            )
-
-            OutlinedTextField(
-                value = customApiKey,
-                onValueChange = { customApiKey = it },
-                label = { Text("API Key (留空则自动使用内置离线 AI 裂变)") },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color(0xFF38BDF8),
-                    unfocusedBorderColor = Color(0xFF64748B)
+                Text(
+                    text = "adb shell am broadcast -a com.enghunter.tv.CONFIG_LLM --es vendor DEEPSEEK --es api_key \"sk-你的密钥\" --es model deepseek-chat",
+                    fontSize = 12.sp,
+                    color = Color(0xFF67E8F9),
+                    fontWeight = FontWeight.Medium
                 )
-            )
-
-            TvFocusableButton(
-                text = "💾 保存自定义 BaseURL / 模型 / API Key",
-                selected = true,
-                accentColor = Color(0xFF22C55E),
-                onClick = {
-                    viewModel.updateLlmCustomEndpointAndKey(
-                        baseUrl = customBaseUrl,
-                        modelName = customModel,
-                        apiKey = customApiKey
-                    )
-                }
-            )
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            Text(
-                text = "💻 方式 B：免遥控器打字！电脑 ADB 一行命令推送配置",
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFFFACC15)
-            )
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFF0F172A))
-                    .padding(14.dp)
-            ) {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(
-                        text = "在电脑终端执行以下任一命令，电视即刻热更新并永久保存：",
-                        fontSize = 13.sp,
-                        color = Color(0xFFCBD5E1)
-                    )
-                    Text(
-                        text = "# 1. 一键配置 DeepSeek 官方模型\nadb shell am broadcast -a com.enghunter.tv.CONFIG_LLM \\\n  --es provider DEEPSEEK --es model deepseek-chat --es api_key sk-你的密钥",
-                        fontSize = 12.sp,
-                        color = Color(0xFF4ADE80)
-                    )
-                    Text(
-                        text = "# 2. 一键配置阿里云百炼 Qwen 或硅基流动\nadb shell am broadcast -a com.enghunter.tv.CONFIG_LLM \\\n  --es provider ALIYUN_QWEN --es model qwen-plus --es api_key sk-你的密钥",
-                        fontSize = 12.sp,
-                        color = Color(0xFF38BDF8)
-                    )
-                    Text(
-                        text = "# 3. 一键连接家里电脑局域网 Ollama (免Key)\nadb shell am broadcast -a com.enghunter.tv.CONFIG_LLM \\\n  --es provider LOCAL_OLLAMA --es base_url http://192.168.1.88:11434/v1 --es model qwen2.5:7b",
-                        fontSize = 12.sp,
-                        color = Color(0xFFFBBF24)
-                    )
-                }
             }
         }
     }
 }
 
 @Composable
-private fun EndpointCard(item: XiaomiKaraokeMicManager.AudioEndpointItem) {
+private fun DiagnosticDeviceCard(
+    title: String,
+    devices: List<XiaomiKaraokeMicManager.AudioEndpointItem>,
+    highlightType: String,
+    modifier: Modifier = Modifier
+) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(10.dp))
-            .background(if (item.isXiaomiKaraokeMicCandidate) Color(0xFF1E3A8A) else Color(0xFF0F172A))
-            .padding(10.dp)
+        modifier = modifier
+            .clip(RoundedCornerShape(14.dp))
+            .background(Color(0xFF1E293B))
+            .border(1.dp, Color(0xFF334155), RoundedCornerShape(14.dp))
+            .padding(14.dp)
     ) {
-        Column {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
-                text = "${if (item.isXiaomiKaraokeMicCandidate) "⭐ " else ""}${item.productName} (id=${item.id})",
-                fontSize = 14.sp,
+                text = title,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = Color(0xFFFACC15)
             )
-            Text(
-                text = "${item.typeLabel} | 采样率: ${if (item.sampleRates.isEmpty()) "自适应" else item.sampleRates.joinToString()}",
-                fontSize = 12.sp,
-                color = Color(0xFFCBD5E1)
-            )
+
+            if (devices.isEmpty()) {
+                Text(
+                    text = "未检测到外部设备 (请开启蓝牙并配对麦克风)",
+                    fontSize = 14.sp,
+                    color = Color(0xFF64748B)
+                )
+            } else {
+                devices.forEach { dev ->
+                    val isHighlight = dev.typeLabel.contains("BLUETOOTH", ignoreCase = true)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(if (isHighlight) Color(0xFF0F2E22) else Color(0xFF0F172A))
+                            .padding(horizontal = 10.dp, vertical = 6.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "${dev.productName} (${dev.typeLabel})",
+                            fontSize = 13.sp,
+                            color = if (isHighlight) Color(0xFF34D399) else Color(0xFFE2E8F0),
+                            fontWeight = if (isHighlight) FontWeight.Bold else FontWeight.Normal
+                        )
+                        Text(
+                            text = "ID: ${dev.id}",
+                            fontSize = 12.sp,
+                            color = Color(0xFF94A3B8)
+                        )
+                    }
+                }
+            }
         }
     }
 }
 
 /**
- * 專為小米電視遙控器 D-Pad 焦點導航設計的大尺寸發光按鈕
- * - 遙控器方向鍵移入焦點時自動放大 1.06 倍並高亮金色外框
- * - 按遙控器【確定/OK鍵】或鼠標點擊均可觸發
+ * 专为小米电视遥控器 D-Pad 焦点导航设计的 StarStage 发光按钮
+ * - 获得焦点时触发柔和弹性放大与金黄色高斯光环
+ * - 按钮材质升级为微立体磨砂触感
  */
 @Composable
 fun TvFocusableButton(
@@ -1176,7 +1243,8 @@ fun TvFocusableButton(
 ) {
     var isFocused by remember { mutableStateOf(false) }
     val scale by animateFloatAsState(
-        targetValue = if (isFocused) 1.06f else 1.0f,
+        targetValue = if (isFocused) 1.08f else 1.0f,
+        animationSpec = spring(dampingRatio = 0.65f),
         label = "btnScale"
     )
 
@@ -1201,19 +1269,19 @@ fun TvFocusableButton(
         color = when {
             isFocused -> accentColor
             selected -> accentColor.copy(alpha = 0.28f)
-            else -> Color(0xFF334155)
+            else -> Color(0xFF241B4E).copy(alpha = 0.85f)
         },
         border = BorderStroke(
-            width = if (isFocused) 3.dp else 1.dp,
-            color = if (isFocused) Color(0xFFFDE047) else accentColor.copy(alpha = 0.65f)
+            width = if (isFocused) 2.5.dp else 1.dp,
+            color = if (isFocused) StarStageTokens.GoldStar else accentColor.copy(alpha = 0.55f)
         )
     ) {
         Text(
             text = text,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
-            fontSize = 15.sp,
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp),
+            fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
-            color = if (isFocused) Color(0xFF0F172A) else Color.White,
+            color = if (isFocused) Color(0xFF0F0B26) else Color.White,
             textAlign = TextAlign.Center
         )
     }
