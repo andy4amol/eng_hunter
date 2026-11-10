@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.enghunter.tv.audio.AntiVocalCancelPlayer
 import com.enghunter.tv.audio.RingBufferAudioCache
+import com.enghunter.tv.audio.VirtualKaraokeMicTwin
 import com.enghunter.tv.audio.XiaomiKaraokeMicManager
 import com.enghunter.tv.model.PronunciationReport
 import com.enghunter.tv.model.SampleSentenceRepository
@@ -48,6 +49,8 @@ data class EngHunterUiState(
     val hasRecordPermission: Boolean = false,
     val selectedInputMode: XiaomiKaraokeMicManager.PreferredInputMode =
         XiaomiKaraokeMicManager.PreferredInputMode.MODE_A_WIRELESS_HFP,
+    val selectedSimulatedProfile: VirtualKaraokeMicTwin.SimulatedChildVoiceProfile =
+        VirtualKaraokeMicTwin.SimulatedChildVoiceProfile.PERFECT_3_STARS,
     val enableAntiVocalCancel: Boolean = true,
     val bluetoothLatencyOffsetMs: Long = 180L,
     val autoFlowHandsFree: Boolean = true, // 模式 A 核心：播完自動叮一聲開麥，說完 VAD 自動停
@@ -148,6 +151,31 @@ class EngHunterViewModel(application: Application) : AndroidViewModel(applicatio
         refreshAudioDevices()
     }
 
+    fun selectSimulatedProfile(profile: VirtualKaraokeMicTwin.SimulatedChildVoiceProfile) {
+        _uiState.update {
+            it.copy(
+                selectedSimulatedProfile = profile,
+                selectedInputMode = XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR
+            )
+        }
+    }
+
+    /**
+     * 在單句跟讀界面一鍵觸發指定數字孿生畫像的跟讀與評測（無需真機麥克風權限）
+     */
+    fun triggerSimulatedPractice(profile: VirtualKaraokeMicTwin.SimulatedChildVoiceProfile) {
+        cancelActiveJob()
+        _uiState.update {
+            it.copy(
+                selectedInputMode = XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR,
+                selectedSimulatedProfile = profile
+            )
+        }
+        activeTaskJob = viewModelScope.launch {
+            startChildRecordingInternal()
+        }
+    }
+
     fun toggleAntiVocalCancel() {
         _uiState.update { it.copy(enableAntiVocalCancel = !it.enableAntiVocalCancel) }
     }
@@ -207,7 +235,9 @@ class EngHunterViewModel(application: Application) : AndroidViewModel(applicatio
             val result = micManager.recordWithAutoVad(
                 mode = _uiState.value.selectedInputMode,
                 maxDurationMs = 5000L,
-                enableVadAutoStop = true
+                enableVadAutoStop = true,
+                simulatedProfile = _uiState.value.selectedSimulatedProfile,
+                expectedWordCount = _uiState.value.activeWordsList.size
             ) { frame ->
                 _uiState.update {
                     it.copy(
@@ -357,7 +387,10 @@ class EngHunterViewModel(application: Application) : AndroidViewModel(applicatio
 
             _uiState.update { it.copy(highlightedWordIndex = -1) }
 
-            if (_uiState.value.autoFlowHandsFree && _uiState.value.hasRecordPermission) {
+            if (_uiState.value.autoFlowHandsFree &&
+                (_uiState.value.hasRecordPermission ||
+                    _uiState.value.selectedInputMode == XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR)
+            ) {
                 startChildRecordingInternal()
             } else {
                 _uiState.update { it.copy(practiceStage = PracticeStage.READY) }
@@ -393,7 +426,9 @@ class EngHunterViewModel(application: Application) : AndroidViewModel(applicatio
             mode = _uiState.value.selectedInputMode,
             maxDurationMs = 6500L,
             enableVadAutoStop = true,
-            silenceHangoverMs = 850L
+            silenceHangoverMs = 850L,
+            simulatedProfile = _uiState.value.selectedSimulatedProfile,
+            expectedWordCount = _uiState.value.activeWordsList.size
         ) { frame ->
             _uiState.update {
                 it.copy(
@@ -478,7 +513,9 @@ class EngHunterViewModel(application: Application) : AndroidViewModel(applicatio
             val result = micManager.recordWithAutoVad(
                 mode = _uiState.value.selectedInputMode,
                 maxDurationMs = 5000L,
-                enableVadAutoStop = true
+                enableVadAutoStop = true,
+                simulatedProfile = _uiState.value.selectedSimulatedProfile,
+                expectedWordCount = _uiState.value.activeWordsList.size
             ) { frame ->
                 _uiState.update {
                     it.copy(

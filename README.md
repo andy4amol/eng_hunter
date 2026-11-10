@@ -25,12 +25,23 @@
    - 一键测试 HFP 无线拾音 + 双 5W 喇叭回放、防消原唱开关对比、蓝牙延迟毫秒级 (`±30ms`) 同步微调、遥控器按键 `KeyCode` 监控。
    - **20 槽位环形 WAV 缓存 (`RingBufferAudioCache`)**：严格限制缓存体积 `< 4MB`，防撑爆小米电视闪存。
 
+5. **里程碑 M1：开发机数字孪生模拟器 (`VirtualKaraokeMicTwin`) + GitHub Actions 自动打包**
+   - **零真机/零麦克风闭环开发**：当开发电脑不在客厅电视旁、不方便手持麦克风说话时，支持一键切换 **“模式 D：开发机数字孪生模拟”** 或点击跟读页的 **“🧪 数字孪生模拟”** 按钮。
+   - **4 种小学生声学画像仿真**：
+     - `🌟 样本A：3星洪亮标准跟读`（验证 VAD 0.85s 自动截断与 3 星解锁 9 种音效秀）
+     - `🟠 样本B：2星中间漏读/卡顿`（验证第 3 个词漏读时的温和橙色高亮与单点提示）
+     - `🌱 样本C：1星害羞微弱声音`（验证“只要敢开口即保底 1 星”护心机制）
+     - `📡 样本D：8kHz CVSD 蓝牙窄带重采样`（验证老款电视 HFP 8000Hz 自动线性插值重采样至 16000Hz）
+   - **GitHub Actions 自动构建 (`android-ci.yml`)**：每次 `git push` 自动运行全部 JVM 单元测试并构建可安装的 `enghunter-tv-debug-apk` 产物。
+
 ---
 
 ## 📂 项目目录结构
 
 ```text
 EngHunter/
+├── .github/workflows/
+│   └── android-ci.yml                               # GitHub Actions 自动测试与 APK 打包流水线
 ├── app/
 │   ├── build.gradle.kts
 │   └── src/
@@ -41,6 +52,7 @@ EngHunter/
 │       │   │   ├── audio/
 │       │   │   │   ├── AntiVocalCancelPlayer.kt     # 防一键消原唱立体声播放器 & 卡拉OK高亮同步
 │       │   │   │   ├── RingBufferAudioCache.kt      # 20槽位环形 WAV 缓存管理
+│       │   │   │   ├── VirtualKaraokeMicTwin.kt     # M1 开发机硬件数字孪生模拟器 (4种儿童语音样本)
 │       │   │   │   └── XiaomiKaraokeMicManager.kt   # XMKGMKF01YM A2DP/HFP 路由与 VAD 录音引擎
 │       │   │   ├── model/
 │       │   │   │   └── SentenceModels.kt            # 句式卡片、逐词时间戳与双麦问答模型
@@ -49,10 +61,10 @@ EngHunter/
 │       │   │   ├── ui/
 │       │   │   │   └── EngHunterTvApp.kt            # Jetpack Compose for TV 双页面大屏 UI
 │       │   │   └── viewmodel/
-│       │   │       └── EngHunterViewModel.kt        # 模式 A 全无线闭环状态机
+│       │   │       └── EngHunterViewModel.kt        # 模式 A 全无线闭环 & 数字孪生状态机
 │       │   └── res/
 │       └── test/java/com/enghunter/tv/
-│           └── AudioAndScoringTest.kt               # 防消原唱与护心打分单元测试
+│           └── AudioAndScoringTest.kt               # 防消原唱、数字孪生4样本与护心打分单元测试
 ├── build.gradle.kts
 ├── settings.gradle.kts
 └── gradlew

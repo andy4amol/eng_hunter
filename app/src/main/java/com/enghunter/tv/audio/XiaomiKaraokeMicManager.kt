@@ -83,6 +83,10 @@ class XiaomiKaraokeMicManager(private val context: Context) {
         MODE_C_REMOTE_OR_BUILTIN(
             "模式 C：K歌麦外放 + 遥控器/电视内置麦收音",
             "保底方案：不切换蓝牙 HFP，保持 A2DP 常开，用遥控器或电视麦录音"
+        ),
+        MODE_DEV_SIMULATOR(
+            "模式 D：开发机数字孪生模拟 (零真机/零麦克风)",
+            "办公开发专用：仿真 450ms HFP 握手 + 自动注入 4 种小学生发音样本"
         )
     }
 
@@ -230,7 +234,7 @@ class XiaomiKaraokeMicManager(private val context: Context) {
     }
 
     /**
-     * 執行一次完整的人聲採集（支持 VAD 說完自動停止 + 8kHz/16kHz 自適應重採樣到 16kHz）
+     * 執行一次完整的人聲採集（支持 VAD 說完自動停止 + 8kHz/16kHz 自適應重採樣到 16kHz + 開發機數字孿生模擬）
      */
     @SuppressLint("MissingPermission")
     suspend fun recordWithAutoVad(
@@ -238,8 +242,22 @@ class XiaomiKaraokeMicManager(private val context: Context) {
         maxDurationMs: Long = 6500L,
         enableVadAutoStop: Boolean = true,
         silenceHangoverMs: Long = 850L,
+        simulatedProfile: VirtualKaraokeMicTwin.SimulatedChildVoiceProfile =
+            VirtualKaraokeMicTwin.SimulatedChildVoiceProfile.PERFECT_3_STARS,
+        expectedWordCount: Int = 6,
         onLiveFrame: (LiveRecordingFrame) -> Unit
     ): RecordingSessionResult = withContext(Dispatchers.IO) {
+        if (mode == PreferredInputMode.MODE_DEV_SIMULATOR) {
+            return@withContext runDigitalTwinSimulation(
+                profile = simulatedProfile,
+                wordCount = expectedWordCount,
+                maxDurationMs = maxDurationMs,
+                enableVadAutoStop = enableVadAutoStop,
+                silenceHangoverMs = silenceHangoverMs,
+                onLiveFrame = onLiveFrame
+            )
+        }
+
         val diag = StringBuilder()
         var hfpEngaged = false
 
@@ -257,6 +275,7 @@ class XiaomiKaraokeMicManager(private val context: Context) {
             PreferredInputMode.MODE_A_WIRELESS_HFP -> MediaRecorder.AudioSource.VOICE_COMMUNICATION
             PreferredInputMode.MODE_B_USB_LINE_IN -> MediaRecorder.AudioSource.VOICE_RECOGNITION
             PreferredInputMode.MODE_C_REMOTE_OR_BUILTIN -> MediaRecorder.AudioSource.VOICE_RECOGNITION
+            PreferredInputMode.MODE_DEV_SIMULATOR -> MediaRecorder.AudioSource.VOICE_RECOGNITION
         }
 
         var chosenRecorder: AudioRecord? = null
@@ -434,6 +453,45 @@ class XiaomiKaraokeMicManager(private val context: Context) {
         )
     }
 
+    private suspend fun runDigitalTwinSimulation(
+        profile: VirtualKaraokeMicTwin.SimulatedChildVoiceProfile,
+        wordCount: Int,
+        maxDurationMs: Long,
+        enableVadAutoStop: Boolean,
+        silenceHangoverMs: Long,
+        onLiveFrame: (LiveRecordingFrame) -> Unit
+    ): RecordingSessionResult {
+        // 1. 模擬真實 XMKGMKF01YM 藍牙 5.1 HFP/SCO 通道切換握手延遲 (450ms)
+        delay(450L)
+
+        // 2. 生成高仿真兒童跟讀語音包絡 PCM
+        val simulatedRaw = VirtualKaraokeMicTwin.synthesizeChildSpeechPcm(
+            profile = profile,
+            wordCount = wordCount
+        )
+
+        // 3. 按真實時間節奏回放 50ms 幀流並執行 VAD 自動截斷
+        return VirtualKaraokeMicTwin.runVadStreamOverPcm(
+            rawPcm = simulatedRaw,
+            sampleRate = profile.simulatedSampleRate,
+            maxDurationMs = maxDurationMs,
+            enableVadAutoStop = enableVadAutoStop,
+            silenceHangoverMs = silenceHangoverMs
+        ) { elapsedMs, frameRmsNorm, peakSoFar, speechStarted ->
+            onLiveFrame(
+                LiveRecordingFrame(
+                    elapsedMs = elapsedMs,
+                    currentRms = frameRmsNorm,
+                    peakRaw = peakSoFar,
+                    hasSpeechStarted = speechStarted,
+                    activeDeviceSummary = "数字孪生::XMKGMKF01YM [${profile.badge}]",
+                    actualSampleRate = profile.simulatedSampleRate,
+                    scoStateLabel = "数字孪生 HFP 仿真中"
+                )
+            )
+        }
+    }
+
     private fun pickPreferredInputDevice(mode: PreferredInputMode): AudioDeviceInfo? {
         val inputs = audioManager.getDevices(AudioManager.GET_DEVICES_INPUTS)
         return when (mode) {
@@ -450,23 +508,12 @@ class XiaomiKaraokeMicManager(private val context: Context) {
                 inputs.firstOrNull { it.type == AudioDeviceInfo.TYPE_BUILTIN_MIC }
                     ?: inputs.firstOrNull()
             }
+            PreferredInputMode.MODE_DEV_SIMULATOR -> null
         }
     }
 
     private fun resampleTo16kHz(input: ShortArray, srcRate: Int): ShortArray {
-        if (input.isEmpty() || srcRate <= 0 || srcRate == 16000) return input
-        val outLen = ((input.size.toLong() * 16000L) / srcRate).toInt().coerceAtLeast(1)
-        val output = ShortArray(outLen)
-        val ratio = srcRate.toDouble() / 16000.0
-        for (i in 0 until outLen) {
-            val srcPos = i * ratio
-            val idx = srcPos.toInt().coerceIn(0, input.lastIndex)
-            val nextIdx = (idx + 1).coerceAtMost(input.lastIndex)
-            val frac = srcPos - idx
-            val interpolated = input[idx] * (1.0 - frac) + input[nextIdx] * frac
-            output[i] = interpolated.toInt().coerceIn(Short.MIN_VALUE.toInt(), Short.MAX_VALUE.toInt()).toShort()
-        }
-        return output
+        return VirtualKaraokeMicTwin.resampleTo16kHz(input, srcRate)
     }
 
     companion object {

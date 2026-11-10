@@ -48,6 +48,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.enghunter.tv.audio.VirtualKaraokeMicTwin
 import com.enghunter.tv.audio.XiaomiKaraokeMicManager
 import com.enghunter.tv.model.WordFeedbackLevel
 import com.enghunter.tv.viewmodel.ActiveTab
@@ -415,7 +416,9 @@ private fun PracticeClosedLoopScreen(
                 selected = true,
                 accentColor = Color(0xFF22C55E),
                 onClick = {
-                    if (!uiState.hasRecordPermission) onRequestPermission()
+                    if (!uiState.hasRecordPermission &&
+                        uiState.selectedInputMode != XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR
+                    ) onRequestPermission()
                     else viewModel.startStandardAudioAndAutoPractice(slowMode = false)
                 }
             )
@@ -425,7 +428,9 @@ private fun PracticeClosedLoopScreen(
                 selected = false,
                 accentColor = Color(0xFF38BDF8),
                 onClick = {
-                    if (!uiState.hasRecordPermission) onRequestPermission()
+                    if (!uiState.hasRecordPermission &&
+                        uiState.selectedInputMode != XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR
+                    ) onRequestPermission()
                     else viewModel.startStandardAudioAndAutoPractice(slowMode = true)
                 }
             )
@@ -435,8 +440,19 @@ private fun PracticeClosedLoopScreen(
                 selected = false,
                 accentColor = Color(0xFFF59E0B),
                 onClick = {
-                    if (!uiState.hasRecordPermission) onRequestPermission()
+                    if (!uiState.hasRecordPermission &&
+                        uiState.selectedInputMode != XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR
+                    ) onRequestPermission()
                     else viewModel.startChildRecording()
+                }
+            )
+
+            TvFocusableButton(
+                text = "🧪 数字孪生模拟: ${uiState.selectedSimulatedProfile.badge}",
+                selected = uiState.selectedInputMode == XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR,
+                accentColor = Color(0xFF8B5CF6),
+                onClick = {
+                    viewModel.triggerSimulatedPractice(uiState.selectedSimulatedProfile)
                 }
             )
 
@@ -617,7 +633,7 @@ private fun Phase0HardwareDiagnosticScreen(
                 color = Color(0xFFFACC15)
             )
 
-            // 三種模式一鍵切換測試
+            // 四種模式一鍵切換測試（含 M1 開發機數字孿生模擬）
             XiaomiKaraokeMicManager.PreferredInputMode.entries.forEach { mode ->
                 TvFocusableButton(
                     text = if (uiState.selectedInputMode == mode) "✅ ${mode.title}" else mode.title,
@@ -627,6 +643,24 @@ private fun Phase0HardwareDiagnosticScreen(
                 )
             }
 
+            // M1 開發機數字孿生模擬器：4 種兒童跟讀畫像選擇器
+            Text(
+                text = "🧪 M1 开发机数字孪生模拟样本（免真机/免麦克风）：",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFC4B5FD)
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                VirtualKaraokeMicTwin.SimulatedChildVoiceProfile.entries.forEach { profile ->
+                    TvFocusableButton(
+                        text = profile.badge,
+                        selected = uiState.selectedSimulatedProfile == profile,
+                        accentColor = Color(0xFF8B5CF6),
+                        onClick = { viewModel.selectSimulatedProfile(profile) }
+                    )
+                }
+            }
+
             // 階段 0 核心測試按鈕
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 TvFocusableButton(
@@ -634,7 +668,9 @@ private fun Phase0HardwareDiagnosticScreen(
                     selected = true,
                     accentColor = Color(0xFF22C55E),
                     onClick = {
-                        if (!uiState.hasRecordPermission) onRequestPermission()
+                        if (!uiState.hasRecordPermission &&
+                            uiState.selectedInputMode != XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR
+                        ) onRequestPermission()
                         else viewModel.runPhase0WirelessHfpLoopbackTest()
                     }
                 )

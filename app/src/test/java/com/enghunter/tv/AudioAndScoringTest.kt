@@ -1,9 +1,12 @@
 package com.enghunter.tv
 
 import com.enghunter.tv.audio.AntiVocalCancelPlayer
+import com.enghunter.tv.audio.VirtualKaraokeMicTwin
 import com.enghunter.tv.model.SampleSentenceRepository
+import com.enghunter.tv.model.WordFeedbackLevel
 import com.enghunter.tv.scoring.PronunciationScorer
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -51,5 +54,95 @@ class AudioAndScoringTest {
         assertTrue("Speaking child should earn at least 1 star", report.stars in 1..3)
         assertEquals(targetWords.size, report.wordResults.size)
         assertNotEquals(0, report.overallScore)
+    }
+
+    @Test
+    fun `digital twin PERFECT_3_STARS triggers VAD auto stop and unlocks 3-star magic sound effect`() {
+        val scorer = PronunciationScorer()
+        val card = SampleSentenceRepository.builtInSentences.first()
+        val targetWords = card.en.split(" ")
+
+        val rawPcm = VirtualKaraokeMicTwin.synthesizeChildSpeechPcm(
+            profile = VirtualKaraokeMicTwin.SimulatedChildVoiceProfile.PERFECT_3_STARS,
+            wordCount = targetWords.size
+        )
+        val vadResult = VirtualKaraokeMicTwin.runVadStreamOverPcm(
+            rawPcm = rawPcm,
+            sampleRate = 16000
+        )
+
+        assertTrue("VAD should auto-stop after trailing silence", vadResult.stoppedByVadSilence)
+        assertTrue("Captured duration should be trimmed before raw PCM length", vadResult.pcm16kMono.size < rawPcm.size)
+
+        val report = scorer.evaluate(card, targetWords, vadResult.pcm16kMono)
+        assertEquals(3, report.stars)
+        assertTrue("3-star result should unlock XMKGMKF01YM 9-mode magic sound effect", report.unlockMagicSoundEffect)
+    }
+
+    @Test
+    fun `digital twin HESITANT_MISSED_WORD_2_STARS highlights skipped word in gentle orange`() {
+        val scorer = PronunciationScorer()
+        val card = SampleSentenceRepository.builtInSentences.first()
+        val targetWords = card.en.split(" ")
+
+        val rawPcm = VirtualKaraokeMicTwin.synthesizeChildSpeechPcm(
+            profile = VirtualKaraokeMicTwin.SimulatedChildVoiceProfile.HESITANT_MISSED_WORD_2_STARS,
+            wordCount = targetWords.size
+        )
+        val vadResult = VirtualKaraokeMicTwin.runVadStreamOverPcm(
+            rawPcm = rawPcm,
+            sampleRate = 16000
+        )
+        val report = scorer.evaluate(card, targetWords, vadResult.pcm16kMono)
+
+        assertEquals(2, report.stars)
+        assertFalse(report.unlockMagicSoundEffect)
+        assertTrue(
+            "At least one missed word should be marked KEEP_TRYING",
+            report.wordResults.any { it.level == WordFeedbackLevel.KEEP_TRYING }
+        )
+    }
+
+    @Test
+    fun `digital twin SHY_LOW_VOICE_1_STAR still earns 1 star floor protection`() {
+        val scorer = PronunciationScorer()
+        val card = SampleSentenceRepository.builtInSentences.first()
+        val targetWords = card.en.split(" ")
+
+        val rawPcm = VirtualKaraokeMicTwin.synthesizeChildSpeechPcm(
+            profile = VirtualKaraokeMicTwin.SimulatedChildVoiceProfile.SHY_LOW_VOICE_1_STAR,
+            wordCount = targetWords.size
+        )
+        val vadResult = VirtualKaraokeMicTwin.runVadStreamOverPcm(
+            rawPcm = rawPcm,
+            sampleRate = 16000
+        )
+        val report = scorer.evaluate(card, targetWords, vadResult.pcm16kMono)
+
+        assertTrue("Shy low voice should still get at least 1 star", report.stars >= 1)
+    }
+
+    @Test
+    fun `digital twin NARROWBAND_8KHZ_CVSD resamples 8000Hz to 16000Hz accurately`() {
+        val scorer = PronunciationScorer()
+        val card = SampleSentenceRepository.builtInSentences.first()
+        val targetWords = card.en.split(" ")
+
+        val raw8k = VirtualKaraokeMicTwin.synthesizeChildSpeechPcm(
+            profile = VirtualKaraokeMicTwin.SimulatedChildVoiceProfile.NARROWBAND_8KHZ_CVSD,
+            wordCount = targetWords.size
+        )
+        val vadResult = VirtualKaraokeMicTwin.runVadStreamOverPcm(
+            rawPcm = raw8k,
+            sampleRate = 8000
+        )
+
+        assertEquals(8000, vadResult.rawSampleRate)
+        // Resampled 16kHz array should match 16 samples per ms of duration
+        val expectedSamples16k = (vadResult.durationMs * 16).toInt()
+        assertTrue(kotlin.math.abs(vadResult.pcm16kMono.size - expectedSamples16k) <= 32)
+
+        val report = scorer.evaluate(card, targetWords, vadResult.pcm16kMono)
+        assertEquals(3, report.stars)
     }
 }
