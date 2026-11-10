@@ -77,7 +77,7 @@ fun EngHunterTvApp(
                 )
             )
             // 5% 電視安全邊距（防止過掃描裁切）
-            .padding(horizontal = 36.dp, vertical = 22.dp)
+            .padding(horizontal = 20.dp, vertical = 8.dp)
             .onPreviewKeyEvent { keyEvent ->
                 if (keyEvent.type == KeyEventType.KeyDown) {
                     viewModel.onRemoteKeyIntercepted(
@@ -96,28 +96,34 @@ fun EngHunterTvApp(
                 onRequestPermission = onRequestPermission
             )
 
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
-            when (uiState.activeTab) {
-                ActiveTab.PRACTICE_PROTOTYPE -> {
-                    PracticeClosedLoopScreen(
-                        uiState = uiState,
-                        viewModel = viewModel,
-                        onRequestPermission = onRequestPermission
-                    )
-                }
-                ActiveTab.PHASE0_DIAGNOSTIC -> {
-                    Phase0HardwareDiagnosticScreen(
-                        uiState = uiState,
-                        viewModel = viewModel,
-                        onRequestPermission = onRequestPermission
-                    )
-                }
-                ActiveTab.AI_MODEL_SETTINGS -> {
-                    AiModelProviderSettingsScreen(
-                        uiState = uiState,
-                        viewModel = viewModel
-                    )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) {
+                when (uiState.activeTab) {
+                    ActiveTab.PRACTICE_PROTOTYPE -> {
+                        PracticeClosedLoopScreen(
+                            uiState = uiState,
+                            viewModel = viewModel,
+                            onRequestPermission = onRequestPermission
+                        )
+                    }
+                    ActiveTab.PHASE0_DIAGNOSTIC -> {
+                        Phase0HardwareDiagnosticScreen(
+                            uiState = uiState,
+                            viewModel = viewModel,
+                            onRequestPermission = onRequestPermission
+                        )
+                    }
+                    ActiveTab.AI_MODEL_SETTINGS -> {
+                        AiModelProviderSettingsScreen(
+                            uiState = uiState,
+                            viewModel = viewModel
+                        )
+                    }
                 }
             }
         }
@@ -134,29 +140,29 @@ private fun TopTvNavigationBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(12.dp))
             .background(Color(0xFF1E293B).copy(alpha = 0.92f))
-            .padding(horizontal = 20.dp, vertical = 12.dp),
+            .padding(horizontal = 14.dp, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "🦁 EngHunter 少儿英语开口王",
-                fontSize = 22.sp,
+                text = "🦁 EngHunter 少儿开口王",
+                fontSize = 18.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color(0xFFFACC15)
             )
-            Spacer(modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.width(8.dp))
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
+                    .clip(RoundedCornerShape(6.dp))
                     .background(Color(0xFF065F46))
-                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                    .padding(horizontal = 8.dp, vertical = 2.dp)
             ) {
                 Text(
-                    text = "XMKGMKF01YM · 模式A全无线闭环",
-                    fontSize = 13.sp,
+                    text = "XMKGMKF01YM",
+                    fontSize = 11.sp,
                     color = Color(0xFFA7F3D0),
                     fontWeight = FontWeight.Bold
                 )
@@ -165,31 +171,31 @@ private fun TopTvNavigationBar(
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             TvFocusableButton(
-                text = "🎯 单句跟读闯关原型",
+                text = "🎯 跟读闯关",
                 selected = uiState.activeTab == ActiveTab.PRACTICE_PROTOTYPE,
                 accentColor = Color(0xFF38BDF8),
                 onClick = { onSwitchTab(ActiveTab.PRACTICE_PROTOTYPE) }
             )
 
             TvFocusableButton(
-                text = "🛠️ 阶段0：K歌麦硬件探测台",
+                text = "🛠️ 硬件探测",
                 selected = uiState.activeTab == ActiveTab.PHASE0_DIAGNOSTIC,
                 accentColor = Color(0xFFF59E0B),
                 onClick = { onSwitchTab(ActiveTab.PHASE0_DIAGNOSTIC) }
             )
 
             TvFocusableButton(
-                text = "🤖 AI供应商设置 (${uiState.llmConfig.vendor.badge})",
+                text = "🤖 AI设置 (${uiState.llmConfig.vendor.badge})",
                 selected = uiState.activeTab == ActiveTab.AI_MODEL_SETTINGS,
                 accentColor = Color(0xFFEC4899),
                 onClick = { onSwitchTab(ActiveTab.AI_MODEL_SETTINGS) }
             )
 
             TvFocusableButton(
-                text = if (uiState.autoFlowHandsFree) "⚡ 免按键自动轮流说：已开启" else "⚡ 免按键自动轮流说：已关闭",
+                text = if (uiState.autoFlowHandsFree) "⚡ 免按键:开" else "⚡ 免按键:关",
                 selected = uiState.autoFlowHandsFree,
                 accentColor = Color(0xFF10B981),
                 onClick = onToggleHandsFree
@@ -197,15 +203,15 @@ private fun TopTvNavigationBar(
 
             if (!uiState.hasRecordPermission) {
                 TvFocusableButton(
-                    text = "⚠️ 点击授权麦克风权限",
+                    text = "⚠️ 授权麦克风",
                     selected = true,
                     accentColor = Color(0xFFEF4444),
                     onClick = onRequestPermission
                 )
             } else {
                 Text(
-                    text = "⭐ 累计星星: ${uiState.totalStarsEarned}",
-                    fontSize = 18.sp,
+                    text = "⭐ ${uiState.totalStarsEarned}",
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFFFDE047)
                 )
