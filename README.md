@@ -40,6 +40,12 @@
    - **四维结构化标注**：每句均内置 **意群拆解 (`chunks`)**、**看图换词造句 (`substitutions`)**、**双麦对唱问答 (`rolePlayQuestion`)** 以及 **常速 (1.0x) / 慢速 (0.78x) 毫秒级卡拉 OK 逐词时间轴 (`WordBoundary`)**。
    - **离线烘焙脚本 (`tools/bake_edge_tts_pack.py`)**：支持零网络导出 `app/src/main/assets/sentences/sentences_manifest.json` 清单，或联网通过 `edge-tts` (`en-US-AnaNeural` 美式少儿音色) 批量烘焙高保真音频包。
 
+7. **里程碑 M3：可插拔三级发音评测引擎 (`PronunciationScorer` + `AzureSpeechAssessmentClient`)**
+   - **三种可插拔评测模式一键切换**：
+     - `智能混合(Cloud+L0)` (`AUTO_CLOUD_WITH_LOCAL_FALLBACK`)：配置微软 Azure Speech 免费层 (F0) Key 后优先走云端音素级 (`Phoneme`) 评测（1.8s 连接 + 2.5s 读取超时保护），未配置或网络超时 0 报错无缝降级本地 L0 包络评测。
+     - `音素仿真(Phoneme)` (`MOCK_AZURE_PHONEME_SIMULATOR`)：无需联网与云端 Key，在开发机上根据声学包络自动生成标准 Azure Detailed JSON（含音标级评分如 `/w/`, `/ɔː/`, `/θ/`, `/r/`）并输出音标纠音提示。
+     - `纯离线(L0包络)` (`LOCAL_L0_ENVELOPE`)：纯本地 16kHz PCM 能量包络与音节节奏对齐评测。
+
 ---
 
 ## 📂 项目目录结构
@@ -69,14 +75,15 @@ EngHunter/
 │       │   │   │   ├── PrimarySchool60Catalog.kt    # M2 小学英语 1~6 年级 6 大单元 60 句完整题库
 │       │   │   │   └── SentenceModels.kt            # 句式卡片、逐词时间戳与双麦问答模型
 │       │   │   ├── scoring/
-│       │   │   │   └── PronunciationScorer.kt       # 小学生护心发音评测器
+│       │   │   │   ├── AzureSpeechAssessmentClient.kt # M3 微软 Azure Speech F0 音素级评测与离线仿真器
+│       │   │   │   └── PronunciationScorer.kt       # M3 可插拔三级小学生护心发音评测器
 │       │   │   ├── ui/
-│       │   │   │   └── EngHunterTvApp.kt            # Jetpack Compose for TV 双页面大屏 UI (含6单元筛选栏)
+│       │   │   │   └── EngHunterTvApp.kt            # Jetpack Compose for TV 双页面大屏 UI
 │       │   │   └── viewmodel/
 │       │   │       └── EngHunterViewModel.kt        # 模式 A 全无线闭环 & 数字孪生状态机
 │       │   └── res/
 │       └── test/java/com/enghunter/tv/
-│           └── AudioAndScoringTest.kt               # 防消原唱、数字孪生4样本、M2 60句题库与清单解析单元测试
+│           └── AudioAndScoringTest.kt               # 防消原唱、数字孪生4样本、M2 60句题库与 M3 音素评测单元测试
 ├── build.gradle.kts
 ├── settings.gradle.kts
 └── gradlew

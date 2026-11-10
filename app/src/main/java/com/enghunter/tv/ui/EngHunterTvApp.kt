@@ -52,6 +52,7 @@ import com.enghunter.tv.audio.VirtualKaraokeMicTwin
 import com.enghunter.tv.audio.XiaomiKaraokeMicManager
 import com.enghunter.tv.model.CurriculumUnit
 import com.enghunter.tv.model.WordFeedbackLevel
+import com.enghunter.tv.scoring.PronunciationScorer
 import com.enghunter.tv.viewmodel.ActiveTab
 import com.enghunter.tv.viewmodel.EngHunterUiState
 import com.enghunter.tv.viewmodel.EngHunterViewModel
@@ -473,6 +474,17 @@ private fun PracticeClosedLoopScreen(
                 }
             )
 
+            TvFocusableButton(
+                text = "🧠 评测引擎: ${uiState.selectedScoringEngineMode.badge}",
+                selected = uiState.selectedScoringEngineMode != PronunciationScorer.ScoringEngineMode.LOCAL_L0_ENVELOPE,
+                accentColor = Color(0xFF06B6D4),
+                onClick = {
+                    val modes = PronunciationScorer.ScoringEngineMode.entries
+                    val nextMode = modes[(modes.indexOf(uiState.selectedScoringEngineMode) + 1) % modes.size]
+                    viewModel.selectScoringEngineMode(nextMode)
+                }
+            )
+
             if (uiState.lastSavedRecording != null) {
                 TvFocusableButton(
                     text = "🔁 对比回放 (标准音 vs 我)",
@@ -674,6 +686,24 @@ private fun Phase0HardwareDiagnosticScreen(
                         selected = uiState.selectedSimulatedProfile == profile,
                         accentColor = Color(0xFF8B5CF6),
                         onClick = { viewModel.selectSimulatedProfile(profile) }
+                    )
+                }
+            }
+
+            // M3 可插拔發音評測引擎選擇器（Azure 音素級 F0 免費層 / 離線音素仿真 / 本地 L0 包絡）
+            Text(
+                text = "🧠 M3 可插拔发音评测引擎（支持 Azure 音素级纠音 + 本地 L0 自动降级）：",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF67E8F9)
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                PronunciationScorer.ScoringEngineMode.entries.forEach { engineMode ->
+                    TvFocusableButton(
+                        text = engineMode.badge,
+                        selected = uiState.selectedScoringEngineMode == engineMode,
+                        accentColor = Color(0xFF06B6D4),
+                        onClick = { viewModel.selectScoringEngineMode(engineMode) }
                     )
                 }
             }

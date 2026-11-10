@@ -9,26 +9,97 @@ import kotlin.math.min
 import kotlin.math.sqrt
 
 /**
- * 少兒英語三級發音評測引擎（PronunciationScorer）
+ * 少兒英語三級可插拔發音評測引擎（PronunciationScorer）
  *
- * 1. L0 本地實時能量包絡與音節節奏對齊（零延遲、100% 離線可用）：
- *    將孩子在 XMKGMKF01YM（16mm 心形指向咪芯 + DRC 動態壓縮）錄下的 16kHz PCM，
- *    按照目標句的單詞時間戳（WordBoundary）切分到每個單詞時間窗，計算每個單詞的能量飽滿度與發聲覆蓋率。
- * 2. L2 雲端發音評測擴展接口（預留 Azure Speech F0 免費層 / 訊飛少兒口語評測）：
- *    配置雲端端點後自動優先走雲端音素級打分，超時或離線時無縫回退 L0/L1。
- * 3. 小學生友好的「護心評分法則」：
- *    - 只要敢對著麥克風開口說話，保底給 1 顆星！
- *    - 不使用刺眼紅色，僅區分「綠色（太棒了）」與「橙色（再試一次會更好）」。
- *    - 每次最多只挑 1 個核心單詞提示重讀，拿滿 3 顆星即解鎖 XMKGMKF01YM 9種搞怪音效獎勵秀！
+ * 【里程碑 M3】支持四種評測引擎路由模式（[ScoringEngineMode]）：
+ * 1. `AUTO_CLOUD_WITH_LOCAL_FALLBACK`（智能混合模式，默認）：
+ *    - 若已配置 Azure Speech F0 免費層密鑰，優先發起 2.5s 超時保護的音素級（Phoneme）雲端評測；
+ *    - 若未配置或網絡超時，0 報錯無縫回退本地 L0 聲學包絡評測。
+ * 2. `MOCK_AZURE_PHONEME_SIMULATOR`（開發機音素級仿真模式）：
+ *    - 無需聯網與雲端 Key，利用本地聲學包絡實時生成標準 Azure Detailed JSON（含音標級評分如 `/w/`, `/ɔː/`, `/θ/`），並走完整 Azure 解析器出分。
+ * 3. `AZURE_CLOUD_PREFER`（強制優先雲端 Azure F0）：
+ *    - 調用微軟 Azure Pronunciation Assessment REST API，失敗時回退 L0 並標註原因。
+ * 4. `LOCAL_L0_ENVELOPE`（純離線 L0 聲學包絡評測）：
+ *    - 零網絡依賴，基於 XMKGMKF01YM 16mm 心形指向咪芯 16kHz PCM 能量包絡切分單詞打分。
+ *
+ * 小學生友好的「護心評分法則」：
+ * - 只要敢對著麥克風開口說話，保底給 1 顆星！
+ * - 不使用刺眼紅色，僅區分「綠色（太棒了）」與「橙色（再試一次會更好）」。
+ * - 每次最多只挑 1 個核心單詞（或音標）提示重讀，拿滿 3 顆星即解鎖 XMKGMKF01YM 9種搞怪音效獎勵秀！
  */
-class PronunciationScorer {
+class PronunciationScorer(
+    private val azureClient: AzureSpeechAssessmentClient = AzureSpeechAssessmentClient()
+) {
 
+    enum class ScoringEngineMode(val title: String, val badge: String) {
+        AUTO_CLOUD_WITH_LOCAL_FALLBACK(
+            title = "智能混合：Azure 音素级优先 + 本地 L0 自动降级",
+            badge = "智能混合(Cloud+L0)"
+        ),
+        MOCK_AZURE_PHONEME_SIMULATOR(
+            title = "音素级仿真：离线模拟 Azure 音标纠音 (/θ/ /w/ /r/)",
+            badge = "音素仿真(Phoneme)"
+        ),
+        LOCAL_L0_ENVELOPE(
+            title = "纯离线 L0：16mm 咪芯声学包络评测 (零网络)",
+            badge = "纯离线(L0包络)"
+        )
+    }
+
+    /**
+     * 異步可插拔評測入口（支持雲端 Azure Speech F0 + 離線音素仿真 + 本地 L0 自動降級）
+     */
+    suspend fun evaluateWithStrategy(
+        sentence: SentenceCard,
+        targetWords: List<String>,
+        pcm16k: ShortArray,
+        mode: ScoringEngineMode = ScoringEngineMode.AUTO_CLOUD_WITH_LOCAL_FALLBACK,
+        credentials: AzureSpeechAssessmentClient.CloudCredentials = AzureSpeechAssessmentClient.CloudCredentials()
+    ): PronunciationReport {
+        val localReport = evaluate(sentence, targetWords, pcm16k)
+        if (pcm16k.isEmpty()) return localReport
+
+        return when (mode) {
+            ScoringEngineMode.LOCAL_L0_ENVELOPE -> localReport
+
+            ScoringEngineMode.MOCK_AZURE_PHONEME_SIMULATOR -> {
+                val simulatedAzureJson = AzureSpeechAssessmentClient.simulatePhonemeLevelResponseJson(
+                    targetWords = targetWords,
+                    localFallbackReport = localReport
+                )
+                AzureSpeechAssessmentClient.parseAzurePronunciationJson(
+                    rawJson = simulatedAzureJson,
+                    targetWords = targetWords,
+                    engineLabel = "L2-Azure音素级仿真 (Phoneme Mock)"
+                ) ?: localReport
+            }
+
+            ScoringEngineMode.AUTO_CLOUD_WITH_LOCAL_FALLBACK -> {
+                if (credentials.isConfigured) {
+                    val cloudReport = azureClient.evaluateOnCloudOrNull(
+                        credentials = credentials,
+                        sentence = sentence,
+                        targetWords = targetWords,
+                        pcm16k = pcm16k
+                    )
+                    cloudReport ?: localReport.copy(
+                        engineSource = "${localReport.engineSource} [云端超时自动降级]"
+                    )
+                } else {
+                    localReport
+                }
+            }
+        }
+    }
+
+    /**
+     * 同步本地 L0 聲學包絡評測（零延遲、100% 離線可用）
+     */
     fun evaluate(
         sentence: SentenceCard,
         targetWords: List<String>,
         pcm16k: ShortArray
     ): PronunciationReport {
-        val sampleRate = 16000
         if (pcm16k.isEmpty()) {
             return buildSilentFallback(targetWords)
         }

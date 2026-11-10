@@ -7,7 +7,9 @@ import com.enghunter.tv.model.CurriculumUnit
 import com.enghunter.tv.model.PrimarySchool60Catalog
 import com.enghunter.tv.model.SampleSentenceRepository
 import com.enghunter.tv.model.WordFeedbackLevel
+import com.enghunter.tv.scoring.AzureSpeechAssessmentClient
 import com.enghunter.tv.scoring.PronunciationScorer
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
@@ -200,5 +202,60 @@ class AudioAndScoringTest {
         val reserialized = OfflineKaraokePackLoader.toManifestJson(parsed)
         val reparsed = OfflineKaraokePackLoader.parseManifestJson(reserialized)
         assertEquals(60, reparsed.size)
+    }
+
+    @Test
+    fun `M3 Azure phoneme-level JSON parser and MOCK_AZURE_PHONEME_SIMULATOR produce phoneme hints`() = runBlocking {
+        val scorer = PronunciationScorer()
+        val card = SampleSentenceRepository.builtInSentences.first()
+        val targetWords = card.en.split(" ")
+
+        // 使用样本 B（第 3 个单词漏读/卡顿）测试音素级纠音反馈
+        val rawPcm = VirtualKaraokeMicTwin.synthesizeChildSpeechPcm(
+            profile = VirtualKaraokeMicTwin.SimulatedChildVoiceProfile.HESITANT_MISSED_WORD_2_STARS,
+            wordCount = targetWords.size
+        )
+        val vadResult = VirtualKaraokeMicTwin.runVadStreamOverPcm(rawPcm, 16000)
+
+        val phonemeReport = scorer.evaluateWithStrategy(
+            sentence = card,
+            targetWords = targetWords,
+            pcm16k = vadResult.pcm16kMono,
+            mode = PronunciationScorer.ScoringEngineMode.MOCK_AZURE_PHONEME_SIMULATOR
+        )
+
+        assertEquals(2, phonemeReport.stars)
+        assertTrue(phonemeReport.engineSource.contains("Azure音素级仿真"))
+        assertTrue("Encouragement should include phoneme IPA slash notation", phonemeReport.encouragementMessage.contains("/"))
+    }
+
+    @Test
+    fun `M3 AUTO_CLOUD_WITH_LOCAL_FALLBACK gracefully falls back to L0 when cloud credentials are empty or unreachable`() = runBlocking {
+        val scorer = PronunciationScorer()
+        val card = SampleSentenceRepository.builtInSentences.first()
+        val targetWords = card.en.split(" ")
+
+        val rawPcm = VirtualKaraokeMicTwin.synthesizeChildSpeechPcm(
+            profile = VirtualKaraokeMicTwin.SimulatedChildVoiceProfile.PERFECT_3_STARS,
+            wordCount = targetWords.size
+        )
+        val vadResult = VirtualKaraokeMicTwin.runVadStreamOverPcm(rawPcm, 16000)
+
+        // 1. 未配置 Key 时直接走本地 L0
+        val reportNoKey = scorer.evaluateWithStrategy(
+            sentence = card,
+            targetWords = targetWords,
+            pcm16k = vadResult.pcm16kMono,
+            mode = PronunciationScorer.ScoringEngineMode.AUTO_CLOUD_WITH_LOCAL_FALLBACK,
+            credentials = AzureSpeechAssessmentClient.CloudCredentials(subscriptionKey = "", region = "eastasia")
+        )
+        assertEquals(3, reportNoKey.stars)
+        assertTrue(reportNoKey.engineSource.startsWith("L0-本地声学包络评测"))
+
+        // 2. WAV 编码头校验 (RIFF + WAVE)
+        val wavBytes = AzureSpeechAssessmentClient.encodePcm16kToWavBytes(vadResult.pcm16kMono, 16000)
+        assertEquals(44 + vadResult.pcm16kMono.size * 2, wavBytes.size)
+        assertEquals("RIFF", String(wavBytes.copyOfRange(0, 4), Charsets.US_ASCII))
+        assertEquals("WAVE", String(wavBytes.copyOfRange(8, 12), Charsets.US_ASCII))
     }
 }

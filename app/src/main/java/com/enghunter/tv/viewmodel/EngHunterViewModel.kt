@@ -13,6 +13,7 @@ import com.enghunter.tv.model.CurriculumUnit
 import com.enghunter.tv.model.PronunciationReport
 import com.enghunter.tv.model.SampleSentenceRepository
 import com.enghunter.tv.model.SentenceCard
+import com.enghunter.tv.scoring.AzureSpeechAssessmentClient
 import com.enghunter.tv.scoring.PronunciationScorer
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -53,6 +54,10 @@ data class EngHunterUiState(
         XiaomiKaraokeMicManager.PreferredInputMode.MODE_A_WIRELESS_HFP,
     val selectedSimulatedProfile: VirtualKaraokeMicTwin.SimulatedChildVoiceProfile =
         VirtualKaraokeMicTwin.SimulatedChildVoiceProfile.PERFECT_3_STARS,
+    val selectedScoringEngineMode: PronunciationScorer.ScoringEngineMode =
+        PronunciationScorer.ScoringEngineMode.AUTO_CLOUD_WITH_LOCAL_FALLBACK,
+    val azureSubscriptionKey: String = "",
+    val azureRegion: String = "eastasia",
     val enableAntiVocalCancel: Boolean = true,
     val bluetoothLatencyOffsetMs: Long = 180L,
     val autoFlowHandsFree: Boolean = true, // 模式 A 核心：播完自動叮一聲開麥，說完 VAD 自動停
@@ -185,6 +190,19 @@ class EngHunterViewModel(application: Application) : AndroidViewModel(applicatio
             it.copy(
                 selectedSimulatedProfile = profile,
                 selectedInputMode = XiaomiKaraokeMicManager.PreferredInputMode.MODE_DEV_SIMULATOR
+            )
+        }
+    }
+
+    fun selectScoringEngineMode(mode: PronunciationScorer.ScoringEngineMode) {
+        _uiState.update { it.copy(selectedScoringEngineMode = mode) }
+    }
+
+    fun updateAzureCredentials(key: String, region: String) {
+        _uiState.update {
+            it.copy(
+                azureSubscriptionKey = key.trim(),
+                azureRegion = region.trim().ifEmpty { "eastasia" }
             )
         }
     }
@@ -479,10 +497,15 @@ class EngHunterViewModel(application: Application) : AndroidViewModel(applicatio
 
         val saved = ringCache.saveToRingBuffer(recResult.pcm16kMono, 16000)
         val currentState = _uiState.value
-        val report = scorer.evaluate(
+        val report = scorer.evaluateWithStrategy(
             sentence = currentState.currentSentence,
             targetWords = currentState.activeWordsList,
-            pcm16k = recResult.pcm16kMono
+            pcm16k = recResult.pcm16kMono,
+            mode = currentState.selectedScoringEngineMode,
+            credentials = AzureSpeechAssessmentClient.CloudCredentials(
+                subscriptionKey = currentState.azureSubscriptionKey,
+                region = currentState.azureRegion
+            )
         )
 
         if (report.stars == 3) {
